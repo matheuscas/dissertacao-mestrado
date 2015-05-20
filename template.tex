@@ -1,0 +1,303 @@
+%% Template para dissertação/tese na classe UFBAthesis
+%% versão 0.9.2
+%% (c) 2005 Paulo G. S. Fonseca
+%% (c) 2012 Antonio Terceiro
+%% www.dcc.ufba.br/~terceiro/ufbathesis
+
+\documentclass[msc, a4paper, classic, pt]{ufbathesis}
+\usepackage[utf8]{inputenc}
+
+%% Preâmbulo:
+%% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
+%% (re)definições de macros, medidas, etc.
+
+\title{<TÍTULO DA OBRA>}
+\date{<DATA DA DEFESA>}
+\author{<NOME DO AUTOR>}
+\adviser{<NOME DO(DA) ORIENTADOR(A)>}
+\coadviser{<NOME DO(DA) CO-ORIENTADOR(A)>}
+
+\begin{document}
+
+% Folha de rosto
+\dmccfrontpage{MMCC-Msc-XXXX}
+% Se seu trabalho não for uma tese de doutorado do DMCC, apague a linha
+% acima e use \frontpage
+
+%%
+%% Parte pré-textual
+%%
+\frontmatter
+
+% Portada (apresentação)
+\dmccpresentationpage
+% Se seu trabalho não for uma tese de doutorado do DMCC, apague a linha
+% acima e use \presenationpage
+
+% Ficha catalográfica
+\authorcitationname{<SEU NOME EM CITAÇÕES>} % e.g. Terceiro, Antonio Soares de Azevedo
+\advisercitationname{<NOME DO SEU ORIENTADOR EM CITAÇÕES>} % e.g. Chavez, Christina von Flach Garcia
+\coadvisercitationname{<NOME DO SEU CO-ORIENTADOR EM CITAÇÕES>} % e.g. Mendonca, Manoel Gomes de
+\catalogtype{<TIPO DE TRABALHO>} % e.g. ``Tese (doutorado)''
+\catalogtopics{<TOPICOS PARA FICHA CATALOGRAFICA>} % e.g. ``1. Complexidade Estrutural. 2. Engenharia de Software''
+\catalogcdd{<NUMERO CDD>} % e.g. ``CDD 20.ed. XXX.YY'' (esse número vai lhe ser dado pela biblioteca)
+\catalogingsheet
+
+% Termo de aprovação - exemplo
+% Modifique com os membros da sua banca
+\approvalsheet{Salvador, <DIA> de <MÊS> de <ANO>}{
+  \comittemember{Profa. Dra. Professora 1}{Universidade XYZ}
+  \comittemember{Prof. Dr. Professor 2}{Universidade 123}
+  \comittemember{Profa. Dra. Professora 3}{Universidade ABC}
+  \comittemember{Prof. Dr. Professor 4}{Universidade HJKL}
+  \comittemember{Profa. Dra. Professora 5}{Universidade QWERTY}
+}
+
+% Agradecimentos
+% Se preferir, crie um arquivo à parte e o inclua via \include{}
+\acknowledgements
+<DIGITE OS AGRADECIMENTOS AQUI>
+
+% Resumo em Português
+% Se preferir, crie um arquivo à parte e o inclua via \include{}
+\resumo
+<DIGITE O RESUMO AQUI>
+% Palavras-chave do resumo em Português
+\begin{keywords}
+<DIGITE AS PALAVRAS-CHAVE AQUI>
+\end{keywords}
+
+% Resumo em Inglês
+% Se preferir, crie um arquivo à parte e o inclua via \include{}
+\abstract
+% Palavras-chave do resumo em Inglês
+\begin{keywords}
+<DIGITE AS PALAVRAS-CHAVE AQUI>
+\end{keywords}
+
+% Sumário
+% Comente para ocultar
+\tableofcontents
+
+% Lista de figuras
+% Comente para ocultar
+\listoffigures
+
+% Lista de tabelas
+% Comente para ocultar
+\listoftables
+
+%%
+%% Parte textual
+%%
+\mainmatter
+
+% É aconselhável criar cada capítulo em um arquivo à parte, digamos
+% "capitulo1.tex", "capitulo2.tex", ... "capituloN.tex" e depois
+% incluí-los com:
+% \include{capitulo1}
+% \include{capitulo2}
+% ...
+% \include{capituloN}
+%
+% Importante: Use \xchapter ao invés de \chapter, conforme exemplo abaixo.
+
+\xchapter{Introdução}{}
+
+\begin{itemize}
+
+\item Motivações
+\begin{itemize}
+\item As opiniões são as principais influenciadoras do comportamento humano (Liu, 2012);
+\item Pessoas pedem opiniões a outras pessoas para consumo (mídia, produtos, etc.), posições políticas, religiosas, etc.;
+\item Empresas precisam saber as opiniões de seus consumidores;
+\item A internet e a web mudaram a forma de comunicação entre pessoas e organizações;
+\item Há mais facilidade de acesso a fontes de informações e de disponibilização de opiniões (USAR DADOS PARA EMBASAR ESSA INFORMACAÇÃO);
+\end{itemize}
+
+\item Problemas
+\begin{itemize}
+\item Grande quantidade e diversidade de fontes de opiniões;
+\item Diferentes formatos, problemas de sintaxe, gírias, dentro outros;
+\item É difícil para uma pessoa comum extrair e resumir opiniões de centenas ou milhares de fontes (USAR EMBASAMENTO);
+\item Opiniões são carregadas de sentimentos subjetivos e imprecisos;
+\end{itemize}
+
+\item Proposta / Definição
+\begin{itemize}
+\item É preciso utilizar uma metodologia para lidar com imprecisões e vagueza;
+\item Lógica fuzzy (Zadeh, 1965): É uma metodologia da Inteligência Computacional que trata computacionalmente dados imprecisos e vagos;
+\item ANGELO: poucos trabalhos sobre a aplicação de lógica fuzzy e/ou sistemas fuzzy foram encontrados, e os encontrados são limitados (tipo de limitação?), demonstrando uma lacuna de pesquisa sobre a aplicação de sistemas fuzzy para mineração de opiniões 
+\item Por todos os problemas citadas, associadas as motivações, torna-se evidente a necessidade de sistemas automáticos de mineração de opiniões;
+\item Definição de "Opinion Mining";
+\item Pela vagueza das opiniões, a Lógica nebulosa pode ser útil para esses sistemas automatizados;
+\item PROPOSTA: Propor e avaliar o desempenho de um sistema automatizado de mineração de opiniões baseado na lógica nebulosa;
+\item DIFERENCIAL: 
+\begin{itemize}
+\item Geração de regras fuzzy;
+\item Extração e definição de características dos documentos para geração das regras;
+\item Apresentação do uso do método de Wang-Mendel no processo de mineração de opinião;
+\end{itemize}
+
+\item Perguntas de pesquisa:
+\begin{itemize}
+\item Como Lógica Nebulosa pode ser utilizada no processo de mineração de opiniões?
+\item Quais são os ganhos, caso existam, do uso de lógica nebulosa em mineração de opiniões?
+\item ANGELO: mais umas duas questões de pesquisa
+\item ANGELO: depois de escrever os resultados e discussão, revisar esta seção 
+\end{itemize}
+
+\item Objetivos secundários:
+\begin{itemize}
+\item Investigar o estado da arte do uso de Lógica Nebulosa em mineração de opiniões;
+\item Formalizar o processo de mineração de opiniões e propor uma aplicação da lógica nebulosa;
+\item dentificar e compor uma base de dados para avaliação da proposta;
+\item Analisar os resultados e compara-los com outros métodos da literatura;
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\xchapter{Revisão da literatura}{}
+
+\begin{itemize}
+\item A área de mineração de opiniões é recente (Pang and Lee, 2008);
+\item Tão recente que ainda existem problemas de terminologias (mineração de opinião, análise de sentimentos, mineração de sentimentos, análise afetiva, dentre outros);
+\item Definição de opinion mining (usar um cara forte para isso, como Lib Bing, Po Pang, Turney, etc.)
+
+\item Definição formal de opinião 'O':
+\begin{itemize}
+\item O = (g, s), onde \emph{g} é o alvo e \emph{s} é o sentimento associados a opinião
+\end{itemize}
+
+\item Níveis de mineração de opinião (cita e depois explica cada um deles e diz qual foi usado e por que. Além de, claro, falar de trabalhos que se encaixam em cada nível)
+\begin{itemize}
+\item Nível de documento;
+\item Nível de sentença;
+\item Nível de entidades e seus aspectos
+\end{itemize}
+
+\item Lógica Fuzzy
+\begin{itemize}
+\item Muitas das informações que lidamos são imprecisas e vagas;
+\item A lógica clássica não consegue lidar com esse tipo de informação;
+\item Para isso,Zadeh (1965) propôs a Lógica Nebulosa para lidar com informações vagas e imprecisas
+
+\item Conjuntos Fuzzy
+\begin{itemize}
+\item A lógica nebulosa diz que um elemento pode fazer parte de mais de um conjunto com graus de pertinência para cada um deles (Uma opinião pode ser positiva e negativa ao mesmo tempo, mas com graus de pertinência para cada conjunto fuzzy)
+\item A lógica clássica, por outro lado, determina que um objeto pertençe ou não a um conjunto (Ou uma opinião é positiva ou negativa);
+\end{itemize}
+
+\item Wang-Mendel
+\begin{itemize}
+\item O que é?
+\item Explicar o método
+\end{itemize}
+
+\item Fala de outros algoritmos de classificação e agrupamento? Tem isso na qualificação, mas não sei se é mais pertinente (??????)
+
+\item Métodos de classificação com uso de regras
+\begin{itemize}
+\item CFRM
+\item GFRM
+\end{itemize}
+\end{itemize}
+\item Trabalhos relacionados
+\begin{itemize}
+\item Papers with opinion mining? (Angelo: Acho que alguns principais, mais para contextualizar as abordagens, independente e dependente de domínio, classificação com palavras e com features)
+\item Papers with both? (angelo: Sim, descrever rapidamente os encontrados e fazer contraste com a nossa proposta)
+\end{itemize}
+
+\end{itemize}
+
+\xchapter{Metodologia}{}
+
+\begin{itemize}
+\item O processo de mineração de opinião
+\begin{itemize}
+
+\item Preprocessing
+\begin{itemize}
+\item Definição
+\item Reiterar o tipo de análise escolhida: Document Level Analysis
+\item Datasets utilizados (Cornell e Amazon - descreve as caracteristicas de cada dataset, como quantidade, balanceamento, natureza, etc.)
+
+\item Explicar as tarefas envolvidas:
+\begin{itemize}
+\item Remoção de sentenças que contem "modals"
+\item POS Tagging
+\item Tokenization -> bag-of-words model (n-grams e explica os tipos de n-grams)
+\item Resume o subcapitulo e finaliza falando da saida dessa fase para a proxima
+\end{itemize}
+\end{itemize}
+
+\item Transformation
+\begin{itemize}
+\item O que é
+\item Uso de dicionários de opinião para transformar n-grams e numeros
+\item Explicar porque o uso de dicionarios de opiniao é bom para nosso trabalho
+\item Sentiwordnet (falar sobre explicar, genericamente, como é criado, como é estruturado, valores associados aos termos)
+\item Falar do trabalho de Guerrine que propoe diferentes formulas para determinar a polaridade de um n-gram. E que são melhores que a mais frequente do SWN
+\item Falar e explicar os intensificadores
+\item Negação
+\item Frequencia de n-grams como transformador da polaridade
+\item Compensação de bias negativo
+\item Resume o subcapitulo e finaliza falando da saida dessa fase para a proxima 
+\end{itemize}
+
+\item Feature extraction
+\begin{itemize}
+\item O que é
+\item Por que extrair features
+\item Corpus-based vs domain independent 
+\item Features usadas de outros trabalhos. Citar todas e falar o que é cada uam delas
+\item Features derivadas e criadas por este trabalho. Fala de cada uma delas. 
+\item Resume o subcapitulo e finaliza falando da saida dessa fase para a proxima
+\end{itemize}
+
+\item Feature selection
+\begin{itemize}
+\item O que é
+\item Por que selecionar features
+\item Falar dos algoritmos de seleção utilizados (explicar em linhas gerais como eles fazem a seleção)
+\begin{itemize}
+\item Correlation$-$based Feature Selection (CFS)
+\item C4.5 decision tree
+\end{itemize}
+\item Resume o subcapitulo e finaliza falando da saida dessa fase para a proxima 
+\end{itemize}
+
+\item Classification
+\item Evaluation
+\end{itemize}
+\end{itemize}
+
+
+\xchapter{Resultados obtidos}{}
+
+\xchapter{Considerações finais e trabalhos futuros}{}
+
+\backmatter
+
+% Apêndices
+% Comente se não houver apêndices
+\appendix
+
+% É aconselhável criar cada apêndice em um arquivo à parte, digamos
+% "apendice1.tex", "apendice.tex", ... "apendiceM.tex" e depois
+% incluí-los com:
+% \include{apendice1}
+% \include{apendice2}
+% ...
+% \include{apendiceM}
+
+
+% Bibliografia
+% É aconselhável utilizar o BibTeX a partir de um arquivo, digamos "biblio.bib".
+% Para ajuda na criação do arquivo .bib e utilização do BibTeX, recorra ao
+% BibTeXpress em www.cin.ufpe.br/~paguso/bibtexpress
+\bibliographystyle{abnt-alf}
+\bibliography{biblio}
+
+%% Fim do documento
+\end{document}

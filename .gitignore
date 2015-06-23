@@ -12,3 +12,6 @@
 *.loc
 *.toc
 *.gz
+*.bak
+*.blg
+*.bbl

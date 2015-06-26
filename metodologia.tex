@@ -1,31 +1,31 @@
 \xchapter{Metodologia}{}
 
-O processo de mineração de opinião
-\begin{itemize}
+%O processo de mineração de opinião
+%\begin{itemize}
 
-\item Preprocessing
-\begin{itemize}
-\item Definição
-\item Reiterar o tipo de análise escolhida: Document Level Analysis
-\item Datasets utilizados (Cornell e Amazon - descreve as caracteristicas de cada dataset, como quantidade, balanceamento, natureza, etc.)
-
-\item Descrever e justificar as tarefas envolvidas:
-\begin{itemize}
-\item O texto é dividido em sentenças
-\item POS Tagging - Brill's Tagger
-\item Blocos irrealis são filtrados ou não (atualmente NÃO FILTRAM)
-\item Defino quais ngrams serão extraídos
-\begin{itemize}
-\item Defino o uso do tipo de negação (FAR NEGATION - REFER)
-\item Os verbos foram recentemente removidos do universo
-\item Depois de testar, MANUALMENTE, diferentes configurações de n-grams, mantendo os demais parametros fixos, restaram adjetivos e adverbios, com unigrams, bigrams e trigrams
-\end{itemize}
-
-\item Retorna um vetor de n-grams (bag-of-words)
-\item Resume o subcapitulo e finaliza falando da saída dessa fase para a próxima
-\end{itemize}
-\end{itemize}
-\end{itemize}
+%\item Preprocessing
+%\begin{itemize}
+%\item Definição
+%\item Reiterar o tipo de análise escolhida: Document Level Analysis
+%\item Datasets utilizados (Cornell e Amazon - descreve as caracteristicas de cada dataset, como quantidade, balanceamento, natureza, etc.)
+%
+%\item Descrever e justificar as tarefas envolvidas:
+%\begin{itemize}
+%\item O texto é dividido em sentenças
+%\item POS Tagging - Brill's Tagger
+%\item Blocos irrealis são filtrados ou não (atualmente NÃO FILTRAM)
+%\item Defino quais ngrams serão extraídos
+%\begin{itemize}
+%\item Defino o uso do tipo de negação (FAR NEGATION - REFER)
+%\item Os verbos foram recentemente removidos do universo
+%\item Depois de testar, MANUALMENTE, diferentes configurações de n-grams, mantendo os demais parametros fixos, restaram adjetivos e adverbios, com unigrams, bigrams e trigrams
+%\end{itemize}
+%
+%\item Retorna um vetor de n-grams (bag-of-words)
+%\item Resume o subcapitulo e finaliza falando da saída dessa fase para a próxima
+%\end{itemize}
+%\end{itemize}
+%\end{itemize}
 
 O processo de mineração de opinião é comumente definido em seis etapas: a i) definição do domínio, ii) pré-processamento, iii) transformação, iv) seleção de características, v) classificação e vi) análise dos resultados \cite{moraes2012document}. Cada etapa inclui diferentes tarefas que, dado um documento na entrada do processo, seja possível classifica-lo e avaliar a classificação realizada.
 
@@ -48,9 +48,37 @@ A etapa de pré-processamento envolve tarefas como a tokenização dos documento
 
 A tarefa final é definir quais n-grams serão usados para compor o modelo que representará o documento. O tipo de modelo utilizado nessa pesquisa é o popular saco de palavras (\textit{bag-of-words}), onde cada documento é representado por um vetor de termos (ou n-grams) do documento \cite{moraes2012document}. N-grams são termos que podem ser unigrams (uma palavra), bigrams (duas palavras) ou trigrams (três palavras). Nós definimos 5 tipos de n-grams: adjetivos e advérbios como unigrams; advérbios com adjetivos (e.g. \textit{very good}), advérbios com advérbios como bigrams; e a combinação de dois advérbios e um adjetivo como trigram (e.g. \textit{not very nice}) \cite{pang2002thumbs, turney2002thumbs, taboada2008extracting, karamibekr2012verb}. Nós também extraímos tipos especiais de bigrams e trigrams que são os n-grams negados (e.g. \textit{not bad}, \textit{nothing special}). A extração desses tipos de n-grams também é conhecido com detecção de negação e, por si só, é um linha de pesquisa completa, indo além do escopo deste trabalho. Nós utilizamos uma versão simplificada da técnica usada em \cite{taboada2011lexicon}. 
 
-Ao fim do estágio de pré-processamento, cada documento é transformado num vetor de saco de palavras e é passado para a etapa de transformação. 
+Ao fim do estágio de pré-processamento, cada documento é transformado num vetor de n-grams que é passado para a etapa de transformação. 
 
 \section{Transformação}
+
+%\item Transformation
+%\begin{itemize}
+%\item O que é
+%\item Uso de dicionários de opinião para transformar n-grams e numeros
+%\item Explicar porque o uso de dicionarios de opiniao é bom para nosso trabalho
+%\item Sentiwordnet (falar sobre explicar, genericamente, como é criado, como é estruturado, valores associados aos termos)
+%\item Falar do trabalho de Guerrine que propoe diferentes formulas para determinar a polaridade de um n-gram. E que são melhores que a mais frequente do SWN
+%\item Falar e explicar os intensificadores
+%\item Negação
+%\item Frequencia de n-grams como transformador da polaridade
+%\item Compensação de bias negativo
+%\item Resume o subcapitulo e finaliza falando da saida dessa fase para a proxima 
+%\end{itemize}
+
+A etapa de transformação cria representações numéricas para os vetores de n-grams oriundos da etapa de pré-processamento, onde cada n-gram é associado a um valor numérico, um grau de polaridade opinativo, usando um dicionário de opiniões \cite{ballhysa2012fuzzy, moraes2012document, mouthami2013sentiment}. O dicionário base de opiniões usado nesse trabalho foi o SentiWordNet 3.0 \footnote{Disponível em: http://sentiwordnet.isti.cnr.it/. Download de 22/01/2013} \cite{baccianella2010sentiwordnet}.
+
+\subsection{SentiWordNet 3.0}
+
+O SentiWordNet 3.0 (SWN) é a terceira versão da primeira versão, SentiWordNet 1.0, apresentada por \cite{esuli2006sentiwordnet}. É um dicionário criado pela anotação automática de todos os conjuntos de sinônimos cognitivos, chamados de \textit{synsets}, de outro dicionário, o WordNet, versão 3.0 \cite{fellbaum2005wordnet}. Esses synsets são anotados de acordo sua positividade, negatividade e neutralidade. Cada synset $s$ é associado a três valores numéricos $Pos(s)$, $Neg(s)$ e $Obj(s)$ que indicam o quanto positivos, negativos e "objetivos" (ou neutros) são os termos existentes no synset \cite{baccianella2010sentiwordnet}.
+
+Por exemplo, o synset [estimable (J, 3)] \footnote{Nós adotamos a convenção usada no WordNet e por \cite{esuli2006sentiwordnet} e \cite{baccianella2010sentiwordnet} que usa o termo entre colchetes para representar um synset; assim [poor (J, 7)] não só se refere ao termo "poor", mas ao synset formado pelos adjetivos {inadequate(J,2), poor(J,7), short(J,4)}}, correspondente ao sentido de “may be computed or estimated” do adjetivo "estimable", tem o grau de neutralidade \textit{Obj} de 1.0 (e de positividade \textit{Pos} e negatividade \textit{Neg} igual a zero), enquanto que o synset [estimable (J, 1)], correspondente ao sentido de “deserving of respect or high regard”, tem o grau de positividade \textit{Pos} de 0.75, \textit{Neg} de 0.0 e \textit{Obj} de 0.25. Cada um dos valores estão num intervalo de zero a um e a soma dos três é igual a 1. Assim, é possível que existam (e existem) synsets que tenham todos os três graus diferentes de zero, indicando que há termos com os três graus opiniativos ao mesmo tempo \cite{esuli2006sentiwordnet}.
+
+inicialmente, nós definimos a polaridade resultante $Pol(n)$ de um n-gram $n$, devidamente marcado gramaticalmente (e.g. adjetivo, advérbio, etc.), como $Pol(n) = Pos(s) - Neg(s)$, subtraindo o grau de positividade do grau de negatividade do synset $s$ a que pertence o n-gram. Por exemplo, o synset mais freqüente de [good (J,1)] somente possui o termo \textit{good}, com grau $Pos(s)$ de 0.75, $Neg(s)$ de 0.0 e $Obj(s)$ de 0.25. A polaridade resultante $Pol(n)$ será de 0.5. Contudo, essa abordagem, de utilizar o synset mais frequente, não é melhor que o caso médio de escolher, aleatoriamente, quaisquer dos synsets de um dado termo, segundo \cite{guerini2013sentiment}. Ele também discute e mostra que o uso de polaridades de palavras fora de contexto (do inglês \textit{word’s prior polarity}), típicas de abordagens \textit{bag-of-words}, deve ter um tratamento diferente para se adequar ao problema da perda do contexto. Como resultado do seu trabalho, \cite{guerini2013sentiment} produziu um dicionário derivado, automaticamente, com todas as polaridades fora de contexto de todos os termos do SentiWordNet 3.0. Essa pesquisa utilizou essa variação do SWN de \cite{guerini2013sentiment} como dicionário de polaridade de opiniões. A polaridade resultante $Pol(n)$ agora é a polaridade fora de contexto do n-gram. 
+
+O uso da abordagem de polaridades fora de contexto tem a vantagem de não depender de profunda análise semântica ou desambiguação (uma linha de pesquisa completa, por si só) para assinalar um valor opinativo para um termo, além de ser independente de domínio, como proposto nesse trabalho \cite{guerini2013sentiment}. Além disso, dicionários construídos automaticamente, como o SWN e a variação de Guerrine, superam problemas existentes de dicionários criados manualmente, como em \cite{taboada2008extracting, taboada2011lexicon} que tendem a se restringir a um número muito menor de termos, consomem tempo para serem construídos e podem sofrer enviesamento de seus autores \cite{ohana2009sentiment}. Outra vantagem de usar técnicas baseadas em dicionários é que dispensa o uso de grandes bases de dados para aprendizado ou motores de buscas com funcionalidades especiais para a tarefa \cite{khan2011sentiment}. A principal desvantagem, contudo, é que a transformação depende inteiramente da precisão e cobertura do dicionário em questão \cite{khan2011sentiment}. 
+
+\subsection{Intensificadores e amenizadores}
 
 \section{Seleção de características}
 

@@ -92,7 +92,21 @@ Outra análise relacionada a definição da polaridade de um unigram, foi o envi
 
 \subsubsection{Bigrams e trigrams}
 
-O dicionário de opiniões provê a polaridade somente para os unigrams. Para os outros tipos de n-grams, bigrams e trigrams, tivemos de considerar a influência entre as palavras que formam o n-gram. Os bigrams e trigrams propostos nesse trabalho são compostos por advérbios e adjetivos ou somente por advérbios. Os advérbios que antecedem os adjetivos ou advérbios são chamados de intensificadores e atenuadores. 
+O dicionário de opiniões provê a polaridade somente para unigrams. Para os outros tipos de n-grams, bigrams e trigrams, tivemos de considerar a influência entre as palavras dos n-grams. Os bigrams e trigrams propostos nesse trabalho são compostos por advérbios e adjetivos ou somente por advérbios, conforme definimos na etapa de pré-processamento. Os advérbios que antecedem os adjetivos ou advérbios nos n-grams são chamados de intensificadores ou atenuadores, pois eles alteram a polaridade das palavras que os acompanham \cite{voll2007not}. Os intensificadores aumentam o grau da polaridade do unigram, seja ele positivo ou negativo, e os atenuadores diminuem. Por exemplo, 
+
+\begin{center}
+$Pos(\textit{good}) = 0,72259$; $Pos(\textit{very good}) = 0,90323$
+\end{center}
+
+\begin{center}
+$Neg(\textit{bad}) = -0.44006$; $Neg(\textit{really bad}) = -0,5060$
+\end{center}
+
+Os advérbios \textit{very} e \textit{really} modificam, intensificando com um dado percentual para cada intensificador, as polaridades dos adjetivos de \textit{good} e \textit{bad}. Diferentemente de dicionários de opiniões, como o SWN e a variação de Guerrine, não conseguimos encontrar, até o presente momento da pesquisa, nenhuma fonte disponível de intensificadores e amenizadores. Diferentes autores como \cite{voll2007not}, \cite{taboada2008extracting}, \cite{taboada2011lexicon} e \cite{pimpalkar2013sentimental} citam alguns modificadores ou até mencionam que construíram, manualmente, dicionários de intensificadores e amenizadores próprios, mas não disponibilizaram tais recursos para serem reproduzidos em outras pesquisas. Assim, tivemos de construir nosso próprio dicionário de modificadores. 
+
+Do mesmo modo que não há dicionários de intensificadores e amenizadores disponíveis nessa área de pesquisa, também não há consenso de como a modificação dos adjetivos pelos advérbios é feita. Nós decidimos nos basear no trabalho de \cite{taboada2011lexicon} que acrescenta ou diminui percentualmente a polaridade dos adjetivos, a depender das classes dos advérbios, para construir nosso dicionário de modificadores. 
+
+
 
 \section{Seleção de características}
 

@@ -8,6 +8,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 
+\newcounter{example}[section]
+\newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
+   \noindent \textbf{Exemplo~\theexample. #1} \rmfamily}{\medskip}
+
+
 %% Preâmbulo:
 %% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
 %% (re)definições de macros, medidas, etc.

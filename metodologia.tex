@@ -122,11 +122,16 @@ Além do problema da não disponibilidade de dicionários de modificadores, tamb
 Diferentemente do que foi feito em \citeauthoronline{taboada2011lexicon}, nós construímos o dicionário de modificadores automaticamente. Extraímos todos os advérbios existentes do Wordnet e, calculando a distância entre eles (os advérbios são organizados num grafo no Wordnet) e os advérbios da lista inicial, os associamos aos advérbios iniciais. Por exemplo, o advérbio \textit{truly} é mais próximo de \textit{very}, da classe VERY HIGH, do que o advérbio \textit{really}, assim ele é associado à classe de \textit{very}. Um outro exemplo é \textit{fairly} que é mais próximo de \textit{somewhat} que do advérbio \textit{pretty}. A partir daí o cálculo da polaridade $Pol$ de um bigram $b$ formado por um modificador $m$ e um unigram $u$ pode ser calculados assim: 
 
 \begin{equation}
-Pol(b) = Pol(u) + Pol(u) * Perc(m)
+Pol(b) = Pol(u) + Pol(u) \cdot Perc(m)
 \label{eq:pol_bigrams}
 \end{equation}
 
-Onde $Perc(m)$ é o percentual de intensificação ou de amenização do modificador $m$. O cálculo da polaridade de um trigram é análogo: primeiro calcula-se a polaridade do bigram mais interno e em seguida aplica-se o modificador mais externo à polaridade do bigram.
+Onde $Perc(m)$ é o percentual de intensificação ou de amenização do modificador $m$. O cálculo da polaridade de um trigram $t$ é análogo: primeiro calcula-se a polaridade do bigram mais interno e em seguida aplica-se o modificador mais externo à polaridade do bigram, conforme a equação \ref{eq:pol_trigrams}.
+
+\begin{equation} 
+Pol(t) = Pol(b) + Pol(u) \cdot Perc(m)
+\label{eq:pol_trigrams}
+\end{equation}.
 
 Existe ainda um tipo especial de n-gram que é a negação. São todos os n-grams formados por advérbios de negação e por adjetivos ou por advérbios (e.g. \textit{not bad} ou \textit{not very good}). A abordagem inicial é inverter a polaridade do n-gram, mudando, por exemplo, $Pos(\textit{good}) = 0,72259$ para $Pos(\textit{not good}) = - 0,72259$. Essa abordagem é conhecida como interruptor da negação ou inversão \cite{sauri2008factuality}. Contudo, embora a negação seja um efeito moderadamente local, é preciso analisar o efeito de palavras negativas, como \textit{none}, \textit{nobody} e \textit{nothing}, que tem efeito equivalente à negação local \cite{taboada2011lexicon} mas que atuam numa distância maior. Por exemplo:
 
@@ -152,6 +157,20 @@ A distância do efeito da negação também implica em como calcular a polaridad
 A negação de um termo fortemente positivo ou negativo reflete a mistura de opiniões que é corretamente capturada pelo deslocamento da negação \cite{taboada2011lexicon}. Depois de unigrams, bigrams e trigrams terem sido transformados para suas polaridades correspondentes, ao fim da etapa de transformação, os vetores de n-grams da entrada dessa etapa são transformados em vetores numéricos de polaridades.  
 
 \section{Seleção de características}
+
+Essa etapa é comumente encontrada em abordagens de mineração de opiniões. A ideia principal é fazer com que a etapa de classificação seja mais eficiente/efetiva, reduzindo a quantidade de características dos documentos a serem analisadas e identificando quais características são mais relevantes para a etapa de classificação \cite{moraes2012document}. Diferentemente da maioria dos trabalhos relacionados que consideram os n-grams como as características dos documentos, este trabalho realiza uma sub-etapa de criação de novas características utilizando as polaridades dos n-grams da etapa de transformação. Essa sub-etapa é a extração de características.
+
+\subsection{Extração de características}
+
+Nessa sub-etapa, nós extraímos características dos documentos dos vetores de polaridades da etapa de transformação. Nós decidimos usar essa abordagem, pois é efetiva em analisar os documentos por suas características em vez de seu conteúdo específico para decidir a orientação semântica destes. As características que utilizamos não são específicas para nenhum domínio e podem ser facilmente aplicadas para quaisquer outros tipos de base de dados \cite{pang2002thumbs}. Além disso, a extração dessas características reduz a dimensionalidade dos dados, já que os vetores resultantes da etapa é significativamente menor que um vetor comum de saco de palavras.
+
+Por outro lado, abordagens de mineração de opinião que são dependentes de domínio, normalmente baseadas em métodos de aprendizado de máquina, conseguem taxas de acurácia iguais ou maiores que 95\%, pois alimentam o classificador com os vetores de palavras dos documentos. Assim, o classificador aprende com os documentos da base de dados quais palavras fazem parte dos documentos positivos e negativos. Contudo, para alcançar altas taxas de classificação, essa abordagens precisam de uma grande massa de dados anotadas para treinamento e considerável tempo de treino para poder classificar corretamente. Todavia, ainda, produzem resultados muito ruins entre domínios diferentes sem novas rodadas de treinamento.
+
+Diferentes estudos propuseram diferentes características para descrever ou discriminar documentos entre eles para identificar suas polaridades \cite{wilson2005recognizing, ohana2009sentiment, taboada2011lexicon}. Com o fim de capturar diversos aspectos dos documentos, nós decidimos extrais um grande número de características. Assim, nós usamos as características apresentadas nesses trabalhos e criamos nossas próprias, derivando destas, resultando em 67 caraterísticas diferentes.
+
+Três tipos de características foram definidas: somatório, contagem e valores máximos. Características de somatório envolvem a soma as polaridades dos diferentes tipos de n-grams, como a soma dos adjetivos de um documento e a soma dos advérbios. As características de contagem são criadas da mesma maneira para os n-grams selecionados, criando características como a quantidade de bigrams positivos formados por advérbios e adjetivos. As características de valores máximos se referem aos valores para um dado n-gram no documento. Por exemplo, se o valor máximo absoluto entre os unigrams de um documento for positivo, essa característica tem valor igual a 1. Por outro lado, se o valor máximo for negativo, a característica tem valor -1. Mais características foram derivadas dos três tipos que acaram de ser descritos, aplicando normalização e subtração entre elas. Por exemplo, a diferença entre bigrams positivos e negativos de um documento ou o somatório normalizado de adjetivos positivos são uma das características derivadas por este trabalho. A lista completa de características pode ser encontrada no [REF TO APENDICE].
+
+Depois da extração de caracteríscas, os vetores de polaridades da etapa de transformácão são substituídos por vetores de características. Cada documento, agora, é representado por um vetor com 67 caraterísticas diferentes. 
 
 \section{Classificação}
 

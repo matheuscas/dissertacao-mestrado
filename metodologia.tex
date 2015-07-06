@@ -156,9 +156,9 @@ A distância do efeito da negação também implica em como calcular a polaridad
 
 A negação de um termo fortemente positivo ou negativo reflete a mistura de opiniões que é corretamente capturada pelo deslocamento da negação \cite{taboada2011lexicon}. Depois de unigrams, bigrams e trigrams terem sido transformados para suas polaridades correspondentes, ao fim da etapa de transformação, os vetores de n-grams da entrada dessa etapa são transformados em vetores numéricos de polaridades.  
 
-\section{Seleção de características}
+\section{Extração e seleção de características}
 
-Essa etapa é comumente encontrada em abordagens de mineração de opiniões. A ideia principal é fazer com que a etapa de classificação seja mais eficiente/efetiva, reduzindo a quantidade de características dos documentos a serem analisadas e identificando quais características são mais relevantes para a etapa de classificação \cite{moraes2012document}. Diferentemente da maioria dos trabalhos relacionados que consideram os n-grams como as características dos documentos, este trabalho realiza uma sub-etapa de criação de novas características utilizando as polaridades dos n-grams da etapa de transformação. Essa sub-etapa é a extração de características.
+A etapa de seleção de características é comumente encontrada em abordagens de mineração de opiniões. A ideia principal é fazer com que a etapa de classificação seja mais eficiente/efetiva, reduzindo a quantidade de características dos documentos a serem analisadas e identificando quais características são mais relevantes para a etapa de classificação \cite{moraes2012document}. Diferentemente da maioria dos trabalhos relacionados que consideram os n-grams como as características dos documentos, este trabalho realiza uma sub-etapa de extração de novas características utilizando as polaridades dos n-grams da etapa de transformação. Essa sub-etapa é a extração de características.
 
 \subsection{Extração de características}
 
@@ -170,7 +170,13 @@ Diferentes estudos propuseram diferentes características para descrever ou disc
 
 Três tipos de características foram definidas: somatório, contagem e valores máximos. Características de somatório envolvem a soma as polaridades dos diferentes tipos de n-grams, como a soma dos adjetivos de um documento e a soma dos advérbios. As características de contagem são criadas da mesma maneira para os n-grams selecionados, criando características como a quantidade de bigrams positivos formados por advérbios e adjetivos. As características de valores máximos se referem aos valores para um dado n-gram no documento. Por exemplo, se o valor máximo absoluto entre os unigrams de um documento for positivo, essa característica tem valor igual a 1. Por outro lado, se o valor máximo for negativo, a característica tem valor -1. Mais características foram derivadas dos três tipos que acaram de ser descritos, aplicando normalização e subtração entre elas. Por exemplo, a diferença entre bigrams positivos e negativos de um documento ou o somatório normalizado de adjetivos positivos são uma das características derivadas por este trabalho. A lista completa de características pode ser encontrada no apêndice \ref{sec:appendix1}.
 
-Depois da extração de características, os vetores de polaridades da etapa de transformácão são substituídos por vetores de características. Cada documento, agora, é representado por um vetor com 67 caraterísticas diferentes. 
+Depois da extração de características, os vetores de polaridades da etapa de transformação são substituídos por vetores de características. Cada documento, agora, é representado por um vetor com 67 caraterísticas diferentes. 
+
+\subsection{A seleção de características}
+
+Depois de extraídas as características dos documentos faz-se necessário selecionar quais delas são mais aptas para representar os documentos do corpus escolhido. Além de reduzir quantidade de características a serem analisadas e tornar a etapa de classificação mais eficiente/efetiva, também reduz a dimensionalidade do vetor de características. Para fazer essa seleção, nós usamos dois algoritmos de seleção de características, o \textit{Correlation - based Feature Selection} (CFS) e o algoritmo de seleção do algoritmo C4.5 \cite{cintra2008fuzzy}. \citeonline{cintra2008fuzzy} apresenta o uso destes algoritmos de seleção de características no âmbito da lógica fuzzy e de regras fuzzy, conceitos chave do nosso trabalho. O CFS avalia subconjuntos de características que são altamente correlacionadas com a classificação, mas que são, ao mesmo tempo, não relacionadas entre si \cite{hall1999correlation}. O C4.5, por outro lado, é um algoritmo que gera uma árvore de decisão que é normalmente usada para a tarefa de classificação \cite{quinlan19934}. Todavia, para construir essa árvore de decisão, esse algoritmo precisa selecionar as melhores características entre as existentes. Daí, nós usamos o C4.5 também como um algoritmo de seleção para nossa tarefa de minerar opinião.
+
+Após a seleção das características mais aptas para representar os documentos do corpus escolhido, estas são passadas para a etapa de classificação. 
 
 \section{Classificação}
 

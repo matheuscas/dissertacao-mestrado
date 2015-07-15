@@ -180,23 +180,77 @@ Após a seleção das características mais aptas para representar os documentos
 
 \section{Classificação}
 
-\begin{itemize}
-\item Definição
-\item Construção das regras
-\begin{itemize}
-\item Outliers e a regra dos 3 sigmas
-\item Definição dos conjuntos fuzzy
-\item Tipos dos conjuntos fuzzy
-\item Quantidade (entrada e saida)
-\item Uniformes vs Não uniformes
-\end{itemize}
-\item Metodo de criacao de regras Wang Mende (explicar bem detalhadamente o metodo)
-\item Metodos de classificacao: CFRM e GFRM
-\end{itemize}
+%\begin{itemize}
+%\item Definição
+%\item Construção das regras
+%\begin{itemize}
+%\item Outliers e a regra dos 3 sigmas
+%\item Definição dos conjuntos fuzzy
+%\item Tipos dos conjuntos fuzzy
+%\item Quantidade (entrada e saida)
+%\item Uniformes vs Não uniformes
+%\end{itemize}
+%\item Metodo de criacao de regras Wang Mende (explicar bem detalhadamente o metodo)
+%\item Metodos de classificacao: CFRM e GFRM
+%\end{itemize}
 
-A etapa de classificação é onde nós construímos nosso sistema baseado em regras fuzzy com o fim de predizer o sentimento geral das opiniões, positivo ou negativo, de cada documento da base dados. Para construir um classificador assim, algumas tarefas estão envolvidas, como a criação de um conjunto de regras baseadas nas características selecionadas previamente e a modelagem das características em variáveis lingüísticas com conjuntos fuzzy.
+A etapa de classificação é onde construímos o sistema baseado em regras fuzzy com o fim de predizer o sentimento geral das opiniões de cada documento da base de dados. Para isso, algumas tarefas estão envolvidas, como a modelagem das características em variáveis lingüísticas usando conjuntos fuzzy \cite{zadeh1965fuzzy} e a criação de um conjunto de regras baseadas nas características selecionadas previamente.
 
-[CONTINUA]
+Antes de executar as tarefas citadas, foi preciso identificar valores extremos (\textit{outliers}) nos vetores de características, criados na etapa anterior, e limita-los a um intervalo comum. Para isso, nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo de três desvios padrão $\sigma$ da média da característica (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal. Os valores extremos que ficam além do intervalo de três sigmas foram reduzidos para os limites do intervalo.
+
+\begin{figure}[h]
+\caption{Regra dos 3 sigmas.}
+\centering
+\includegraphics[scale=0.85]{regra-dos-3-sigma.png}
+\label{figura:regra_3_sigmas}
+\end{figure}
+
+Após a padronização das características, nós podemos gerar o conjunto de regras baseadas nos vetores de características. A primeira etapa desse processo do conjunto de regras é definir os conjuntos fuzzy \cite{zadeh1965fuzzy} para modelar nossas variáveis de entrada e de saída;  A segunda etapa é a geração de regras fuzzy da combinação das variáveis de entrada e saída das características; A terceira etapa associa um grau para cada regra gerada; E a quarta etapa forma o conjunto final de regras fuzzy, eliminando regras repetidas e inconsistentes. Esse processo é conhecido como o método de Wang-Mendel para geração de regras fuzzy \cite{wang1992generating}. 
+
+\subsection{O método de Wang-Mendel}
+
+A primeira etapa de definição dos conjuntos fuzzy consiste na divisão dos dados de entrada e saída em regiões fuzzy ou conjuntos fuzzy. Nós escolhemos os conjuntos fuzzy triangulares \cite{wang1992generating} para o mapeamento dos dados. Para os dados de saída, nós utilizamos dois conjuntos fuzzy, positivo (P) e negativo (N), de mesmo tamanho, já que nossa tarefa principal é classificar o sentimento geral dos documentos em positivo ou negativo. A figura \ref{fig:conjuntos_fuzzy_saida} mostra como ficou a divisão da saída. 
+
+\begin{figure}[h]
+\caption{Divisão da saída em 2 conjuntos fuzzy}
+\centering
+\includegraphics[scale=0.45]{conjuntos_fuzzy_saida.png}
+\label{figura:conjuntos_fuzzy_saida}
+\end{figure}
+
+Para os dados de entrada, nossa primeira abordagem foi dividir igualmente e automaticamente os dados em $2N + 1$ \cite{wang1992generating} conjuntos fuzzy, para $N$ igual a 2, resultando em cinco regiões fuzzy: "Muito Baixo (MB)", "Baixo (B)", "Medio (M)", "Alto (A)" e "Muito Alto (MA)". A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira abordagem.
+
+\begin{figure}[h]
+\caption{Divisão das características de entrada em 5 conjuntos fuzzy}
+\centering
+\includegraphics[scale=0.45]{cinco_conjuntos_fuzzy.png}
+\label{figura:cinco_conjuntos_fuzzy}
+\end{figure}
+
+O uso de mais conjuntos fuzzy para dividir as regiões das características faz com que o mapeamento dos dados seja mais granular, possibilitando classificar casos mais específicos. Todavia, a natureza dos dados das características se sobrepõem bastante, anulando esse efeito. Assim, com o fim diminuir a complexidade das regras a serem geradas e tentar aumentar a performance da classificação, decidimos reduzir a quantidade dos conjuntos fuzzy para três, "Baixo (B)", "Medio (M)" e "Alto (A)", como mostra a figura \ref{figura:tres_conjuntos_fuzzy}.
+
+\begin{figure}[h]
+\caption{Divisão das características de entrada em 3 conjuntos fuzzy}
+\centering
+\includegraphics[scale=0.45]{tres_conjuntos_fuzzy.png}
+\label{figura:tres_conjuntos_fuzzy}
+\end{figure}
+
+Mais uma vez, a natureza de sobreposição dos dados das características se mostrou evidente com o uso do conjunto fuzzy "Medio". A figura \ref{fig:distribuicao_dados_sobreposicao} mostra um das características extraídas na etapa anterior. É possível perceber que há significativa sobreposição dos dados na região central da distribuição onde o conjunto fuzzy "Medio" tem maior grau de pertinência. Com essa natureza de sobreposição e a distribuição dos dados, manter o conjunto "Médio" resultaria em regras que classificariam erroneamente muitos dados positivos e negativos como médios. Assim, nós decidimos reduzir novamente a quantidade de conjuntos fuzzy para 2, "Baixo (B)" e "Alto (A)", como mostra a figura \ref{fig:conjuntos_fuzzy_entrada_final}. 
+
+\begin{figure}[h]
+\caption{Distribuição dos dados de uma das características da base de dados}
+\centering
+\includegraphics[scale=0.45]{distribuicao_dados_sobreposicao.png}
+\label{figura:distribuicao_dados_sobreposicao}
+\end{figure}
+
+\begin{figure}[h]
+\caption{Divisão das características de entrada em 2 conjuntos fuzzy}
+\centering
+\includegraphics[scale=0.45]{conjuntos_fuzzy_entrada_final.png}
+\label{figura:conjuntos_fuzzy_entrada_final}
+\end{figure}
 
 \section{Avaliação}
 

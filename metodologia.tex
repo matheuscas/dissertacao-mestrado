@@ -282,15 +282,58 @@ onde $m_{CFI_o}(x_n)$, por exemplo, é o grau de pertinência de $x_n$ no conjun
 
 \subsection{Classificação}
 
-O conjunto gerado de regras fuzzy é usado, agora, por um mecanismo de inferência fuzzy para determinar a polaridade final dos documentos da base. Nós utilizamos dois mecanismos para fins de comparação que foram Método Geral do Raciocínio Fuzzy (MGRF) e o Método Clássico do Raciocínio Fuzzy (MCRF) \cite{cordon1999proposal}.
-Ambos mecanismos tem processos bastante similares e somente diferente na etapa de decisão na classificação. O mecanismo comum a ambos é: cada vetor de característica é avaliado por todas as regras fuzzy do conjunto gerado e um grau de compatibilidade \ref{eq:compat_regra} é produzido para cada regra. 
+O conjunto gerado de regras fuzzy é usado, agora, por um mecanismo de inferência fuzzy para determinar a polaridade final dos documentos da base de dados. Nós utilizamos dois mecanismos, com fins de comparação, que foram Método Geral do Raciocínio Fuzzy (MGRF) e o Método Clássico do Raciocínio Fuzzy (MCRF) \cite{cordon1999proposal}.
+Ambos mecanismos tem processos bastante similares e somente diferem na etapa de decisão na classificação. O mecanismo comum a ambos é: cada vetor de característica é avaliado por todas as regras fuzzy geradas e um grau de compatibilidade \ref{eq:compat_regra} é produzido para cada regra. 
 
 \begin{equation}
 D(regra) = m_{CFI_n}(x_1) \cdot m_{CFI_m}(x_2) \cdot m_{CFI_o}(x_3) \cdot ...\cdot m_{CFI_p}(x_n)
 \label{eq:compat_regra}
 \end{equation}
 
-O MCRF escolhe a regra com o máximo grau de compatibilidade para um dado vetor de característica e classifica o documento relacionado com a classe da regra escolhida. Por outro lado, o MGRF considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MGRF calcula a média dos graus de compatibilidade das regras que tem o consequente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
+O MCRF escolhe a regra que ficou com o maior grau de compatibilidade após a avaliação das características e classifica o documento com a classe de saída dessa regra. Do outro lado, o MGRF considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MGRF calcula a média dos graus de compatibilidade entre as regras que tem o consequente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
 
 \section{Avaliação}
 
+\textbf{Aqui ainda vai faltar a parte de falar das medidas de avaliação estatística e das novas medidas a serem usadas nos resultados. Depois da seção seguinte, essa aqui vai ser mudada bastante.}
+
+A avaliação dos resultados do sistema de mineração de opinião desse trabalho foi feita usando validação cruzada de 10 faces. As medidas para avaliar o desempenho da classificação da classificação do sistema foram a \textit{accuracy}, \textit{recall}, \textit{precision} e a pontuação F1. A \textit{accuracy} \ref{eq:acccuracy} é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados corretamente e o total de documentos classificados, sejam eles corretos ou não.
+
+\begin{equation}
+Accuracy = (\sum TP + \sum TN) / Total
+\label{eq:acccuracy}
+\end{equation}
+
+A \textit{recall} mede a razão entre os documentos classificados corretamente numa categoria e o total de documentos que realmente pertencem àquela categoria. O \textit{recall} mais utilizado é o positivo, também conhecido como sensibilidade da classificação, que avalia a razão entre a quantidade de documentos positivos classificados corretamente (TP) e esse mesmo número somado à quantidade de falsos negativos (documentos positivos que foram classificados como negativos - TN) \ref{eq:recall}. 
+
+\begin{equation}
+Recall = TP / (\sum TP + \sum FN)
+\label{eq:recall}
+\end{equation}
+
+A \textit{precision}, por outro lado, mede a razão entre os documentos classificados corretamente numa categoria e os documentos classificados nessa mesma categoria. A \textit{precision} mais comum é a positiva que mede a razão entre TP e a soma deste com a quantidade de documentos negativos que foram classificados como positivos (falsos positivos - FP) \ref{eq:precision}. 
+
+\begin{equation}
+Precision = TP / (\sum TP + \sum FP)
+\label{eq:precision}
+\end{equation}
+
+E a medida F1 considera a \textit{precisão} e a \textit{recall} \ref{eq:f1}. Essa medida é normalmente considerada como a média ponderada entre a \textit{precisão} e a \textit{recall} \ref{eq:f1} \ref{chaovalit2005movie};
+
+\begin{equation}
+F1 = 2 \cdot (precision \cdot recall) / (precision + recall))
+\label{eq:f1}
+\end{equation}
+
+A tabela \ref{table:medidas} ilustra a região em que cada medida atua.
+
+\begin{table}[!h]
+	\centering
+    \begin{tabular}{llll}
+    População & Positivos & Negativos & -- \\ \hline
+    Classificado como positivo & TP & FP & \textbf{Precision} (\ref{eq:precision}) \\
+    Classificado como negativo  & TP & FN& -- \\
+    \textbf{Accuracy} (\ref{eq:acccuracy}) & \textbf{Recall} (\ref{eq:recall})  & -- & -- \\
+    \end{tabular}
+    \caption{Medidas utilizadas na avaliação do sistema fuzzy de mineração de opinião.}
+	\label{table:medidas}
+\end{table}

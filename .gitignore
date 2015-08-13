@@ -5,3 +5,12 @@
 *.pdf
 *.cls
 *.eps
+*.toc
+*.bak
+*.aux
+*.log
+*.lot
+*.bbl
+*.blg
+*.lof
+*.gz

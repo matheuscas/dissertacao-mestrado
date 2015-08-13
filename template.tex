@@ -6,6 +6,12 @@
 
 \documentclass[msc, a4paper, classic, pt]{ufbathesis}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\newcounter{example}[section]
+\newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
+   \noindent \textbf{Exemplo~\theexample. #1} \rmfamily}{\medskip}
+
 
 %% Preâmbulo:
 %% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
@@ -13,9 +19,9 @@
 
 \title{<TÍTULO DA OBRA>}
 \date{<DATA DA DEFESA>}
-\author{<NOME DO AUTOR>}
-\adviser{<NOME DO(DA) ORIENTADOR(A)>}
-\coadviser{<NOME DO(DA) CO-ORIENTADOR(A)>}
+\author{Matheus Cardoso de Andrade Silva}
+\adviser{Prof. Dr. Angelo Loula}
+\coadviser{Prof. Dr. Matheus Pires}
 
 \begin{document}
 
@@ -210,68 +216,7 @@
 
 \end{itemize}
 
-\xchapter{Metodologia}{}
-
-\begin{itemize}
-\item O processo de mineração de opinião
-\begin{itemize}
-
-\item Preprocessing
-\begin{itemize}
-\item Definição
-\item Reiterar o tipo de análise escolhida: Document Level Analysis
-\item Datasets utilizados (Cornell e Amazon - descreve as caracteristicas de cada dataset, como quantidade, balanceamento, natureza, etc.)
-
-\item Explicar as tarefas envolvidas:
-\begin{itemize}
-\item Remoção de sentenças que contem "modals"
-\item POS Tagging
-\item Tokenization -> bag-of-words model (n-grams e explica os tipos de n-grams)
-\item Resume o subcapitulo e finaliza falando da saida dessa fase para a proxima
-\end{itemize}
-\end{itemize}
-
-\item Transformation
-\begin{itemize}
-\item O que é
-\item Uso de dicionários de opinião para transformar n-grams e numeros
-\item Explicar porque o uso de dicionarios de opiniao é bom para nosso trabalho
-\item Sentiwordnet (falar sobre explicar, genericamente, como é criado, como é estruturado, valores associados aos termos)
-\item Falar do trabalho de Guerrine que propoe diferentes formulas para determinar a polaridade de um n-gram. E que são melhores que a mais frequente do SWN
-\item Falar e explicar os intensificadores
-\item Negação
-\item Frequencia de n-grams como transformador da polaridade
-\item Compensação de bias negativo
-\item Resume o subcapitulo e finaliza falando da saida dessa fase para a proxima 
-\end{itemize}
-
-\item Feature extraction
-\begin{itemize}
-\item O que é
-\item Por que extrair features
-\item Corpus-based vs domain independent 
-\item Features usadas de outros trabalhos. Citar todas e falar o que é cada uam delas
-\item Features derivadas e criadas por este trabalho. Fala de cada uma delas. 
-\item Resume o subcapitulo e finaliza falando da saida dessa fase para a proxima
-\end{itemize}
-
-\item Feature selection
-\begin{itemize}
-\item O que é
-\item Por que selecionar features
-\item Falar dos algoritmos de seleção utilizados (explicar em linhas gerais como eles fazem a seleção)
-\begin{itemize}
-\item Correlation$-$based Feature Selection (CFS)
-\item C4.5 decision tree
-\end{itemize}
-\item Resume o subcapitulo e finaliza falando da saida dessa fase para a proxima 
-\end{itemize}
-
-\item Classification
-\item Evaluation
-\end{itemize}
-\end{itemize}
-
+\include{metodologia}
 
 \xchapter{Resultados obtidos}{}
 
@@ -282,11 +227,11 @@
 % Apêndices
 % Comente se não houver apêndices
 \appendix
-
+%\xchapter{Apêndices}{}
 % É aconselhável criar cada apêndice em um arquivo à parte, digamos
 % "apendice1.tex", "apendice.tex", ... "apendiceM.tex" e depois
 % incluí-los com:
-% \include{apendice1}
+\include{appendix1}
 % \include{apendice2}
 % ...
 % \include{apendiceM}
@@ -297,7 +242,7 @@
 % Para ajuda na criação do arquivo .bib e utilização do BibTeX, recorra ao
 % BibTeXpress em www.cin.ufpe.br/~paguso/bibtexpress
 \bibliographystyle{abnt-alf}
-\bibliography{biblio}
+\bibliography{../pesquisa}
 
 %% Fim do documento
 \end{document}

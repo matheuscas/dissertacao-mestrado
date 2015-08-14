@@ -4,14 +4,17 @@ Nessa seção são descritos e discutidos os experimentos realizados e os result
 
 \section{Datasets}
 
-Falar dos datasets usados, características, algum tratamento inicial, como o da Amazon que diminui para 2000 e deixei equilibrado.
-Filmes - Cornell
-Amazon - Genérico
-Epinions - 400 - Taboada
+Nós executamos nossos experimentos em três bases de dados. Duas já foram mencionadas anteriormente, que são a base de dados de filmes \cite{pang2004sentimental} e a de diferentes categorias da Amazon \cite{wang2011latent}. Ambas contém 2000 documentos que foram previamente classificadas pelo sentimento geral das opiniões como sendo positivos ou negativos. Além disso, estas bases são ditas equilibradas, pois tem a mesma quantidade de documentos positivos e negativos. 
+
+Para a base da Amazon, a referência para definir o sentimento geral dos documentos foi a quantidade de estrelas recebidas pelo usuário: mais de três estrelas o documentos era considerado positivo e menos que isso, negativo. Os documentos com exatamente 3 estrelas foram removidos de nossa análise por não serem claros quanto ao sentimento geral expresso para serem usados como referência. Além disso, a base da Amazon, originalmente, possui 20000 documentos. Contudo ela está  desbalanceada, onde mais 75\% dos documentos são positivos e o restante negativos. Assim, sorteamos, aleatoriamente, 1000 documentos positivos e 1000 documentos negativos para equiparar ao mesmo volume de dados da base de filmes. Sobre a base de filmes, como já dissemos anteriormente, esta já tinha sido pré classificada por seus autores \cite{pang2004sentimental}.
+
+A terceira base, um conjunto de documentos retirados do site Epinions por \cite{taboada2011lexicon}, é composta por 400 documentos de 8 categorias diferentes: livros, carros, computadores, panelas, hotéis, filmes, música e telefones. Cada categoria possui 50 documentos equilibrados, sendo 25 positivos e 25 negativos, classificados préviamente pelo autor da base. Essa base foi utilizada para verificarmos a efetividade de regras criadas em uma base de dados e usadas em outras, nesse caso, a base da Epinions. 
 
 \section{Design dos experimentos}
 
-Descrever de forma geralc como foram realizados os experimentos. Com a exceção de análises mais específicas como o uso de regras de uma base para a outra, o processo é o mesmo: pre-processamento, transformacao, extracao, selecao (com cross-fold), classificacao (com cross-fold) e avaliacao (com cross-fold).
+Nós focamos em comparar os métodos de classificação MGRF e MCRF, variando as configurações em diferentes etapas do processo de mineração de opinião, comparando as medidas de \textit{accuracy} e \textit{F1}. Nós também avaliamos a influência dos algoritmos de seleção de características, os sistemas de inferência fuzzy em si, a quantidade usada de conjuntos fuzzy, a eficiência das regras geradas num domínio e usadas em outro e as características mais selecionadas entre as bases utilizadas. 
+
+Para cada base de dados, o processo é idêntico para as etapas de pré-processamento, transformação e extração de características. A partir da seleção de características, as etapas seguintes foram executadas com validação cruzada de 10 dobras, utilizando somente as treinamento. Por exemplo, a dobra 1 não é usada para a seleção de características e é usada como teste nas etapas seguintes de classificação e avaliação. Mas as dobras restantes são usadas na seleção de características e na construção base de regras fuzzy para aquela dobra 1. O mesmo processo é repetido para cada dobra e nossos resultados, para todas as métricas usadas, são a média das dobras de teste. Conseqüentemente, todos os tipos de n-grams combinados com todas as técnicas de transformação descritas nesse trabalho passam pela seleção de características para encontrar quais delas são mais apropriadas para representar os documentos. 
 
 \subsection{Avaliação dos algoritmos de seleção de features}
 

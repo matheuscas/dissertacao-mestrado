@@ -16,11 +16,96 @@ Nós focamos em comparar os métodos de classificação MGRF e MCRF, variando as
 
 Para cada base de dados, o processo é idêntico para as etapas de pré-processamento, transformação e extração de características. A partir da seleção de características, as etapas seguintes foram executadas com validação cruzada de 10 dobras, utilizando somente as treinamento. Por exemplo, a dobra 1 não é usada para a seleção de características e é usada como teste nas etapas seguintes de classificação e avaliação. Mas as dobras restantes são usadas na seleção de características e na construção base de regras fuzzy para aquela dobra 1. O mesmo processo é repetido para cada dobra e nossos resultados, para todas as métricas usadas, são a média das dobras de teste. Conseqüentemente, todos os tipos de n-grams combinados com todas as técnicas de transformação descritas nesse trabalho passam pela seleção de características para encontrar quais delas são mais apropriadas para representar os documentos. 
 
-\subsection{Avaliação dos algoritmos de seleção de features}
+\subsection{Avaliação dos algoritmos de seleção de características}
+
+Para avaliar os algoritmos de seleção de características, CFS e C45, foi definido o seguinte cenário: 3 conjuntos fuzzy para as variáveis de entrada e o uso do MCRF para ambos os datasets, filmes e a base mista da Amazon. Assim, deixando os demais parâmetros inalterados, nós podemos avaliar o desempenho dos algoritmos de seleção de características. Além de avaliar \textit{accuracy}, \textit{recall}, \textit{precision} e \textit{F1}, foi avaliado também a quantidade média de características selecionadas para cada algoritmo de seleção. A tabela (\ref{table:movies}) e tabela (\ref{table:amazon}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon. 
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    Movies         				 & CFS                                 	 	 & c4.5                                  \\ \hline
+    Precision                   & 53.65\% $\pm$ 6.09\% 			 & 73.09\% $\pm$ 21.24\% \\
+    Recall                        & 64.2\% $\pm$ 30.55\% 		 & 52.3\% $\pm$ 44.78\% \\
+    Accuracy                   & 52.25\% $\pm$ 4.92\% 			 & 54.2\% $\pm$ 1.76\% \\
+    F1                  			 & 53.45\% $\pm$ 14.88\% 	     & 41.04\% $\pm$ 3.83\% \\
+    Features selected      & 4.7 $\pm$ 1.1            			 & 2                                     \\
+    \end{tabular}
+    \caption{Resultados da base de filmest}
+	\label{table:movies}
+\end{table}
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    Movies         					& CFS                          		& c4.5                                  \\ \hline
+    Precision                     & 61.99\% $\pm$ 9.01\% 	& 81.22\% $\pm$ 18.36\%  \\
+    Recall                          & 77.5\% $\pm$ 13.9\% 		& 47.1\% $\pm$ 34.22\% \\
+    Accuracy                     & 64.4\% $\pm$ 8.12\% 		& 60.4\% $\pm$ 5.75\% \\
+    F1                                & 68.17\% $\pm$ 8.65\% 	& 47.62\% $\pm$ 19.95\% \\
+    Features selected 		& 6.3 $\pm$ 0.64               & 2.9 $\pm$ 0.7                                  \\
+    \end{tabular}
+    \caption{Resultados da base da Amazon}
+	\label{table:amazon}
+\end{table}
+
+Como pode ser visto, a seleção de características com c4.5 usando o MCRF e três conjuntos fuzzy na entrada produziu melhor \textit{precision} e \textit{accuracy}, esta última mesmo que próxima, na base de filmes, usando menos da metade de características usadas no algoritmo CFS. Contudo, o inverso ocorreu na base da Amazon, onde o CFS com o MCRF produziu melhor resultado que o c4.5, mas utilizando ainda mais características para a geração das regras. Isso resulta em regras com 6 antecedentes, em média, menos legíveis e compreensíveis para um ser humano. Assim, já que o algoritmo c4.5 somente precisou de 2 características, produzindo regras menos complexas e mais claras, para produzir resultados melhores (considerando \textit{accuracy)}, no caso de filmes, e próximos, no caso da Amazon, foi decidido em manter o c4.5 para os próximos cenários de avaliação. 
+
+Um outro comportamento, agora comum para ambas as bases foi o baixo balanço (\textit{F1}) entre a classificação dos documentos positivos e negativos. Em ambas as bases foi possível perceber que a cada dobra da validação cruzada documentos positivos eram classificados mais corretamente em detrimento aos negativos e vice-versa.
+A tabela (\ref{table:amazon_folds}) mostra as matrizes de confusão de cada fold para os resultados produzidos para a base da Amazon. 
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    a         					& b                          		& classificado como                                  \\ \hline
+	Dobra 0 \\    
+    6 (TP)    				&94 (FN)      				& b = negative (100) \\
+    0 (FP)    				&100 (TN)      				& b = negative (100) \\
+	&&\\
+	Dobra 1    \\
+    5 (TP)    				&95 (FN)      				& b = negative (100) \\
+    0 (FP)    				&100 (TN)      				& b = negative (100) \\
+	&&\\ 
+	Dobra 2    \\
+    96 (TP)    				&4 (FN)      				& b = negative (100) \\
+    87 (FP)    				&13 (TN)      				& b = negative (100) \\
+	&&\\
+    Dobra 3    \\
+    98 (TP)    				&2 (FN)      				& b = negative (100) \\
+    94 (FP)    				&6 (TN)      				& b = negative (100) \\
+	&&\\
+	Dobra 4    \\
+    99 (TP)    				&1 (FN)      				& b = negative (100) \\
+    88 (FP)    				&12 (TN)      				& b = negative (100) \\
+	&&\\
+	Dobra 5    \\
+    4 (TP)    				&96 (FN)      				& b = negative (100) \\
+    1 (FP)    				&99 (TN)      				& b = negative (100) \\
+	&&\\
+	Dobra 6    \\
+    9 (TP)    				&91 (FN)      				& b = negative (100) \\
+    0 (FP)    				&100 (TN)      				& b = negative (100) \\
+	&&\\
+	Dobra 7    \\
+    97 (TP)    				&3 (FN)      				& b = negative (100) \\
+    83 (FP)    				&17 (TN)      				& b = negative (100) \\
+	&&\\
+	Dobra 8    \\
+    14 (TP)    				&86 (FN)      				& b = negative (100) \\
+    2 (FP)    				&98 (TN)      				& b = negative (100) \\
+	&&\\
+	Dobra 9    \\
+    95 (TP)    				&5 (FN)      				& b = negative (100) \\
+    84 (FP)    				&16 (TN)      				& b = negative (100) \\
+	&&\\
+    \end{tabular}
+    \caption{Resultados das dobras da base da Amazon}
+	\label{table:amazon_folds}
+\end{table}
+
+Mesmo que um novo embaralhamento dos dados seja feito e uma nova seleção com uma nova organização de dobras seja feito, o efeito se repete em ambas as bases, e os resultados pouco melhoram significativamente e pioram bastante em alguns casos. 
 
 \subsubsection{Avaliação do impacto da arvore de decisao do C45}
 
 \subsection{Avaliação dos sistemas de inferência}
+
+\subsubsection{Avaliação de uso de pesos nas regras dos sistemas de inferência}
 
 \subsection{Avaliação da quantidade de conjuntos fuzzy usados}
 

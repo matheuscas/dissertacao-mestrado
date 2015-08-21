@@ -27,29 +27,29 @@ Para avaliar os algoritmos de seleção de características, CFS e C45, foi defi
     Recall                        & 64.2\% $\pm$ 30.55\% 		 & 52.3\% $\pm$ 44.78\% \\
     Accuracy                   & 52.25\% $\pm$ 4.92\% 			 & 54.2\% $\pm$ 1.76\% \\
     F1                  			 & 53.45\% $\pm$ 14.88\% 	     & 41.04\% $\pm$ 3.83\% \\
-    Features selected      & 4.7 $\pm$ 1.1            			 & 2                                     \\
+    Features selected      & 4.7 $\pm$ 1.1            			 & 1                                     \\
     \end{tabular}
-    \caption{Resultados da base de filmest}
+    \caption{Resultados da base de filmes}
 	\label{table:movies}
 \end{table}
 
 \begin{table}[!h]
     \begin{tabular}{lll}
     Movies         					& CFS                          		& c4.5                                  \\ \hline
-    Precision                     & 61.99\% $\pm$ 9.01\% 	& 81.22\% $\pm$ 18.36\%  \\
-    Recall                          & 77.5\% $\pm$ 13.9\% 		& 47.1\% $\pm$ 34.22\% \\
-    Accuracy                     & 64.4\% $\pm$ 8.12\% 		& 60.4\% $\pm$ 5.75\% \\
-    F1                                & 68.17\% $\pm$ 8.65\% 	& 47.62\% $\pm$ 19.95\% \\
-    Features selected 		& 6.3 $\pm$ 0.64               & 2.9 $\pm$ 0.7                                  \\
+    Precision                     & 61.99\% $\pm$ 9.01\% 	& 66.01\% $\pm$ 22.25\%  \\
+    Recall                          & 77.5\% $\pm$ 13.9\% 		& 74.5\% $\pm$ 38.82\% \\
+    Accuracy                     & 64.4\% $\pm$ 8.12\% 		& 54.25\% $\pm$ 2.82\% \\
+    F1                                & 68.17\% $\pm$ 8.65\% 	& 55.42\% $\pm$ 19.43\% \\
+    Features selected 		& 5.3 $\pm$ 0.64               & 1 $\pm$                                  \\
     \end{tabular}
     \caption{Resultados da base da Amazon}
 	\label{table:amazon}
 \end{table}
 
-Como pode ser visto, a seleção de características com c4.5 usando o MCRF e três conjuntos fuzzy na entrada produziu melhor \textit{precision} e \textit{accuracy}, esta última mesmo que próxima, na base de filmes, usando menos da metade de características usadas no algoritmo CFS. Contudo, o inverso ocorreu na base da Amazon, onde o CFS com o MCRF produziu melhor resultado que o c4.5, mas utilizando ainda mais características para a geração das regras. Isso resulta em regras com 6 antecedentes, em média, menos legíveis e compreensíveis para um ser humano. Assim, já que o algoritmo c4.5 somente precisou de 2 características, produzindo regras menos complexas e mais claras, para produzir resultados melhores (considerando \textit{accuracy)}, no caso de filmes, e próximos, no caso da Amazon, foi decidido em manter o c4.5 para os próximos cenários de avaliação. 
+Como pode ser visto, a seleção de características com c4.5 usando o MCRF e três conjuntos fuzzy na entrada produziu melhor \textit{precision} e \textit{accuracy}, esta última mesmo que próxima, na base de filmes, usando menos da metade de características usadas no algoritmo CFS. Contudo, o inverso ocorreu na base da Amazon, onde o CFS com o MCRF produziu melhor resultado que o c4.5, mas utilizando ainda mais características para a geração das regras. Isso resulta em regras com 5 antecedentes, em média, menos legíveis e compreensíveis para um ser humano. Assim, já que o algoritmo c4.5 somente precisou de 2 características, produzindo regras menos complexas e mais claras, para produzir resultados melhores (considerando \textit{accuracy)}, no caso de filmes, e próximos, no caso da Amazon, foi decidido em manter o c4.5 para os próximos cenários de avaliação. 
 
-Um outro comportamento, agora comum para ambas as bases foi o baixo balanço (\textit{F1}) entre a classificação dos documentos positivos e negativos. Em ambas as bases foi possível perceber que a cada dobra da validação cruzada documentos positivos eram classificados mais corretamente em detrimento aos negativos e vice-versa.
-A tabela (\ref{table:amazon_folds}) mostra as matrizes de confusão de cada fold para os resultados produzidos para a base da Amazon. 
+Um outro comportamento, agora comum para ambas as bases foi o baixo balanço (\textit{F1}) entre a classificação dos documentos positivos e negativos. Foi possível perceber que a cada dobra da validação cruzada, documentos positivos eram classificados mais corretamente em detrimento aos negativos e vice-versa.
+A tabela (\ref{table:amazon_folds}) mostra as matrizes de confusão de cada dobra para os resultados produzidos na base da Amazon. 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
@@ -99,11 +99,43 @@ A tabela (\ref{table:amazon_folds}) mostra as matrizes de confusão de cada fold
 	\label{table:amazon_folds}
 \end{table}
 
-Mesmo que um novo embaralhamento dos dados seja feito e uma nova seleção com uma nova organização de dobras seja feito, o efeito se repete em ambas as bases, e os resultados pouco melhoram significativamente e pioram bastante em alguns casos. 
+É possível perceber que há alternância entre as dobras para as extremidades da classificação dos documentos: ou são todos (ou quase) positivos ou quase todos negativos. E ainda que um novo embaralhamento dos dados seja feito e uma nova seleção de características, o efeito se repete e os resultados pouco melhoram e pioram bastante em alguns casos. 
 
-\subsubsection{Avaliação do impacto da arvore de decisao do C45}
+\subsubsection{Avaliação do impacto da altura da árvore de decisão do algoritmo de seleção de características do c4.5}
+
+É importante ressaltar que os resultados anteriores, para o c4.5, foram obtidos com o algoritmo otimizado, utilizando a ferramenta Weka [CITE], para que a árvore tivesse altura 1, para fins de simplificação e aumento da generalização do algoritmo. Dessa forma, decidimos avaliar o quanto o aumento da altura da árvore de decisão do algoritmo de seleção de características do c4.5 influenciaria na classificação dos documentos. Definimos que o limite da altura da árvore de decisão fosse 3 para não aumentar demais a complexidade das regras que serão geradas. A tabela (\ref{table:movies_h3}) e tabela (\ref{table:amazon_h3}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon.
+
+ \begin{table}[!h]
+    \begin{tabular}{lll}
+    Movies         				 & c4.5 - Altura 3                                 	 	 & c4.5 - Altura 1                               \\ \hline
+    Precision                   & 71.77\% $\pm$ 19.87\% 			 & 73.09\% $\pm$ 21.24\% \\
+    Recall                        & 53.4\% $\pm$ 44.50\% 		 & 52.3\% $\pm$ 44.78\% \\
+    Accuracy                   & 54.5\% $\pm$ 1.76\% 			 & 54.2\% $\pm$ 1.76\% \\
+    F1                  			 & 42.28\% $\pm$ 26.63\% 	     & 41.04\% $\pm$ 3.83\% \\
+    Features selected      & 1.1 $\pm$ 0.3            			 & 1                                     \\
+    \end{tabular}
+    \caption{Resultados da base de filmes}
+	\label{table:movies_h3}
+\end{table}
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    Movies         					& c4.5 - Altura 3                          		& c4.5 - Altura 1                              \\ \hline
+    Precision                     & 81.22\% $\pm$ 18.36\% 		& 66.01\% $\pm$ 22.25\%  \\
+    Recall                          & 47.1\% $\pm$ 34.22\% 		& 74.5\% $\pm$ 38.82\% \\
+    Accuracy                     & 60.4\% $\pm$ 5.72\% 			& 54.25\% $\pm$ 2.82\% \\
+    F1                                & 47.62\% $\pm$ 19.17\% 	& 55.42\% $\pm$ 19.43\% \\
+    Features selected 		& 1.9 $\pm$ 0.7               		& 1 $\pm$                                  \\
+    \end{tabular}
+    \caption{Resultados da base da Amazon}
+	\label{table:amazon_h3}
+\end{table}
+
+Os resultados mostram comportamentos diferentes entre as bases, mas uma tendência já vista nos resultados anteriores. A base da Amazon precisa de mais características para poder classificar melhor os documentos. Esses resultados sugerem que para esse tipo de conjunto de dados diversificado (lembrando que a base da Amazon é composta de filmes, hotéis, GPS, telefones, dentre outros), faz-se necessário mais características para descrever melhor os documentos para que possam ser identificados corretamente pelo classificador. Por outro lado, os resultados pouco se alteraram na base de filmes, evidenciando que pouco será eficaz o acréscimo de mais características para descrever os documentos. Nesse caso, para a base de filmes, é necessário encontrar as características mais aptas a descreverem melhor os documentos. 
 
 \subsection{Avaliação dos sistemas de inferência}
+
+
 
 \subsubsection{Avaliação de uso de pesos nas regras dos sistemas de inferência}
 

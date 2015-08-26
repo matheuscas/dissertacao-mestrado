@@ -135,17 +135,128 @@ Os resultados mostram comportamentos diferentes entre as bases, mas uma tendênc
 
 \subsection{Avaliação dos sistemas de inferência}
 
+Nessa subseção é avaliado o desempenho dos sistemas de inferência escolhidos, o Método Geral do Raciocínio Fuzzy (MGRF) e o Método Clássico do Raciocínio Fuzzy (MCRF). Da mesma maneira que foi feita na seção anterior, nós fixamos os demais parâmetros do experimento para melhor avaliar os sistemas de inferência, mantendo o algoritmo de seleção de característica c4.5 (com altura 1, para continuar buscando a geração de regras claras e de fácil leitura para humanos) e 3 conjuntos fuzzy nas variáveis de entrada. A tabela (\ref{table:movies2}) e tabela (\ref{table:amazon2}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon.
 
+\begin{table}[!h]
+    \begin{tabular}{lll}
+ 	~         			& CFRM 								& GFRM \\ \hline
+    Precision 		& 68.35\% $\pm$ 19.96\%   & 67.55\% $\pm$ 14.61\%    \\
+    Recall    		& 61.7\% $\pm$ 43.93\%   & 64.6\% $\pm$ 37.08\%   \\
+    Accuracy  		& 54.4\% $\pm$ 1.72\%    	& 59.2\% $\pm$ 1.83\%    \\
+    F1  					& 46.81\% $\pm$ 26.74\% & 54.69\% $\pm$ 19.62\%    \\
+    \end{tabular}
+    \caption{Resultados dos sistemas de inferência na base de filmes}
+	\label{table:movies2}
+\end{table}
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    ~         			& CFRM 									& GFRM \\ \hline
+    Precision 		& 66.01\% $\pm$ 22.25\%    	& 67.49\% $\pm$ 18.33\%    \\
+    Recall    		& 74.5\% $\pm$ 38.82\%    	& 75.5\% $\pm$ 34.80\%    \\
+    Accuracy  		& 54.25\% $\pm$ 2.82\%    		& 60.05\% $\pm$ 2.37\%   \\
+    F1  					& 55.52\% $\pm$ 19.43\%   	& 60.48\% $\pm$ 16.63	\%   \\
+    \end{tabular}
+    \caption{Resultados dos sistemas de inferência na base da Amazon}
+	\label{table:amazon2}
+\end{table}
+
+Os resultados mostram que Método Geral do Raciocínio Fuzzy (MGRF) aumenta o \textit{accuracy} sobre o MCRF, em ambas bases,  mantendo a seleção de características e a quantidade de conjuntos fuzzy inalterados. Ainda é possível observar que o equilíbrio na classificação (\textit{F1}) dos documentos também melhorou tanto na base de filmes quanto na da Amazon, usando o MGRF. \todo[inline]{com certeza isso não será verdade depois de fazer a comparação estatística. Mas como ainda não tem ela, eu deixei assim mesmo.} Assim, nessa tarefa de classificação de somente duas classes, positivo e negativo, os resultados mostraram que uma melhor abordagem é considerar todas as regras de uma classe, em vez de uma única com maior grau. Daí, o MGRF foi a nossa escolha para alcançar melhores resultados nesse trabalho e será o método de classificação usado nos próximos experimentos. 
 
 \subsubsection{Avaliação de uso de pesos nas regras dos sistemas de inferência}
 
+Em \cite{ishibuchi2001effect} foi mostrado que é possivel aumentar a performance da classificação de regras fuzzy IF-THEN aplicando pesos à elas, além do grau de compatibilidade das regras. No referido artigo, os autores descreveram o processo em que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada. Baseando-se neste artigo, este trabalho calculou os pesos como se segue. Para cada regra da base de regras gerada, foi calculado o grau de compatibilidade com todos documentos do conjunto de teste. Se o documento fosse positivo, o grau de compatibilidade era acumulado em $\beta_{positivo}$; se o documento fosse negativo, o grau de compatibilidade era acumulado em $\beta_{negativo}$. Caso ambos os betas fosse iguais, não há peso a ser considerado, já que as regras tem igual influência sobre o conjunto de dados que elas foram geradas. De outra forma, o peso da regra era definido pela equação \ref{eq:pesos}.
+
+\begin{equation}
+P_j = |\beta_{positivo} - \beta_{negativo}| / (\beta_{positivo} + \beta_{negativo})
+\label{eq:pesos}
+\end{equation}
+
+onde $P_j$ é o peso da regra, para $0 <= P_j <= 1$. 
+
+Uma vez que todas as regras tiveram seus pesos calculados, estes são adicionados ao processo de classificação de ambos os métodos utilizados até aqui, o MGRF e o MCRF. O peso torna-se um fator multiplicador do grau de cada regra em cada método. Assim, o MCRF em vez de levar em consideração a regra com maior grau de compatibilidade com o documento de teste, vai, agora, levar em consideração a regra com maior resultado da multiplicação do grau de compatibilidade e do peso da regra. O mesmo acontece para o MGRF ao considerar o grau médio entre as classes positivo e negativo. A tabela (\ref{table:movies2_pesos}) e tabela (\ref{table:amazon2_pesos}) mostram, respectivamente, os resultados para o uso dos pesos nas bases de filmes e da Amazon usando os parâmetros até agora estabelecidos. 
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+ 	~         			& CFRM 								& GFRM \\ \hline
+    Precision 		& 70.12\% $\pm$ 4.32\%   & 70.36\% $\pm$ 3.88\%    \\
+    Recall    		& 70.3\% $\pm$ 11.73\%   & 69.7\% $\pm$ 9.81\%   \\
+    Accuracy  		& 69.8\% $\pm$ 4.03\%    	& 70.05\% $\pm$ 4.00\%    \\
+    F1  					& 69.52\% $\pm$ 6.00\% & 69.64\% $\pm$ 5.62\%    \\
+    \end{tabular}
+    \caption{Resultados dos sistemas de inferência na base de filmes utilizando pesos nas regras}
+	\label{table:movies2_pesos}
+\end{table}
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    ~         			& CFRM 									& GFRM \\ \hline
+    Precision 		& 72.91\% $\pm$ 4.22\%    	& 73.80\% $\pm$ 3.89\%    \\
+    Recall    		& 65.9\% $\pm$ 6.25\%    		& 64.9\% $\pm$ 5.50\%    \\
+    Accuracy  		& 70.55\% $\pm$ 3.12\%    	& 70.85\% $\pm$ 3.09\%   \\
+    F1  					& 69.00\% $\pm$ 3.88\%   		& 68.92\% $\pm$ 3.82	\%   \\
+    \end{tabular}
+    \caption{Resultados dos sistemas de inferência na base da Amazon utilizando pesos nas regras}
+	\label{table:amazon2_pesos}
+\end{table}
+
+Os resultados corroboraram as conclusões de \cite{ishibuchi2001effect} que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada apenas aplicando pesos às regras geradas. O aumento da performance e do equilíbrio da classificação usando ambos os métodos e nas duas bases é bastante significativo, como pôde ser visto nas tabelas (\ref{table:movies2_pesos}) e (\ref{table:amazon2_pesos}). Dessa forma, serão mantidos os pesos para os próximos experimentos. 
+
 \subsection{Avaliação da quantidade de conjuntos fuzzy usados}
+
+Através das últimas seções, foram mostrados resultados utilizando 3 conjuntos fuzzy para modelar nossas variáveis lingüísticas. Seguindo a nossa decisão de usar o c4.5 com altura máxima da árvore de decisão para 1 para reduzir a complexidade das regras geradas e torna-las mais legíveis para seres humanos, nós tentamos reduzir a quantidade de conjuntos fuzzy, usando somente os conjuntos "Baixo" e "Alto", para as variáveis de entrada. Esse experimento tem por fim verificar se há aumento da performance da classificação com regras mais simples e gerais. A tabela (\ref{table:movies2_pesos_2f}) e tabela (\ref{table:amazon2_pesos_2fs}) mostram, respectivamente, os resultados para o uso de somente dois conjuntos fuzzy nas variáveis de entrada nas bases de filmes e da Amazon.
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    ~         		& 3 fuzzy sets 							& 2 fuzzy sets \\ \hline
+    Precision 	& 70.36\% $\pm$ 3.88\%       & 71.11\% $\pm$ 3.58\%    \\
+    Recall    	& 69.7\% $\pm$ 9.81\%    		& 70.6\% $\pm$ 3.35\%   \\
+    Accuracy  	& 70.05\% $\pm$ 4.00\%    	& 70.9\% $\pm$ 3.07\%    \\
+    F1  				69.64\% $\pm$ 5.62\%    		& 70.81\% $\pm$ 2.98\%    \\
+    \end{tabular}
+    \caption{Resultados dos sistemas de inferência na base de filmes utilizando 2 conjuntos fuzzy na entrada}
+	\label{table:movies2_pesos_2fs}
+\end{table}
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    ~         		& 3 fuzzy sets 							& 2 fuzzy sets \\ \hline
+    Precision 	& 73.80\% $\pm$ 3.89\%            & 73.87\% $\pm$ 3.93\%    \\
+    Recall    	& 64.9\% $\pm$ 5.50\% 				& 64.4\% $\pm$ 3.46\%   \\
+    Accuracy  	& 70.85\% $\pm$ 3.09\%         	& 70.8\% $\pm$ 3.27\%    \\
+    F1  				& 68.92\% $\pm$ 3.82	\%    		& 68.79\% $\pm$ 3.52\%    \\
+    \end{tabular}
+    \caption{Resultados dos sistemas de inferência na base da Amazon utilizando 2 conjuntos fuzzy na entrada}
+	\label{table:amazon2_pesos_2fs}
+\end{table}
+
+A tabela (\ref{table:movies2_pesos_2fs}) mostra que todos, mesmo em pequena escala, os indicadores do classificador tiveram uma melhora. Além disso, mesmo que também por uma diferença pequena, o melhor resultado geral da performance do classificador foi na base de filmes. Isso é especificamente interessante, pois críticas de filmes são comumente reportadas como o mais difícil tipo de documentos de serem classificados \cite{turney2002thumbs,pang2004sentimental,chaovalit2005movie,ohana2009sentiment}. 
+
+%positive_to_negative_ratio_of_adjectives_sum_and_bigrams_with_adjectives
+%positive_to_negative_ratio_of_unigrams_and_bigrams_sum
+Em ambos conjuntos de dados somente duas características foram selecionadas pelo c4.5:
+\begin{itemize}
+\item Diferença entre a soma positiva e negativa dos adjetivos e dos bigrams formados por advérbio e adjetivo
+\item Diferença entre a soma positiva e negativa dos unigrams e bigrams
+\end{itemize}
+
+Na base de filmes as duas foram necessárias para atingir os resultados mostrados na tabela ((\ref{table:movies2_pesos_2fs})). Novamente remete ao fato de documentos de filmes sejam mais difíceis de serem classificados, precisem de mais características para caracterizar bem as críticas. Já na base da Amazon, somente a segunda característica foi utilizada para classificar os documentos. Embora o algoritmo tenha decidido que somente essa característica seja suficiente, não é difícil concluir que, sendo a base da Amazon bastante diversa (e que também inclui filmes), mais características podem ser necessárias para caracterizar melhor documentos tão variados.
+Todavia, nós conseguimos classificar um pouco mais de 70\% dos documentos de filmes e da Amazon com poucas regras simples, legíveis para humanos, geradas pelo método de Wang-Mendel:
+
+\begin{itemize}
+\item IF a \textit{diferença entre a soma positiva e negativa dos unigrams e bigrams} is ALTO then POLARIDADE is POSITIVA
+\item IF a \textit{diferença entre a soma positiva e negativa dos unigrams e bigrams} is BAIXO then POLARIDADE is NEGATIVA
+\item IF a \textit{diferença entre a soma positiva e negativa dos adjetivos e dos bigrams formados por advérbio e adjetivo} is ALTO then POLARIDADE is POSITIVA
+\item IF a \textit{diferença entre a soma positiva e negativa dos adjetivos e dos bigrams formados por advérbio e adjetivo} is BAIXO then POLARIDADE is NEGATIVA
+\end{itemize}
+
+As quatro regras foram utilizadas na base de filmes e as duas primeiras regras na base da Amazon.
 
 \subsection{Avaliação do uso de regras entre domínios}
 
 Usar regras geradas em um domínio e usar para classificar em outro.
 
-\subsection{Avaliação das features mais selecionadas entre domínios}
+\subsection{Avaliação das características mais selecionadas entre domínios}
 
 Discutir os motivos de tais features terem sido mais selecionadas em vez das outras
 

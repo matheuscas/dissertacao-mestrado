@@ -1,8 +1,9 @@
 \xchapter{Resultados obtidos}{}
 
-Nessa seção são descritos e discutidos os experimentos realizados e os resultados obtidos desses experimentos. O objetivo principal não é comparar qual cenário obtém melhor \textit{accuracy} ou \textit{F1}, mas também discutir em quais contextos os classificadores produzem melhores ou piores resultados.
+Nessa seção são descritos e discutidos os experimentos realizados e os resultados obtidos desses experimentos. O objetivo principal não é comparar qual cenário obtém melhor \textit{accuracy} ou TPR e TNR, mas também discutir em quais contextos os classificadores produzem melhores ou piores resultados.
 
 \section{Datasets}
+\todo[inline]{Pelo que vi nos comentários da seção de metodologia essa seção deve sumir daqui e subir para para metodologia, certo?}
 
 Nós executamos nossos experimentos em três bases de dados. Duas já foram mencionadas anteriormente, que são a base de dados de filmes \cite{pang2004sentimental} e a de diferentes categorias da Amazon \cite{wang2011latent}. Ambas contém 2000 documentos que foram previamente classificadas pelo sentimento geral das opiniões como sendo positivos ou negativos. Além disso, estas bases são ditas equilibradas, pois tem a mesma quantidade de documentos positivos e negativos. 
 
@@ -12,126 +13,173 @@ A terceira base, um conjunto de documentos retirados do site Epinions por \cite{
 
 \section{Design dos experimentos}
 
-Nós focamos em comparar os métodos de classificação MGRF e MCRF, variando as configurações em diferentes etapas do processo de mineração de opinião, comparando as medidas de \textit{accuracy} e \textit{F1}. Nós também avaliamos a influência dos algoritmos de seleção de características, os sistemas de inferência fuzzy em si, a quantidade usada de conjuntos fuzzy, a eficiência das regras geradas num domínio e usadas em outro e as características mais selecionadas entre as bases utilizadas. 
+Nós focamos em comparar os métodos de classificação MGRF e MCRF, variando as configurações em diferentes etapas do processo de mineração de opinião, comparando \textit{accuracy}, TPR e TNR. Nós também avaliamos a influência dos algoritmos de seleção de características, os sistemas de inferência fuzzy em si, a quantidade usada de conjuntos fuzzy, a eficiência das regras entre domínios e usadas em outro e as características mais selecionadas entre as bases utilizadas. 
 
-Para cada base de dados, o processo é idêntico para as etapas de pré-processamento, transformação e extração de características. A partir da seleção de características, as etapas seguintes foram executadas com validação cruzada de 10 dobras, utilizando somente as treinamento. Por exemplo, a dobra 1 não é usada para a seleção de características e é usada como teste nas etapas seguintes de classificação e avaliação. Mas as dobras restantes são usadas na seleção de características e na construção base de regras fuzzy para aquela dobra 1. O mesmo processo é repetido para cada dobra e nossos resultados, para todas as métricas usadas, são a média das dobras de teste. Conseqüentemente, todos os tipos de n-grams combinados com todas as técnicas de transformação descritas nesse trabalho passam pela seleção de características para encontrar quais delas são mais apropriadas para representar os documentos. 
+Para cada base de dados, o processo de mineração de opinião é idêntico para as etapas de pré-processamento, transformação e extração de características. A partir da seleção de características, as etapas seguintes foram executadas com validação cruzada de 10 dobras, utilizando somente as treinamento. Por exemplo, a dobra 1 não é usada para a seleção de características, pois é usada como teste nas etapas seguintes de classificação e avaliação. As dobras restantes são usadas na seleção de características e na construção da base de regras fuzzy para aquela dobra de teste 1. O mesmo processo é repetido para cada dobra e os resultados, para todas as métricas usadas, são a média dos valores obtidos nas dobras de teste. 
+%Conseqüentemente, todos os tipos de n-grams combinados com todas as técnicas de transformação descritas nesse trabalho passam pela seleção de características para encontrar quais delas são mais apropriadas para representar os documentos. 
 
 \subsection{Avaliação dos algoritmos de seleção de características}
 
-Para avaliar os algoritmos de seleção de características, CFS e C45, foi definido o seguinte cenário: 3 conjuntos fuzzy para as variáveis de entrada e o uso do MCRF para ambos os datasets, filmes e a base mista da Amazon. Assim, deixando os demais parâmetros inalterados, nós podemos avaliar o desempenho dos algoritmos de seleção de características. Além de avaliar \textit{accuracy}, \textit{recall}, \textit{precision} e \textit{F1}, foi avaliado também a quantidade média de características selecionadas para cada algoritmo de seleção. A tabela (\ref{table:movies}) e tabela (\ref{table:amazon}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon. 
+Para avaliar os algoritmos de seleção de características, CFS e C45, foi definido o seguinte cenário: 3 conjuntos fuzzy para as variáveis de entrada e o uso do MCRF para ambas bases de dados, filmes e a base mista da Amazon. Assim, deixando os demais parâmetros inalterados, nós podemos avaliar o desempenho dos algoritmos de seleção de características. Além de avaliar \textit{accuracy}, TPR e TNR, foi avaliado também a quantidade média de características selecionadas para cada algoritmo de seleção. A tabela (\ref{table:movies}) e tabela (\ref{table:amazon}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon. 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
-    Movies         				 & CFS                                 	 	 & c4.5                                  \\ \hline
-    Precision                   & 53.65\% $\pm$ 6.09\% 			 & 73.09\% $\pm$ 21.24\% \\
-    Recall                        & 64.2\% $\pm$ 30.55\% 		 & 52.3\% $\pm$ 44.78\% \\
-    Accuracy                   & 52.25\% $\pm$ 4.92\% 			 & 54.2\% $\pm$ 1.76\% \\
-    F1                  			 & 53.45\% $\pm$ 14.88\% 	     & 41.04\% $\pm$ 3.83\% \\
-    Features selected      & 4.7 $\pm$ 1.1            			 & 1                                     \\
+    Movies         				 				& CFS                                 	 	& c4.5                                  \\ \hline
+    TNR                   						& 40.3\% $\pm$ 6.09\% 			 	& 47.1\% $\pm$ 42.67\% \\
+    TPR                        					& 64.2\% $\pm$ 30.55\% 		    & 61.7\% $\pm$ 43.93\% \\
+    Accuracy                   				& 52.25\% $\pm$ 4.92\% 			 & 54.4\% $\pm$ 1.72\% \\
+    Características selecionadas & 4.7 $\pm$ 1.1            			 	 & 1                                     \\
     \end{tabular}
     \caption{Resultados da base de filmes}
 	\label{table:movies}
 \end{table}
 
+%SVM Filmes
+
+%---> Avg TPR:  69.1 %
+%Standard Deviation:  7.3 %
+%---> Avg TNR:  72.1 %
+%Standard Deviation:  6.87677249878 %
+%---> Avg Accuracy:  70.6 %
+%Standard Deviation:  3.44818792991 %
+
+%WILCOXON
+%two-tailed
+
+%Result 1 - Z-value
+%The Z-value is -1.1212. The p-value is 0.26272. The result is not significant at p≤ 0.01.
+%
+%Result 2 - W-value
+%The W-value is 16.5. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
+
 \begin{table}[!h]
     \begin{tabular}{lll}
-    Movies         					& CFS                          		& c4.5                                  \\ \hline
-    Precision                     & 61.99\% $\pm$ 9.01\% 	& 66.01\% $\pm$ 22.25\%  \\
-    Recall                          & 77.5\% $\pm$ 13.9\% 		& 74.5\% $\pm$ 38.82\% \\
-    Accuracy                     & 64.4\% $\pm$ 8.12\% 		& 54.25\% $\pm$ 2.82\% \\
-    F1                                & 68.17\% $\pm$ 8.65\% 	& 55.42\% $\pm$ 19.43\% \\
-    Features selected 		& 5.3 $\pm$ 0.64               & 1 $\pm$                                  \\
+    Movies         										& CFS                          		& c4.5                                  \\ \hline
+    TNR                     								& 51.3\% $\pm$ 13.56\% 	& 34.0\% $\pm$ 43.26\%  \\
+    TPR                          						& 77.5\% $\pm$ 13.9\% 		& 74.5\% $\pm$ 38.82\% \\
+    Accuracy                     					& 64.4\% $\pm$ 8.12\% 		& 54.25\% $\pm$ 2.82\% \\\
+    Características selecionadas 		& 5.3 $\pm$ 0.64               & 1 $\pm$                                  \\
     \end{tabular}
     \caption{Resultados da base da Amazon}
 	\label{table:amazon}
 \end{table}
 
-Como pode ser visto, a seleção de características com c4.5 usando o MCRF e três conjuntos fuzzy na entrada produziu melhor \textit{precision} e \textit{accuracy}, esta última mesmo que próxima, na base de filmes, usando menos da metade de características usadas no algoritmo CFS. Contudo, o inverso ocorreu na base da Amazon, onde o CFS com o MCRF produziu melhor resultado que o c4.5, mas utilizando ainda mais características para a geração das regras. Isso resulta em regras com 5 antecedentes, em média, menos legíveis e compreensíveis para um ser humano. Assim, já que o algoritmo c4.5 somente precisou de 2 características, produzindo regras menos complexas e mais claras, para produzir resultados melhores (considerando \textit{accuracy)}, no caso de filmes, e próximos, no caso da Amazon, foi decidido em manter o c4.5 para os próximos cenários de avaliação. 
+%SVM
+%
+%---> Avg TPR:  65.8 %
+%Standard Deviation:  4.6432747065 %
+%---> Avg TNR:  75.5 %
+%Standard Deviation:  3.20156211872 %
+%---> Avg Accuracy:  70.65 %
+%Standard Deviation:  2.99207286008 %
 
-Um outro comportamento, agora comum para ambas as bases foi o baixo balanço (\textit{F1}) entre a classificação dos documentos positivos e negativos. Foi possível perceber que a cada dobra da validação cruzada, documentos positivos eram classificados mais corretamente em detrimento aos negativos e vice-versa.
-A tabela (\ref{table:amazon_folds}) mostra as matrizes de confusão de cada dobra para os resultados produzidos na base da Amazon. 
+%WILCOSOX
+%
+%Result 1 - Z-value
+%The Z-value is -2.3953. The p-value is 0.0164. The result is not significant at p≤ 0.01.
+%
+%Result 2 - W-value
+%The W-value is 4. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
+
+Em ambas as bases as diferenças entre os resultados não são significativas usando o teste \textit{Wilcoxon signed-rank} para $p <= 0.01$. Isso mostra que mesmo que o CFS utiliza quase 5 vezes mais características em ambas as bases e não consegue produzir resultados significativamente melhores, criando ainda regras mais complexas e de difícil compreensão para seres humanos. Assim, já que o algoritmo c4.5 somente precisou de 2 características, produzindo regras menos complexas e mais claras, para produzir resultados próximos ou iguais ao do CFS, decidiu-se em manter o c4.5 para os próximos cenários de avaliação. 
+
+Um outro comportamento comum para ambas as bases foi expressivo desvio padrão de cada medida. Foi possível perceber que a em cada dobra da validação cruzada, documentos positivos eram classificados mais corretamente em detrimento aos negativos e vice-versa. A tabela (\ref{table:amazon_folds}) mostra as matrizes de confusão de cada dobra para os resultados produzidos na base da Amazon. 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
     a         					& b                          		& classificado como                                  \\ \hline
 	Dobra 0 \\    
-    6 (TP)    				&94 (FN)      				& b = negative (100) \\
-    0 (FP)    				&100 (TN)      				& b = negative (100) \\
+    100 (TP)    				&0 (FN)      				& a = positivo(100) \\
+    92 (FP)    				&8 (TN)      				& b = negativo (100) \\
 	&&\\
 	Dobra 1    \\
-    5 (TP)    				&95 (FN)      				& b = negative (100) \\
-    0 (FP)    				&100 (TN)      				& b = negative (100) \\
+    22 (TP)    				&78 (FN)      				& a = positivo(100) \\
+    0 (FP)    				&100 (TN)      			& b = negativo (100) \\   
 	&&\\ 
 	Dobra 2    \\
-    96 (TP)    				&4 (FN)      				& b = negative (100) \\
-    87 (FP)    				&13 (TN)      				& b = negative (100) \\
+    100 (TP)    				&0 (FN)      				& a = positivo(100) \\
+    95 (FP)    				&5 (TN)      				& b = negativo (100) \\   
 	&&\\
     Dobra 3    \\
-    98 (TP)    				&2 (FN)      				& b = negative (100) \\
-    94 (FP)    				&6 (TN)      				& b = negative (100) \\
+    100 (TP)    				&0 (FN)      				& a = positivo(100) \\
+    95 (FP)    				&5 (TN)      				& b = negativo (100) \\   
 	&&\\
 	Dobra 4    \\
-    99 (TP)    				&1 (FN)      				& b = negative (100) \\
-    88 (FP)    				&12 (TN)      				& b = negative (100) \\
+    12 (TP)    				&88 (FN)      				& a = positivo(100) \\ 
+    0 (FP)    				&100 (TN)      				& b = negativo (100) \\
 	&&\\
 	Dobra 5    \\
-    4 (TP)    				&96 (FN)      				& b = negative (100) \\
-    1 (FP)    				&99 (TN)      				& b = negative (100) \\
+    99 (TP)    				&1 (FN)      				& a = positivo(100) \\ 
+    96 (FP)    				&4 (TN)      				& b = negativo (100) \\
 	&&\\
 	Dobra 6    \\
-    9 (TP)    				&91 (FN)      				& b = negative (100) \\
-    0 (FP)    				&100 (TN)      				& b = negative (100) \\
+    100 (TP)    				&0 (FN)      				& a = positivo(100) \\ 
+    99 (FP)    				&1 (TN)      			& b = negativo (100) \\
 	&&\\
 	Dobra 7    \\
-    97 (TP)    				&3 (FN)      				& b = negative (100) \\
-    83 (FP)    				&17 (TN)      				& b = negative (100) \\
+    12 (TP)    				&88 (FN)      				& a = positivo(100) \\ 
+    0 (FP)    				&100 (TN)      				& b = negativo (100) \\
 	&&\\
 	Dobra 8    \\
-    14 (TP)    				&86 (FN)      				& b = negative (100) \\
-    2 (FP)    				&98 (TN)      				& b = negative (100) \\
+    100 (TP)    				&0 (FN)      				& a = positivo(100) \\ 
+    92 (FP)    				&8 (TN)      				& b = negativo (100) \\
 	&&\\
 	Dobra 9    \\
-    95 (TP)    				&5 (FN)      				& b = negative (100) \\
-    84 (FP)    				&16 (TN)      				& b = negative (100) \\
+    100 (TP)    				&0 (FN)      				& a = positivo(100) \\ 
+    91 (FP)    				&9 (TN)      				& b = negativo (100) \\
 	&&\\
     \end{tabular}
     \caption{Resultados das dobras da base da Amazon}
 	\label{table:amazon_folds}
 \end{table}
 
-É possível perceber que há alternância entre as dobras para as extremidades da classificação dos documentos: ou são todos (ou quase) positivos ou quase todos negativos. E ainda que um novo embaralhamento dos dados seja feito e uma nova seleção de características, o efeito se repete e os resultados pouco melhoram e pioram bastante em alguns casos. 
+É possível perceber que há alternância entre as dobras para as extremidades da classificação dos documentos: ou são todos (ou quase) positivos ou quase todos negativos. E ainda que um novo embaralhamento dos dados seja feito e uma nova seleção de características, o efeito se repete e os resultados também. 
 
 \subsubsection{Avaliação do impacto da altura da árvore de decisão do algoritmo de seleção de características do c4.5}
 
-É importante ressaltar que os resultados anteriores, para o c4.5, foram obtidos com o algoritmo otimizado, utilizando a ferramenta Weka [CITE], para que a árvore tivesse altura 1, para fins de simplificação e aumento da generalização do algoritmo. Dessa forma, decidimos avaliar o quanto o aumento da altura da árvore de decisão do algoritmo de seleção de características do c4.5 influenciaria na classificação dos documentos. Definimos que o limite da altura da árvore de decisão fosse 3 para não aumentar demais a complexidade das regras que serão geradas. A tabela (\ref{table:movies_h3}) e tabela (\ref{table:amazon_h3}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon.
+É importante ressaltar que os resultados anteriores, para o c4.5, foram obtidos com o algoritmo otimizado, utilizando a ferramenta Weka [CITE], para que a árvore do algoritmo de seleção de características do algoritmo tivesse altura 1, para fins de simplificação das regras geradas. Dessa forma, decidimos avaliar o quanto o aumento da altura da árvore de decisão do algoritmo de seleção de características do c4.5 influenciaria na classificação dos documentos. Definimos que o limite da altura da árvore de decisão fosse 3 para não aumentar demais a complexidade das regras que seriam geradas. A tabela (\ref{table:movies_h3}) e tabela (\ref{table:amazon_h3}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon.
 
  \begin{table}[!h]
     \begin{tabular}{lll}
-    Movies         				 & c4.5 - Altura 3                                 	 	 & c4.5 - Altura 1                               \\ \hline
-    Precision                   & 71.77\% $\pm$ 19.87\% 			 & 73.09\% $\pm$ 21.24\% \\
-    Recall                        & 53.4\% $\pm$ 44.50\% 		 & 52.3\% $\pm$ 44.78\% \\
-    Accuracy                   & 54.5\% $\pm$ 1.76\% 			 & 54.2\% $\pm$ 1.76\% \\
-    F1                  			 & 42.28\% $\pm$ 26.63\% 	     & 41.04\% $\pm$ 3.83\% \\
-    Features selected      & 1.1 $\pm$ 0.3            			 & 1                                     \\
+    Movies         				 					  & c4.5 - Altura 3                                 	 	 & c4.5 - Altura 1                               \\ \hline
+    TNR                   					  		  & 55.6\% $\pm$ 43.49\% 			 				& 47.1\% $\pm$ 42.67\% \\
+    TPR                        					  	  & 53.4\% $\pm$ 44.50\% 		 					& 61.7\% $\pm$ 43.93\% \\
+    Accuracy                   					  & 54.5\% $\pm$ 1.76\% 			 				& 54.4\% $\pm$ 1.72\% \\
+    Características selecionadas      & 1.1 $\pm$ 0.3            			 					& 1                                     \\
     \end{tabular}
     \caption{Resultados da base de filmes}
 	\label{table:movies_h3}
 \end{table}
 
+%Result 1 - Z-value
+%
+%The Z-value is -1.7838. The p-value is 0.07508. The result is not significant at p≤ 0.01.
+%
+%Result 2 - W-value
+%
+%The W-value is 10. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
+
 \begin{table}[!h]
     \begin{tabular}{lll}
-    Movies         					& c4.5 - Altura 3                          		& c4.5 - Altura 1                              \\ \hline
-    Precision                     & 81.22\% $\pm$ 18.36\% 		& 66.01\% $\pm$ 22.25\%  \\
-    Recall                          & 47.1\% $\pm$ 34.22\% 		& 74.5\% $\pm$ 38.82\% \\
-    Accuracy                     & 60.4\% $\pm$ 5.72\% 			& 54.25\% $\pm$ 2.82\% \\
-    F1                                & 47.62\% $\pm$ 19.17\% 	& 55.42\% $\pm$ 19.43\% \\
-    Features selected 		& 1.9 $\pm$ 0.7               		& 1 $\pm$                                  \\
+    Movies         										& c4.5 - Altura 3                          		& c4.5 - Altura 1                              \\ \hline
+    TNR                     								& 73.7\% $\pm$ 35.86\% 					& 34.0\% $\pm$ 43.26\%  \\
+    TPR                          						& 47.1\% $\pm$ 34.22\% 					& 74.5\% $\pm$ 38.82\% \\
+    Accuracy                     					& 60.4\% $\pm$ 5.75\% 						& 54.25\% $\pm$ 2.82\% \\
+    Características selecionadas 		& 1.9 $\pm$ 0.7               					& 1 $\pm$                                  \\
     \end{tabular}
     \caption{Resultados da base da Amazon}
 	\label{table:amazon_h3}
 \end{table}
 
-Os resultados mostram comportamentos diferentes entre as bases, mas uma tendência já vista nos resultados anteriores. A base da Amazon precisa de mais características para poder classificar melhor os documentos. Esses resultados sugerem que para esse tipo de conjunto de dados diversificado (lembrando que a base da Amazon é composta de filmes, hotéis, GPS, telefones, dentre outros), faz-se necessário mais características para descrever melhor os documentos para que possam ser identificados corretamente pelo classificador. Por outro lado, os resultados pouco se alteraram na base de filmes, evidenciando que pouco será eficaz o acréscimo de mais características para descrever os documentos. Nesse caso, para a base de filmes, é necessário encontrar as características mais aptas a descreverem melhor os documentos. 
+%Result 1 - Z-value
+%
+%The Z-value is -2.1915. The p-value is 0.02852. The result is not significant at p≤ 0.01.
+%
+%Result 2 - W-value
+%
+%The W-value is 6. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
+
+Mais uma vez, os resultados apresentados em ambas as bases para o aumento da altura da árvore de decisão do algoritmo de seleção de características não produziram resultados significativamente melhores para $p <= 0.01$ no teste \textit{Wilcoxon signed-rank}. Assim, o crescimento da árvore, que resulta no aumento da complexidade das regras em relação a altura 1, não contribui para o aumento de performance do nosso classificador e na simplificação das regras geradas para a classificação. 
 
 \subsection{Avaliação dos sistemas de inferência}
 
@@ -140,32 +188,46 @@ Nessa subseção é avaliado o desempenho dos sistemas de inferência escolhidos
 \begin{table}[!h]
     \begin{tabular}{lll}
  	~         			& CFRM 								& GFRM \\ \hline
-    Precision 		& 68.35\% $\pm$ 19.96\%   & 67.55\% $\pm$ 14.61\%    \\
-    Recall    		& 61.7\% $\pm$ 43.93\%   & 64.6\% $\pm$ 37.08\%   \\
+    TNR 				& 47.1\% $\pm$ 42.67\%   & 53.8\% $\pm$ 34.96\%    \\
+    TPR    			& 61.7\% $\pm$ 43.93\%   & 64.6\% $\pm$ 37.08\%   \\
     Accuracy  		& 54.4\% $\pm$ 1.72\%    	& 59.2\% $\pm$ 1.83\%    \\
-    F1  					& 46.81\% $\pm$ 26.74\% & 54.69\% $\pm$ 19.62\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base de filmes}
 	\label{table:movies2}
 \end{table}
 
+%Result 1 - Z-value
+%
+%The Z-value is -2.8031. The p-value is 0.00512. The result is significant at p≤ 0.01.
+%
+%Result 2 - W-value
+%
+%The W-value is 0. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is significant at p≤ 0.01.
+
 \begin{table}[!h]
     \begin{tabular}{lll}
     ~         			& CFRM 									& GFRM \\ \hline
-    Precision 		& 66.01\% $\pm$ 22.25\%    	& 67.49\% $\pm$ 18.33\%    \\
-    Recall    		& 74.5\% $\pm$ 38.82\%    	& 75.5\% $\pm$ 34.80\%    \\
-    Accuracy  		& 54.25\% $\pm$ 2.82\%    		& 60.05\% $\pm$ 2.37\%   \\
-    F1  					& 55.52\% $\pm$ 19.43\%   	& 60.48\% $\pm$ 16.63	\%   \\
+    TNR 				& 34.0\% $\pm$ 43.26\%    	& 44.6\% $\pm$ 35.73\%    \\
+    TPR    			& 74.5\% $\pm$ 38.82\%    	& 75.5\% $\pm$ 34.80\%    \\
+    Accuracy  		& 54.25\% $\pm$ 2.82\%    	& 60.05\% $\pm$ 2.37\%   \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base da Amazon}
 	\label{table:amazon2}
 \end{table}
 
-Os resultados mostram que Método Geral do Raciocínio Fuzzy (MGRF) aumenta o \textit{accuracy} sobre o MCRF, em ambas bases,  mantendo a seleção de características e a quantidade de conjuntos fuzzy inalterados. Ainda é possível observar que o equilíbrio na classificação (\textit{F1}) dos documentos também melhorou tanto na base de filmes quanto na da Amazon, usando o MGRF. \todo[inline]{com certeza isso não será verdade depois de fazer a comparação estatística. Mas como ainda não tem ela, eu deixei assim mesmo.} Assim, nessa tarefa de classificação de somente duas classes, positivo e negativo, os resultados mostraram que uma melhor abordagem é considerar todas as regras de uma classe, em vez de uma única com maior grau. Daí, o MGRF foi a nossa escolha para alcançar melhores resultados nesse trabalho e será o método de classificação usado nos próximos experimentos. 
+%Result 1 - Z-value
+%
+%The Z-value is -2.8031. The p-value is 0.00512. The result is significant at p≤ 0.01.
+%
+%Result 2 - W-value
+%
+%The W-value is 0. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is significant at p≤ 0.01.
 
-\subsubsection{Avaliação de uso de pesos nas regras dos sistemas de inferência}
+Os resultados mostram que Método Geral do Raciocínio Fuzzy (MGRF) aumenta o \textit{accuracy} sobre o MCRF, em ambas bases,  mantendo a seleção de características e a quantidade de conjuntos fuzzy inalterados. O resultado do teste \textit{Wilcoxon signed-rank} confirma a melhora significativa do MGRF sobre o MCRF, para $p <= 0.01$. Assim, nessa tarefa de classificação de somente duas classes, positivo e negativo, os resultados mostraram que uma melhor abordagem é considerar todas as regras de uma classe, em vez de uma única com maior grau. Daí, o MGRF foi a nossa escolha para prosseguir nos próximos experimentos com o fim de alcançar melhores resultados nesse trabalho.
 
-Em \cite{ishibuchi2001effect} foi mostrado que é possivel aumentar a performance da classificação de regras fuzzy IF-THEN aplicando pesos à elas, além do grau de compatibilidade das regras. No referido artigo, os autores descreveram o processo em que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada. Baseando-se neste artigo, este trabalho calculou os pesos como se segue. Para cada regra da base de regras gerada, foi calculado o grau de compatibilidade com todos documentos do conjunto de teste. Se o documento fosse positivo, o grau de compatibilidade era acumulado em $\beta_{positivo}$; se o documento fosse negativo, o grau de compatibilidade era acumulado em $\beta_{negativo}$. Caso ambos os betas fosse iguais, não há peso a ser considerado, já que as regras tem igual influência sobre o conjunto de dados que elas foram geradas. De outra forma, o peso da regra era definido pela equação \ref{eq:pesos}.
+\subsection{Avaliação de uso de pesos nas regras dos sistemas de inferência}
+
+Em \cite{ishibuchi2001effect} foi mostrado que é possível aumentar a performance da classificação de regras fuzzy IF-THEN, aplicando pesos à elas, além do grau de compatibilidade das regras. No referido artigo, os autores descreveram o processo em que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada. Baseando-se neste artigo, este trabalho calculou os pesos como se segue. Para cada regra da base de regras gerada, foi calculado o grau de compatibilidade com todos documentos do conjunto de teste. Se o documento fosse positivo, o grau de compatibilidade era acumulado em $\beta_{positivo}$; se o documento fosse negativo, o grau de compatibilidade era acumulado em $\beta_{negativo}$. Ao fim desse processo, caso ambos os betas fosse iguais, não haveria peso a ser considerado, já que as regras tem igual influência sobre o conjunto de dados que elas foram geradas. De outra forma, o peso da regra era definido pela equação \ref{eq:pesos}.
 
 \begin{equation}
 P_j = |\beta_{positivo} - \beta_{negativo}| / (\beta_{positivo} + \beta_{negativo})
@@ -174,33 +236,47 @@ P_j = |\beta_{positivo} - \beta_{negativo}| / (\beta_{positivo} + \beta_{negativ
 
 onde $P_j$ é o peso da regra, para $0 <= P_j <= 1$. 
 
-Uma vez que todas as regras tiveram seus pesos calculados, estes são adicionados ao processo de classificação de ambos os métodos utilizados até aqui, o MGRF e o MCRF. O peso torna-se um fator multiplicador do grau de cada regra em cada método. Assim, o MCRF em vez de levar em consideração a regra com maior grau de compatibilidade com o documento de teste, vai, agora, levar em consideração a regra com maior resultado da multiplicação do grau de compatibilidade e do peso da regra. O mesmo acontece para o MGRF ao considerar o grau médio entre as classes positivo e negativo. A tabela (\ref{table:movies2_pesos}) e tabela (\ref{table:amazon2_pesos}) mostram, respectivamente, os resultados para o uso dos pesos nas bases de filmes e da Amazon usando os parâmetros até agora estabelecidos. 
+Uma vez que todas as regras tiveram seus pesos calculados, estes são adicionados ao processo de classificação de ambos os métodos utilizados até aqui, o MGRF e o MCRF. O peso torna-se um fator multiplicador do grau de cada regra. Assim, o MCRF em vez de somente levar em consideração a regra com maior grau de compatibilidade com o documento de teste, vai, agora, levar em consideração a regra com maior grau multiplicado pelo peso da regra. O mesmo acontece para o MGRF ao considerar o grau médio entre as classes positivo e negativo. A tabela (\ref{table:movies2_pesos}) e tabela (\ref{table:amazon2_pesos}) mostram, respectivamente, os resultados para o uso dos pesos nas bases de filmes e da Amazon usando os parâmetros até agora estabelecidos. 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
- 	~         			& CFRM 								& GFRM \\ \hline
-    Precision 		& 70.12\% $\pm$ 4.32\%   & 70.36\% $\pm$ 3.88\%    \\
-    Recall    		& 70.3\% $\pm$ 11.73\%   & 69.7\% $\pm$ 9.81\%   \\
-    Accuracy  		& 69.8\% $\pm$ 4.03\%    	& 70.05\% $\pm$ 4.00\%    \\
-    F1  					& 69.52\% $\pm$ 6.00\% & 69.64\% $\pm$ 5.62\%    \\
+ 	~         			& S/ Pesos 								& C/ Pesos \\ \hline
+    TNR 				& 53.8\% $\pm$ 34.96\%   	& 70.4\% $\pm$ 7.11\%    \\
+    TPR    			& 64.6\% $\pm$ 37.08\%   	& 69.7\% $\pm$ 9.81\%   \\   
+    Accuracy  		& 59.2\% $\pm$ 1.83\%    	& 70.05\% $\pm$ 4.00\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base de filmes utilizando pesos nas regras}
 	\label{table:movies2_pesos}
 \end{table}
 
+%Result 1 - Z-value
+%
+%The Z-value is -2.8031. The p-value is 0.00512. The result is significant at p≤ 0.05.
+%
+%Result 2 - W-value
+%
+%The W-value is 0. The critical value of W for N = 10 at p≤ 0.05 is 8. Therefore, the result is significant at p≤ 0.05.
+
 \begin{table}[!h]
     \begin{tabular}{lll}
-    ~         			& CFRM 									& GFRM \\ \hline
-    Precision 		& 72.91\% $\pm$ 4.22\%    	& 73.80\% $\pm$ 3.89\%    \\
-    Recall    		& 65.9\% $\pm$ 6.25\%    		& 64.9\% $\pm$ 5.50\%    \\
-    Accuracy  		& 70.55\% $\pm$ 3.12\%    	& 70.85\% $\pm$ 3.09\%   \\
-    F1  					& 69.00\% $\pm$ 3.88\%   		& 68.92\% $\pm$ 3.82	\%   \\
+    ~         			& S/ Pesos									& C / Pesos \\ \hline
+    TNR 				& 44.6\% $\pm$ 35.73\%    	& 76.80\% $\pm$ 4.57\%    \\
+    TPR    			& 75.5\% $\pm$ 34.80\%    	& 64.9\% $\pm$ 5.50\%    \\
+    Accuracy  		& 60.05\% $\pm$ 2.37\%    	& 70.85\% $\pm$ 3.09\%   \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base da Amazon utilizando pesos nas regras}
 	\label{table:amazon2_pesos}
 \end{table}
 
-Os resultados corroboraram as conclusões de \cite{ishibuchi2001effect} que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada apenas aplicando pesos às regras geradas. O aumento da performance e do equilíbrio da classificação usando ambos os métodos e nas duas bases é bastante significativo, como pôde ser visto nas tabelas (\ref{table:movies2_pesos}) e (\ref{table:amazon2_pesos}). Dessa forma, serão mantidos os pesos para os próximos experimentos. 
+%Result 1 - Z-value
+%
+%The Z-value is -2.8031. The p-value is 0.00512. The result is significant at p≤ 0.05.
+%
+%Result 2 - W-value
+%
+%The W-value is 0. The critical value of W for N = 10 at p≤ 0.05 is 8. Therefore, the result is significant at p≤ 0.05.
+
+Os resultados corroboraram as conclusões de \cite{ishibuchi2001effect} que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada apenas aplicando pesos às regras geradas. O resultado do teste \textit{Wilcoxon signed-rank} também confirma a melhora significativa do MGRF usando pesos nas regras em vez de somente o grau de compatibilidade, para $p <= 0.01$.
 
 \subsection{Avaliação da quantidade de conjuntos fuzzy usados}
 
@@ -209,28 +285,42 @@ Através das últimas seções, foram mostrados resultados utilizando 3 conjunto
 \begin{table}[!h]
     \begin{tabular}{lll}
     ~         		& 3 fuzzy sets 							& 2 fuzzy sets \\ \hline
-    Precision 	& 70.36\% $\pm$ 3.88\%       & 71.11\% $\pm$ 3.58\%    \\
-    Recall    	& 69.7\% $\pm$ 9.81\%    		& 70.6\% $\pm$ 3.35\%   \\
-    Accuracy  	& 70.05\% $\pm$ 4.00\%    	& 70.9\% $\pm$ 3.07\%    \\
-    F1  				69.64\% $\pm$ 5.62\%    		& 70.81\% $\pm$ 2.98\%    \\
+    TNR 		  	& 70.4\% $\pm$ 7.11\%         & 71.2\% $\pm$ 4.33\%    \\
+    TPR    		 & 69.7\% $\pm$ 9.81\%        & 70.6\% $\pm$ 3.35\%   \\
+    Accuracy  	 & 70.05\% $\pm$ 4.00\%    	& 70.9\% $\pm$ 3.07\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base de filmes utilizando 2 conjuntos fuzzy na entrada}
 	\label{table:movies2_pesos_2fs}
 \end{table}
 
+%Result 1 - Z-value
+%
+%The Z-value is -1.2741. The p-value is 0.20408. The result is not significant at p≤ 0.05.
+%
+%Result 2 - W-value
+%
+%The W-value is 15. The critical value of W for N = 10 at p≤ 0.05 is 8. Therefore, the result is not significant at p≤ 0.05.
+
 \begin{table}[!h]
     \begin{tabular}{lll}
     ~         		& 3 fuzzy sets 							& 2 fuzzy sets \\ \hline
-    Precision 	& 73.80\% $\pm$ 3.89\%            & 73.87\% $\pm$ 3.93\%    \\
-    Recall    	& 64.9\% $\pm$ 5.50\% 				& 64.4\% $\pm$ 3.46\%   \\
+    TNR 			& 76.80\% $\pm$ 4.57\%            & 77.2\% $\pm$ 3.54\%    \\
+    TPR    		& 64.9\% $\pm$ 5.50\% 				& 64.4\% $\pm$ 3.46\%   \\
     Accuracy  	& 70.85\% $\pm$ 3.09\%         	& 70.8\% $\pm$ 3.27\%    \\
-    F1  				& 68.92\% $\pm$ 3.82	\%    		& 68.79\% $\pm$ 3.52\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base da Amazon utilizando 2 conjuntos fuzzy na entrada}
 	\label{table:amazon2_pesos_2fs}
 \end{table}
 
-A tabela (\ref{table:movies2_pesos_2fs}) mostra que todos, mesmo em pequena escala, os indicadores do classificador tiveram uma melhora. Além disso, mesmo que também por uma diferença pequena, o melhor resultado geral da performance do classificador foi na base de filmes. Isso é especificamente interessante, pois críticas de filmes são comumente reportadas como o mais difícil tipo de documentos de serem classificados \cite{turney2002thumbs,pang2004sentimental,chaovalit2005movie,ohana2009sentiment}. 
+%Result 1 - Z-value
+%
+%The Z-value is -0.3568. The p-value is 0.71884. The result is not significant at p≤ 0.01.
+%
+%Result 2 - W-value
+%
+%The W-value is 24. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
+
+A tabela (\ref{table:movies2_pesos_2fs}) mostra pequena melhora na base de filmes e empate técnico na base da Amazon. Mas, estatisticamente, os resultados não são significativamente diferentes para $p <= 1$. Todavia, a redução da quantidade dos conjuntos fuzzy para as variáveis de entrada produz regras mais simples e legíveis para serem humanos. Assim, nós temos regras menos complexas com a mesma performance de regras com maior número de antecedentes. 
 
 %positive_to_negative_ratio_of_adjectives_sum_and_bigrams_with_adjectives
 %positive_to_negative_ratio_of_unigrams_and_bigrams_sum
@@ -240,7 +330,7 @@ Em ambos conjuntos de dados somente duas características foram selecionadas pel
 \item Diferença entre a soma positiva e negativa dos unigrams e bigrams
 \end{itemize}
 
-Na base de filmes as duas foram necessárias para atingir os resultados mostrados na tabela ((\ref{table:movies2_pesos_2fs})). Novamente remete ao fato de documentos de filmes sejam mais difíceis de serem classificados, precisem de mais características para caracterizar bem as críticas. Já na base da Amazon, somente a segunda característica foi utilizada para classificar os documentos. Embora o algoritmo tenha decidido que somente essa característica seja suficiente, não é difícil concluir que, sendo a base da Amazon bastante diversa (e que também inclui filmes), mais características podem ser necessárias para caracterizar melhor documentos tão variados.
+Na base de filmes as duas foram necessárias para atingir os resultados mostrados na tabela ((\ref{table:movies2_pesos_2fs})). Isso remete ao fato de documentos de filmes serem mais difíceis de ser classificados, precisando de mais características para caracterizar corretamente as opiniões \cite{turney2002thumbs, pang2004sentimental, chaovalit2005movie, ohana2009sentiment}. Já na base da Amazon, somente a segunda característica foi utilizada para classificar os documentos. Embora o algoritmo de seleção de características do c4.5 tenha decidido que somente essa característica seja suficiente, não é difícil concluir que, sendo a base da Amazon bastante diversa (e que também inclui filmes), mais características podem ser necessárias para caracterizar melhor documentos tão variados.
 Todavia, nós conseguimos classificar um pouco mais de 70\% dos documentos de filmes e da Amazon com poucas regras simples, legíveis para humanos, geradas pelo método de Wang-Mendel:
 
 \begin{itemize}
@@ -254,12 +344,247 @@ As quatro regras foram utilizadas na base de filmes e as duas primeiras regras n
 
 \subsection{Avaliação do uso de regras entre domínios}
 
-Usar regras geradas em um domínio e usar para classificar em outro.
+% REGRAS DA AMAZON EM EPINIONS
+
+%{{{{{{{{{{{{{{{RESULTS - FOLD 0 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%105 (FP)    95 (TN)      |b = negative (200)
+%========================
+%Accuracy:  69.0 %
+%TPR:  90.5 %
+%TNR:  47.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 1 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%107 (FP)    93 (TN)      |b = negative (200)
+%========================
+%Accuracy:  68.5 %
+%TPR:  90.5 %
+%TNR:  46.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 2 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%106 (FP)    94 (TN)      |b = negative (200)
+%========================
+%Accuracy:  68.75 %
+%TPR:  90.5 %
+%TNR:  47.0 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 3 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%107 (FP)    93 (TN)      |b = negative (200)
+%========================
+%Accuracy:  68.5 %
+%TPR:  90.5 %
+%TNR:  46.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 4 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%105 (FP)    95 (TN)      |b = negative (200)
+%========================
+%Accuracy:  69.0 %
+%TPR:  90.5 %
+%TNR:  47.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 5 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%106 (FP)    94 (TN)      |b = negative (200)
+%========================
+%Accuracy:  68.75 %
+%TPR:  90.5 %
+%TNR:  47.0 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 6 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%106 (FP)    94 (TN)      |b = negative (200)
+%========================
+%Accuracy:  68.75 %
+%TPR:  90.5 %
+%TNR:  47.0 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 7 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%105 (FP)    95 (TN)      |b = negative (200)
+%========================
+%Accuracy:  69.0 %
+%TPR:  90.5 %
+%TNR:  47.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 8 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%106 (FP)    94 (TN)      |b = negative (200)
+%========================
+%Accuracy:  68.75 %
+%TPR:  90.5 %
+%TNR:  47.0 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 9 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%181 (TP)   19 (FN)      |a = positive (200)
+%106 (FP)    94 (TN)      |b = negative (200)
+%========================
+%Accuracy:  68.75 %
+%TPR:  90.5 %
+%TNR:  47.0 %
+%
+%---------------- 10-FOLD GENERAL RESULTS ----------------
+% ---> Avg Precision:  63.0885594758 %
+%Standard Deviation:  0.153877029356 %
+% ---> Avg Recall:  90.5 %
+%Standard Deviation:  1.11022302463e-14 %
+% ---> Avg Accuracy:  68.775 %
+%Standard Deviation:  0.175 %
+% ---> Avg F1:  74.3480690214 %
+%Standard Deviation:  0.106866593171 %
+%---> Avg TPR:  90.5 %
+%Standard Deviation:  1.11022302463e-14 %
+%---> Avg TNR:  47.05 %
+%Standard Deviation:  0.35 %
+%array([[ 69.  ,  68.5 ,  68.75,  68.5 ,  69.  ,  68.75,  68.75,  69.  ,
+%         68.75,  68.75]])
+
+
+%REGRAS DE FILMES NA EPINIONS - O.O
+
+%{{{{{{{{{{{{{{{RESULTS - FOLD 0 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%173 (TP)   27 (FN)      |a = positive (200)
+%77 (FP)    123 (TN)      |b = negative (200)
+%========================
+%Accuracy:  74.0 %
+%TPR:  86.5 %
+%TNR:  61.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 1 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%168 (TP)   32 (FN)      |a = positive (200)
+%74 (FP)    126 (TN)      |b = negative (200)
+%========================
+%Accuracy:  73.5 %
+%TPR:  84.0 %
+%TNR:  63.0 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 2 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%173 (TP)   27 (FN)      |a = positive (200)
+%77 (FP)    123 (TN)      |b = negative (200)
+%========================
+%Accuracy:  74.0 %
+%TPR:  86.5 %
+%TNR:  61.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 3 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%175 (TP)   25 (FN)      |a = positive (200)
+%81 (FP)    119 (TN)      |b = negative (200)
+%========================
+%Accuracy:  73.5 %
+%TPR:  87.5 %
+%TNR:  59.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 4 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%173 (TP)   27 (FN)      |a = positive (200)
+%79 (FP)    121 (TN)      |b = negative (200)
+%========================
+%Accuracy:  73.5 %
+%TPR:  86.5 %
+%TNR:  60.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 5 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%168 (TP)   32 (FN)      |a = positive (200)
+%73 (FP)    127 (TN)      |b = negative (200)
+%========================
+%Accuracy:  73.75 %
+%TPR:  84.0 %
+%TNR:  63.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 6 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%168 (TP)   32 (FN)      |a = positive (200)
+%72 (FP)    128 (TN)      |b = negative (200)
+%========================
+%Accuracy:  74.0 %
+%TPR:  84.0 %
+%TNR:  64.0 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 7 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%172 (TP)   28 (FN)      |a = positive (200)
+%75 (FP)    125 (TN)      |b = negative (200)
+%========================
+%Accuracy:  74.25 %
+%TPR:  86.0 %
+%TNR:  62.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 8 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%173 (TP)   27 (FN)      |a = positive (200)
+%79 (FP)    121 (TN)      |b = negative (200)
+%========================
+%Accuracy:  73.5 %
+%TPR:  86.5 %
+%TNR:  60.5 %
+%
+%{{{{{{{{{{{{{{{RESULTS - FOLD 9 }}}}}}}}}}}}}}}}
+%=== Confusion Matrix ===
+%a         b        <-- class as
+%173 (TP)   27 (FN)      |a = positive (200)
+%79 (FP)    121 (TN)      |b = negative (200)
+%========================
+%Accuracy:  73.5 %
+%TPR:  86.5 %
+%TNR:  60.5 %
+%
+%---------------- 10-FOLD GENERAL RESULTS ----------------
+% ---> Avg Precision:  69.1478414655 %
+%Standard Deviation:  0.521803685037 %
+% ---> Avg Recall:  85.8 %
+%Standard Deviation:  1.22882057274 %
+% ---> Avg Accuracy:  73.75 %
+%Standard Deviation:  0.273861278753 %
+% ---> Avg F1:  76.5707887951 %
+%Standard Deviation:  0.29666598806 %
+%---> Avg TPR:  85.8 %
+%Standard Deviation:  1.22882057274 %
+%---> Avg TNR:  61.7 %
+%Standard Deviation:  1.41774468788 %
+%array([[ 74.  ,  73.5 ,  74.  ,  73.5 ,  73.5 ,  73.75,  74.  ,  74.25,
+%         73.5 ,  73.5 ]])
 
 \subsection{Avaliação das características mais selecionadas entre domínios}
 
 Discutir os motivos de tais features terem sido mais selecionadas em vez das outras
 
-\section{Outros resultados}
+\subsection{Outros resultados}
 
-Seguindo a reta do artigo
+Comparação com o SVM com a melhor configuração obtida. 

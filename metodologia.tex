@@ -294,46 +294,25 @@ O MCRF escolhe a regra que ficou com o maior grau de compatibilidade após a ava
 
 \section{Avaliação}
 
-\textbf{Aqui ainda vai faltar a parte de falar das medidas de avaliação estatística e das novas medidas a serem usadas nos resultados. Depois da seção seguinte, essa aqui vai ser mudada bastante.}
-
-A avaliação dos resultados do sistema de mineração de opinião desse trabalho foi feita usando validação cruzada de 10 faces. As medidas para avaliar o desempenho da classificação da classificação do sistema foram a \textit{accuracy}, \textit{recall}, \textit{precision} e a pontuação F1. A \textit{accuracy} \ref{eq:acccuracy} é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados corretamente e o total de documentos classificados, sejam eles corretos ou não.
+A avaliação dos resultados do sistema de mineração de opinião desse trabalho foi feita usando validação cruzada de 10 dobras. As medidas para avaliar o desempenho da classificação do sistema foram a \textit{accuracy}, taxa real de positivos (TPR) e taxa real de negativos (TNR). A \textit{accuracy} \ref{eq:acccuracy} é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos classificados, sejam eles corretos ou não.
 
 \begin{equation}
-Accuracy = (\sum TP + \sum TN) / Total
+Accuracy =  (TP + TN) / Total
 \label{eq:acccuracy}
 \end{equation}
 
-A \textit{recall} mede a razão entre os documentos classificados corretamente numa categoria e o total de documentos que realmente pertencem àquela categoria. O \textit{recall} mais utilizado é o positivo, também conhecido como sensibilidade da classificação, que avalia a razão entre a quantidade de documentos positivos classificados corretamente (TP) e esse mesmo número somado à quantidade de falsos negativos (documentos positivos que foram classificados como negativos - TN) \ref{eq:recall}. 
+A taxa real de positivos (TPR) mede a proporção de documentos positivos que são corretamente classificados como tal. Mais especificamente, a TPR mede a razão entre os documentos classificados como positivo sobre o universo de documentos realmente positivos (TP) e documentos positivos que foram classificados como negativos, conhecidos como falsos negativos (FN). A equação \ref{eq:tpr} ilustra como é feito o cálculo dessa medida. 
 
 \begin{equation}
-Recall = TP / (\sum TP + \sum FN)
-\label{eq:recall}
+TPR = TP / (TP + FN)
+\label{eq:tpr}
 \end{equation}
 
-A \textit{precision}, por outro lado, mede a razão entre os documentos classificados corretamente numa categoria e os documentos classificados nessa mesma categoria. A \textit{precision} mais comum é a positiva que mede a razão entre TP e a soma deste com a quantidade de documentos negativos que foram classificados como positivos (falsos positivos - FP) \ref{eq:precision}. 
+A taxa real de negativos (TNR), por outro lado, mede a proporção de documentos negativos que são corretamente classificados como tal. Mais especificamente, a TNR mede a razão entre os documentos classificados como negativo sobre o universo de documentos realmente negativos (TN) e documentos negativos que foram classificados como positivos, conhecidos como falsos positivos (FP). A equação \ref{eq:tnr} ilustra como é feito o cálculo dessa medida. 
 
 \begin{equation}
-Precision = TP / (\sum TP + \sum FP)
-\label{eq:precision}
+TNR = TN / (TN + FP)
+\label{eq:tnr}
 \end{equation}
 
-E a medida F1 considera a \textit{precisão} e a \textit{recall} \ref{eq:f1}. Essa medida é normalmente considerada como a média ponderada entre a \textit{precisão} e a \textit{recall} \ref{eq:f1} \ref{chaovalit2005movie};
-
-\begin{equation}
-F1 = 2 \cdot (precision \cdot recall) / (precision + recall))
-\label{eq:f1}
-\end{equation}
-
-A tabela \ref{table:medidas} ilustra a região em que cada medida atua.
-
-\begin{table}[!h]
-	\centering
-    \begin{tabular}{llll}
-    População & Positivos & Negativos & -- \\ \hline
-    Classificado como positivo & TP & FP & \textbf{Precision} (\ref{eq:precision}) \\
-    Classificado como negativo  & TP & FN& -- \\
-    \textbf{Accuracy} (\ref{eq:acccuracy}) & \textbf{Recall} (\ref{eq:recall})  & -- & -- \\
-    \end{tabular}
-    \caption{Medidas utilizadas na avaliação do sistema fuzzy de mineração de opinião.}
-	\label{table:medidas}
-\end{table}
+Além disso, para comparar os resultados, com fim de verificar se as diferenças entre os experimentos eram significativas ou não, nós utilizamos o teste \textit{Wilcoxon signed-rank} \cite{wilcoxon1945individual} usado para comparar resultados entre conjuntos de testes relacionados, resultados sucessivos sobre um único conjunto de teste, dentre outros. Por fim, também introduzimos um terceiro método, o \textit{Support Vector Machine} (SVM), bastante utilizado em trabalhos de mineração opinião dependentes de domínio e que, comumente, produz bons resultados \cite{ohana2009sentiment, moraes2012document}. Assim, podemos verificar como nossa proposta se comporta frente a métodos tradicionais utilizados nessa área. 

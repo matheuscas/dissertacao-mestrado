@@ -209,7 +209,7 @@ O algoritmo C4.5, por outro lado, gera uma árvore de decisão que é normalment
 
 Após a seleção das características mais aptas para representar os documentos do corpus escolhido, estas são passadas para a etapa de classificação. 
 
-\section{Classificação}
+\section{Classificação}\todo[inline]{Acho que esta seção deveria se chamar Construção do Sistema Baseado em Regras Fuzzy}
 
 %\begin{itemize}
 %\item Definição
@@ -225,9 +225,11 @@ Após a seleção das características mais aptas para representar os documentos
 %\item Metodos de classificacao: CFRM e GFRM
 %\end{itemize}
 
-A etapa de classificação é onde construímos o sistema baseado em regras fuzzy com o fim de predizer o sentimento geral das opiniões de cada documento da base de dados. Para isso, algumas tarefas precisam ser executadas, como a modelagem das características em variáveis lingüísticas usando conjuntos fuzzy \cite{zadeh1965fuzzy} e a criação de um conjunto de regras baseadas nas características selecionadas previamente.
+A classificação do sentimento geral das opiniões de cada documento de uma determinada base de dados será realizada por meio de um Sistema Baseado em Regras Fuzzy (SBRF). Para isso, algumas tarefas precisam ser executadas, tais como, a modelagem fuzzy das variáveis do SBRF, a criação de um conjunto de regras fuzzy e a escolha de um método de raciocínio, responsável pela inferência do sistema. Estas tarefas serão detalhadas nas próximas seções.
 
-Antes de executar as tarefas citadas, foi preciso identificar valores extremos (\textit{outliers}) nos vetores de características e limita-los a um intervalo comum. Nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo de três desvios padrão $\sigma$ da média da característica (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal. Os valores extremos que ficam além do intervalo de três sigmas foram reduzidos para os limites do intervalo.
+\subsection{Modelagem Fuzzy}
+
+No processo da modelagem fuzzy das variáveis do SBRF, idenficamos a necessidade de identificar os valores extremos (\textit{outliers}) nos vetores de características e limita-los a um determinado intervalo. \todo[inline]{Precisa explicar o motivo de identificar os outliers, qual foi o prejuizo com a presenca deles no sistema. Outra questao: está correto usar o termo outliers para este caso?} Nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média da característica (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal. Os valores que ficam além deste intervalo foram reduzidos para os limites do mesmo.
 
 \begin{figure}[h]
 \caption{Regra dos 3 sigmas.}
@@ -236,7 +238,7 @@ Antes de executar as tarefas citadas, foi preciso identificar valores extremos (
 \label{figura:regra_3_sigmas}
 \end{figure}
 
-Após a padronização das características, a primeira tarefa é gerar o conjunto de regras baseadas nos vetores de características. A primeira etapa desse processo do conjunto de regras é definir os conjuntos fuzzy para modelar nossas variáveis de entrada e de saída;  A segunda etapa é a geração de regras fuzzy da combinação das variáveis de entrada e saída das características; A terceira etapa associa um grau para cada regra gerada; E a quarta etapa forma o conjunto final de regras fuzzy, eliminando regras repetidas e inconsistentes. Esse processo é conhecido como o método de Wang-Mendel para geração de regras fuzzy \cite{wang1992generating}. 
+Após a padronização das características, a primeira tarefa é gerar o conjunto de regras baseadas nos vetores de características. A primeira etapa desse processo do conjunto de regras é definir os conjuntos fuzzy para modelar nossas variáveis de entrada e de saída;  A segunda etapa é a geração de regras fuzzy da combinação das variáveis de entrada e saída das características; A terceira etapa associa um grau para cada regra gerada; E a quarta etapa forma o conjunto final de regras fuzzy, eliminando regras repetidas e inconsistentes. Esse processo é conhecido como o método de Wang-Mendel para geração de regras fuzzy \cite{wang1992generating}.
 
 \subsection{O método de Wang-Mendel}
 

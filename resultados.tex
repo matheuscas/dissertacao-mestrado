@@ -284,10 +284,10 @@ Através das últimas seções, foram mostrados resultados utilizando 3 conjunto
 
 \begin{table}[!h]
     \begin{tabular}{lll}
-    ~         		& 3 fuzzy sets 							& 2 fuzzy sets \\ \hline
-    TNR 		  	& 70.4\% $\pm$ 7.11\%         & 71.2\% $\pm$ 4.33\%    \\
-    TPR    		 & 69.7\% $\pm$ 9.81\%        & 70.6\% $\pm$ 3.35\%   \\
-    Accuracy  	 & 70.05\% $\pm$ 4.00\%    	& 70.9\% $\pm$ 3.07\%    \\
+    ~         			& 3 conjuntos fuzzy 							& 2 conjuntos fuzzy \\ \hline
+    TNR 		  		& 70.4\% $\pm$ 7.11\%         			& 71.2\% $\pm$ 4.33\%    \\
+    TPR    		 	& 69.7\% $\pm$ 9.81\%        			& 70.6\% $\pm$ 3.35\%   \\
+    Accuracy  	 	& 70.05\% $\pm$ 4.00\%    			& 70.9\% $\pm$ 3.07\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base de filmes utilizando 2 conjuntos fuzzy na entrada}
 	\label{table:movies2_pesos_2fs}
@@ -303,10 +303,10 @@ Através das últimas seções, foram mostrados resultados utilizando 3 conjunto
 
 \begin{table}[!h]
     \begin{tabular}{lll}
-    ~         		& 3 fuzzy sets 							& 2 fuzzy sets \\ \hline
-    TNR 			& 76.80\% $\pm$ 4.57\%            & 77.2\% $\pm$ 3.54\%    \\
-    TPR    		& 64.9\% $\pm$ 5.50\% 				& 64.4\% $\pm$ 3.46\%   \\
-    Accuracy  	& 70.85\% $\pm$ 3.09\%         	& 70.8\% $\pm$ 3.27\%    \\
+    ~         			& 3 conjuntos fuzzy 							& 2 conjuntos fuzzy \\ \hline
+    TNR 				& 76.80\% $\pm$ 4.57\%            	& 77.2\% $\pm$ 3.54\%    \\
+    TPR    			& 64.9\% $\pm$ 5.50\% 					& 64.4\% $\pm$ 3.46\%   \\
+    Accuracy  		& 70.85\% $\pm$ 3.09\%         		& 70.8\% $\pm$ 3.27\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base da Amazon utilizando 2 conjuntos fuzzy na entrada}
 	\label{table:amazon2_pesos_2fs}
@@ -344,247 +344,70 @@ As quatro regras foram utilizadas na base de filmes e as duas primeiras regras n
 
 \subsection{Avaliação do uso de regras entre domínios}
 
-% REGRAS DA AMAZON EM EPINIONS
+Outra avaliação que fizemos foi a validação do uso de regras entre domínios, utilizando a base inteira da Epinions como teste. Foram usadas as regras geradas da base de filmes e da base da Amazon e aplicadas à base da Epinions. Para isso, a base da Epinions passou por pré-processamento, transformação e extração de características, para que as regras pudessem avaliar corretamente os documentos. É importante frisar que nenhuma adaptação foi feita às regras para que pudesse funcionar corretamente. Da maneira que foram geradas na bases de filmes e Amazon, foram utilizadas na classificação dos documentos da base da Epinions. A tabela \ref{table:epinions} mostra os resultados obtidos.
 
-%{{{{{{{{{{{{{{{RESULTS - FOLD 0 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%105 (FP)    95 (TN)      |b = negative (200)
-%========================
-%Accuracy:  69.0 %
-%TPR:  90.5 %
-%TNR:  47.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 1 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%107 (FP)    93 (TN)      |b = negative (200)
-%========================
-%Accuracy:  68.5 %
-%TPR:  90.5 %
-%TNR:  46.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 2 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%106 (FP)    94 (TN)      |b = negative (200)
-%========================
-%Accuracy:  68.75 %
-%TPR:  90.5 %
-%TNR:  47.0 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 3 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%107 (FP)    93 (TN)      |b = negative (200)
-%========================
-%Accuracy:  68.5 %
-%TPR:  90.5 %
-%TNR:  46.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 4 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%105 (FP)    95 (TN)      |b = negative (200)
-%========================
-%Accuracy:  69.0 %
-%TPR:  90.5 %
-%TNR:  47.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 5 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%106 (FP)    94 (TN)      |b = negative (200)
-%========================
-%Accuracy:  68.75 %
-%TPR:  90.5 %
-%TNR:  47.0 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 6 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%106 (FP)    94 (TN)      |b = negative (200)
-%========================
-%Accuracy:  68.75 %
-%TPR:  90.5 %
-%TNR:  47.0 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 7 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%105 (FP)    95 (TN)      |b = negative (200)
-%========================
-%Accuracy:  69.0 %
-%TPR:  90.5 %
-%TNR:  47.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 8 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%106 (FP)    94 (TN)      |b = negative (200)
-%========================
-%Accuracy:  68.75 %
-%TPR:  90.5 %
-%TNR:  47.0 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 9 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%181 (TP)   19 (FN)      |a = positive (200)
-%106 (FP)    94 (TN)      |b = negative (200)
-%========================
-%Accuracy:  68.75 %
-%TPR:  90.5 %
-%TNR:  47.0 %
-%
-%---------------- 10-FOLD GENERAL RESULTS ----------------
-% ---> Avg Precision:  63.0885594758 %
-%Standard Deviation:  0.153877029356 %
-% ---> Avg Recall:  90.5 %
-%Standard Deviation:  1.11022302463e-14 %
-% ---> Avg Accuracy:  68.775 %
-%Standard Deviation:  0.175 %
-% ---> Avg F1:  74.3480690214 %
-%Standard Deviation:  0.106866593171 %
-%---> Avg TPR:  90.5 %
-%Standard Deviation:  1.11022302463e-14 %
-%---> Avg TNR:  47.05 %
-%Standard Deviation:  0.35 %
-%array([[ 69.  ,  68.5 ,  68.75,  68.5 ,  69.  ,  68.75,  68.75,  69.  ,
-%         68.75,  68.75]])
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    ~         		& Regras da Amazon 					& Regras dos Filmes \\ \hline
+    TNR 			& 47.05\% $\pm$ 0.35\%           & 61.7\% $\pm$ 1.41\%    \\
+    TPR    		& 90.5\% $\pm$ 1.11\% 				& 85.8\% $\pm$ 1.22\%   \\
+    Accuracy  	& 68.77\% $\pm$ .0.17\%         	& 73.75\% $\pm$ 0.27\%    \\
+    \end{tabular}
+    \caption{Resultados da aplicação de regras da base de filmes e Amazon na base Epinions}
+	\label{table:epinions}
+\end{table}
 
-
-%REGRAS DE FILMES NA EPINIONS - O.O
-
-%{{{{{{{{{{{{{{{RESULTS - FOLD 0 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%173 (TP)   27 (FN)      |a = positive (200)
-%77 (FP)    123 (TN)      |b = negative (200)
-%========================
-%Accuracy:  74.0 %
-%TPR:  86.5 %
-%TNR:  61.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 1 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%168 (TP)   32 (FN)      |a = positive (200)
-%74 (FP)    126 (TN)      |b = negative (200)
-%========================
-%Accuracy:  73.5 %
-%TPR:  84.0 %
-%TNR:  63.0 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 2 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%173 (TP)   27 (FN)      |a = positive (200)
-%77 (FP)    123 (TN)      |b = negative (200)
-%========================
-%Accuracy:  74.0 %
-%TPR:  86.5 %
-%TNR:  61.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 3 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%175 (TP)   25 (FN)      |a = positive (200)
-%81 (FP)    119 (TN)      |b = negative (200)
-%========================
-%Accuracy:  73.5 %
-%TPR:  87.5 %
-%TNR:  59.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 4 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%173 (TP)   27 (FN)      |a = positive (200)
-%79 (FP)    121 (TN)      |b = negative (200)
-%========================
-%Accuracy:  73.5 %
-%TPR:  86.5 %
-%TNR:  60.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 5 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%168 (TP)   32 (FN)      |a = positive (200)
-%73 (FP)    127 (TN)      |b = negative (200)
-%========================
-%Accuracy:  73.75 %
-%TPR:  84.0 %
-%TNR:  63.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 6 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%168 (TP)   32 (FN)      |a = positive (200)
-%72 (FP)    128 (TN)      |b = negative (200)
-%========================
-%Accuracy:  74.0 %
-%TPR:  84.0 %
-%TNR:  64.0 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 7 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%172 (TP)   28 (FN)      |a = positive (200)
-%75 (FP)    125 (TN)      |b = negative (200)
-%========================
-%Accuracy:  74.25 %
-%TPR:  86.0 %
-%TNR:  62.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 8 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%173 (TP)   27 (FN)      |a = positive (200)
-%79 (FP)    121 (TN)      |b = negative (200)
-%========================
-%Accuracy:  73.5 %
-%TPR:  86.5 %
-%TNR:  60.5 %
-%
-%{{{{{{{{{{{{{{{RESULTS - FOLD 9 }}}}}}}}}}}}}}}}
-%=== Confusion Matrix ===
-%a         b        <-- class as
-%173 (TP)   27 (FN)      |a = positive (200)
-%79 (FP)    121 (TN)      |b = negative (200)
-%========================
-%Accuracy:  73.5 %
-%TPR:  86.5 %
-%TNR:  60.5 %
-%
-%---------------- 10-FOLD GENERAL RESULTS ----------------
-% ---> Avg Precision:  69.1478414655 %
-%Standard Deviation:  0.521803685037 %
-% ---> Avg Recall:  85.8 %
-%Standard Deviation:  1.22882057274 %
-% ---> Avg Accuracy:  73.75 %
-%Standard Deviation:  0.273861278753 %
-% ---> Avg F1:  76.5707887951 %
-%Standard Deviation:  0.29666598806 %
-%---> Avg TPR:  85.8 %
-%Standard Deviation:  1.22882057274 %
-%---> Avg TNR:  61.7 %
-%Standard Deviation:  1.41774468788 %
-%array([[ 74.  ,  73.5 ,  74.  ,  73.5 ,  73.5 ,  73.75,  74.  ,  74.25,
-%         73.5 ,  73.5 ]])
-
-\subsection{Avaliação das características mais selecionadas entre domínios}
-
-Discutir os motivos de tais features terem sido mais selecionadas em vez das outras
+Os resultados mostram que as regras geradas podem ser usadas entre domínios diferentes, produzindo resultados próximos ou melhores que os produzidos nas próprias bases, como pode ser visto na tabela \ref{table:epinions}.
 
 \subsection{Outros resultados}
 
-Comparação com o SVM com a melhor configuração obtida. 
+Cinquenta e sete características foram extraídas dos documentos para realizar os experimentos dessa pesquisa. Destas, duas foram constantemente selecionadas pelos algoritmos de seleção de características. Foram elas:
+
+\begin{itemize}
+\item Diferença entre a soma positiva e negativa dos adjetivos e dos bigrams formados por advérbio e adjetivo
+\item Diferença entre a soma positiva e negativa dos unigrams e bigrams
+\end{itemize}
+
+Essas características englobam unigrams e bigrams formados por advérbios e adjetivos. Esses resultados corroboram quase que completamente os n-grams propostos por \cite{turney2002thumbs}, formados em sua maioria por advérbios e adjetivos; reiteram também a importância central dos adjetivos na mineração e classificação de opiniões, como apontado por \cite{voll2007not}; além de reforçar o proposto por \cite{benamara2007sentiment} que advérbios tema significativa influência como modificadores de intensidade dos adjetivos.
+
+Também comparamos a configuração final do nosso classificador com um método clássico de aprendizado de máquina muito utilizado na tarefa de mineração de opinião, o \textit{Support Vector Machine} (SVM), e que geralmente produz bons resultados, como ser visto em \cite{moraes2012document}, \cite{pang2002thumbs}, \cite{pang2004sentimental} e \cite{wilson2004just}. 
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    ~         			& Wang-Mendel 2 conjuntos fuzzy						& SVM \\ \hline
+    TNR 				& 71.2\% $\pm$ 4.33\%            								& 72.9\% $\pm$ 5.80\%    \\
+    TPR    			& 70.6\% $\pm$ 3.35\%     									& 68.6\% $\pm$ 7.04\%   \\
+    Accuracy  		& 70.9\% $\pm$ 3.07\%             							& 70.75\% $\pm$ 3.70\%    \\
+    \end{tabular}
+    \caption{Comparação entre os resultados do método de Wang-Mendel e SVM na base de filmes}
+	\label{table:movies_svm}
+\end{table}
+
+%Result 1 - Z-value
+%
+%The Z-value is -0.5606. The p-value is 0.57548. The result is not significant at p≤ 0.01.
+%
+%Result 2 - W-value
+%
+%The W-value is 22. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
+
+\begin{table}[!h]
+    \begin{tabular}{lll}
+    ~         				& Wang-Mendel 2 conjuntos fuzzy 							& SVM \\ \hline
+    TNR 			     	& 77.2\% $\pm$ 3.54\%            									& 75.5\% $\pm$ 3.20\%    \\
+    TPR    			   	& 64.4\% $\pm$ 3.46\%   											& 65.8\% $\pm$ 4.64\%   \\
+    Accuracy  		   & 70.8\% $\pm$ 3.27\%       										& 70.65\% $\pm$ 2.99\%    \\
+    \end{tabular}
+    \caption{Comparação entre os resultados do método de Wang-Mendel e SVM na base da Amazon}
+	\label{table:amazon_svm}
+\end{table}
+
+%Result 1 - Z-value
+%
+%The Z-value is -1.2232. The p-value is 0.22246. The result is not significant at p≤ 0.01.
+%
+%Result 2 - W-value
+%
+%The W-value is 15.5. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
+
+Nossos resultados mostram que o classificador construído nesse trabalho equivale aos resultados do SVM, pois em ambas as bases as diferenças dos resultados não são significativas para $p <= 0.01$. Contudo, nosso classificador possui regras legíveis para seres humanos, é independente de domínio e não precisa de nova rodada de treino para diferentes bases, diferentemente do SVM.

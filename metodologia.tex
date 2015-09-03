@@ -229,9 +229,11 @@ Após a seleção das características mais aptas para representar os documentos
 
 A classificação do sentimento geral das opiniões de cada documento de uma determinada base de dados será realizada por meio de um Sistema Baseado em Regras Fuzzy (SBRF). Para isso, algumas tarefas precisam ser executadas, tais como, a modelagem fuzzy das variáveis do SBRF, a criação de um conjunto de regras fuzzy e a escolha de um método de raciocínio, responsável pela inferência do sistema. Estas tarefas serão detalhadas nas próximas seções.
 
-\subsection{Modelagem Fuzzy}
+\subsection{Modelagem Fuzzy das Variáveis do Sistema Fuzzy}
 
-No processo da modelagem fuzzy das variáveis do SBRF, idenficamos a necessidade de identificar os valores extremos (\textit{outliers}) nos vetores de características e limita-los a um determinado intervalo. \todo[inline]{Precisa explicar o motivo de identificar os outliers, qual foi o prejuizo com a presenca deles no sistema. Outra questao: está correto usar o termo outliers para este caso?} Nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média da característica (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal. Os valores que ficam além deste intervalo foram reduzidos para os limites do mesmo.
+No processo da modelagem fuzzy das variáveis do SBRF, constatamos a necessidade de identificar os valores extremos (\textit{outliers}) nos vetores de características e limita-los a um determinado intervalo. \todo[inline]{Precisa explicar o motivo de identificar os outliers, qual foi o prejuizo com a presenca deles no sistema. Outra questao: está correto usar o termo outliers para este caso? Outra coisa: insira uma nota de rodapé explicando que as variáveis do SBRF são as caracteristicas das bases de dados, para nao confundir o leitor. O uso do termo variavel é quase impossível de não usar, pois se falar "as caracteriticas do SBRF" dá outro sentido, completamente diferente do que estamos dizendo}
+
+Nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média de um determinado conjunto de valores (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal. Os valores que ficam além deste intervalo foram reduzidos para os limites do mesmo.
 
 \begin{figure}[h]
 \caption{Regra dos 3 sigmas.}
@@ -240,54 +242,53 @@ No processo da modelagem fuzzy das variáveis do SBRF, idenficamos a necessidade
 \label{figura:regra_3_sigmas}
 \end{figure}
 
-Após a delimitação dos valores das características de acordo com a regra do três-sigma, definimos um único formato de conjunto fuzzy para todas as variáveis do SBRF. O formato escolhido foi o triangular, por sua simplicidade, e também, pelo fato de ser muito utilizado na literatura.\todo[inline]{Procurar por REFERENCIAS}
+Após a delimitação dos valores das características de acordo com a regra do três-sigma, definimos um único formato de conjunto fuzzy para todas as variáveis do SBRF. O formato escolhido foi o triangular, por sua simplicidade, e também, pelo fato de ser muito utilizado na literatura.\todo[inline]{Inserir estas referencias: Integration of an Index to Preserve the Semantic Interpretabiliy in the MOE Rule Selection and Tuning of LFS (GACTO et al 2010), Multi-objective Evolutionary Rule and Condition Selection for Designing Fuzzy Rule-based Classifiers (Antonelli et al 2012), Alcala et al 2009 A MOEA to concurrently learn rule and data bases of linguistic FRBS, Multiobjective Genetic Generation of Fuzzy Classifiers using IRL (Cardenas e Camargo 2012) Inserir em ordem cronológica}
 
-a primeira tarefa é gerar o conjunto de regras baseadas nos vetores de características. A primeira etapa desse processo do conjunto de regras é definir os conjuntos fuzzy para modelar nossas variáveis de entrada e de saída;  A segunda etapa é a geração de regras fuzzy da combinação das variáveis de entrada e saída das características; A terceira etapa associa um grau para cada regra gerada; E a quarta etapa forma o conjunto final de regras fuzzy, eliminando regras repetidas e inconsistentes. Esse processo é conhecido como o método de Wang-Mendel para geração de regras fuzzy \cite{wang1992generating}.
+Para as variáveis de entrada do SBRF, nossa primeira modelagem foi dividir igualmente os dados em $2N + 1$ conjuntos fuzzy \cite{wang1992generating}, para $N$ igual a dois, resultando em cinco regiões fuzzy: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira modelagem.
 
-\subsection{O método de Wang-Mendel}
-
-A primeira etapa de definição dos conjuntos fuzzy consiste na divisão dos dados de entrada e saída em regiões fuzzy. Nós escolhemos os conjuntos fuzzy triangulares para o mapeamento dos dados. Para os dados de saída, nós utilizamos dois conjuntos fuzzy $Positivo (P)$ e $Negativo (N)$, de mesmo tamanho, já que nossa tarefa principal é classificar o sentimento geral dos documentos em positivo ou negativo. A figura \ref{fig:conjuntos_fuzzy_saida} mostra como ficou a divisão da saída \cite{wang1992generating}. 
+Para as variáveis de entrada do SBRF testamos três modelagens diferentes: cinco, três e dois conjuntos fuzzy, uniformemente distribuídos no domínio de cada variável. Os conjuntos fuzzy foram denominados de: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira modelagem. As figuras \ref{figura:tres_conjuntos_fuzzy} e \ref{fig:conjuntos_fuzzy_entrada_final} ilustram as partições fuzzy com três e dois conjuntos fuzzy, respectivamente.
 
 \begin{figure}[h]
-\caption{Divisão da saída em 2 conjuntos fuzzy}
-\centering
-\includegraphics[scale=0.45]{conjuntos_fuzzy_saida.png}
-\label{figura:conjuntos_fuzzy_saida}
-\end{figure}
-
-Para os dados de entrada, nossa primeira abordagem foi dividir igualmente, de maneira automática,os dados em $2N + 1$ \cite{wang1992generating} conjuntos fuzzy, para $N$ igual a 2, resultando em cinco regiões fuzzy: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira abordagem.
-
-\begin{figure}[h]
-\caption{Divisão das características de entrada em 5 conjuntos fuzzy}
+\caption{Modelagem com 5 conjuntos fuzzy}
 \centering
 \includegraphics[scale=0.45]{cinco_conjuntos_fuzzy.png}
 \label{figura:cinco_conjuntos_fuzzy}
 \end{figure}
 
-O uso de mais conjuntos fuzzy para dividir as regiões das características faz com que o mapeamento dos dados seja mais granular, possibilitando classificar casos mais específicos. Todavia, os dados das características se sobrepõem bastante, anulando esse efeito da quantidade maior de regiões fuzzy. Assim, decidimos diminuir a quantidade de regiões fuzzy, diminuindo a complexidade das regras a serem geradas e aumentando a performance da classificação. As regiões fuzzy que restaram foram $Baixo (B)$, $Medio (M)$ e $Alto (A)$, como mostra a figura \ref{figura:tres_conjuntos_fuzzy}.
-
 \begin{figure}[h]
-\caption{Divisão das características de entrada em 3 conjuntos fuzzy}
+\caption{Modelagem com 3 conjuntos fuzzy}
 \centering
 \includegraphics[scale=0.45]{tres_conjuntos_fuzzy.png}
 \label{figura:tres_conjuntos_fuzzy}
 \end{figure}
 
-Mais uma vez, em nossos experimentos, a natureza de sobreposição dos dados das características se mostrou evidente com o uso do conjunto fuzzy $Medio$. A figura \ref{fig:distribuicao_dados_sobreposicao} mostra um das características extraídas na etapa anterior. É possível perceber que há significativa sobreposição dos dados na região central da distribuição onde o conjunto fuzzy $Medio$ tem maior grau de pertinência. Daí, manter o conjunto $Medio$ sob estas condições resultaria em regras que classificariam erroneamente muitos dados como médios. Assim, nós decidimos reduzir novamente a quantidade de conjuntos fuzzy para 2, $Baixo (B)$ e $Alto (A)$, como mostra a figura \ref{fig:conjuntos_fuzzy_entrada_final}. 
-
 \begin{figure}[h]
-\caption{Distribuição dos dados de uma das características da base de dados}
-\centering
-\includegraphics[scale=0.45]{distribuicao_dados_sobreposicao.png}
-\label{figura:distribuicao_dados_sobreposicao}
-\end{figure}
-
-\begin{figure}[h]
-\caption{Divisão das características de entrada em 2 conjuntos fuzzy}
+\caption{Modelagem com 2 conjuntos fuzzy}
 \centering
 \includegraphics[scale=0.45]{conjuntos_fuzzy_entrada_final.png}
 \label{figura:conjuntos_fuzzy_entrada_final}
 \end{figure}
+
+\todo[inline]{Matheus, na figura, retire o m(x1), pois isso representa o grau de pertinencia de x1 no conjunto m. Mas como o objetivo eh apenas ilustrar a particao fuzzy da variavel linguistica X1, ele nao serah necessario. Faca isso nas outras figuras tambem!}
+
+Para a variável de saída, nós utilizamos dois conjuntos fuzzy, $Positivo (P)$ e $Negativo (N)$, distribuídos uniformemente. Isto porque, a nossa principal tarefa é classificar o sentimento geral dos documentos em positivo ou negativo. A figura \ref{fig:conjuntos_fuzzy_saida} mostra como ficou a modelagem da variável de saída.
+
+\begin{figure}[h]
+\caption{Modelagem da variável de saída em 2 conjuntos fuzzy}
+\centering
+\includegraphics[scale=0.45]{conjuntos_fuzzy_saida.png}
+\label{figura:conjuntos_fuzzy_saida}
+\end{figure}
+
+O uso de mais ou menos conjuntos fuzzy faz com que o mapeamento dos dados seja mais ou menos granular, possibilitando classificar casos mais específicos. Todavia, quanto maior a granularidade, mais complexo será o processo de construção das regras. Esta é uma característica do método de Wang-Mendel \cite{wang1992generating}, que foi utilizado neste trabalho, e que será detalhado na próxima seção.
+
+\todo[inline]{Nao esquecer de explicar no capítulo de Fundamentação Teórica: granularidade, partição fuzzy. Outra coisa: as figuras não estão ficando em lugares adequados. Precisa adequar as posições delas... E tem uma figura com ??}
+
+\subsection{O método de Wang-Mendel}
+
+O método de Wang-Mendel é uma forma rápida para construção de regras fuzzy orientado à dados numéricos, os quais representam as amostras de um determinado conjunto de dados. A primeira etapa deste método é definir os conjuntos fuzzy das variáveis de entrada e saída. A segunda etapa é a geração das regras fuzzy a partir da combinação das variáveis de entrada e saída. A terceira etapa associa um grau para cada regra gerada. E por último, o conjunto final de regras fuzzy é gerado, eliminando as regras repetidas e inconsistentes \cite{wang1992generating}.
+
+\todo[inline]{Matheus, vc tem duas opções: 1.Descrever de forma geral o algoritmo, ou 2.Descrever detalhadamente o algoritmo. Se vc escolher 1. Eu recomendaria tirar toda definição formal de vetor de característica, de conjunto, etc., e deixar somente texto para explicar o algoritmo. Eu recomendaria a inserção de um pseudocodigo, após o texto explicativo. Se vc escolher 2. Vc deve fazer como está no artigo, ou seja, definir formalmente como estão os seus dados (vetores de características), mostrar a partição fuzzy das varíaveis, etc... em outras palavras, seria transcrever o exemplo do artigo de Wang-Mendel. O seu texto está entre as opções 1 e 2. A opção 1 é mais simples, vc teria menos trabalho. A opção 2, vc teria que melhorar mais a sua explicação. E ai? qual vai ser?}
 
 Uma vez definidas as regiões fuzzy (ou conjuntos fuzzy) dos dados de entrada e saída, a próxima tarefa é a criação do conjunto de regras baseadas nas características. Nosso conjunto de características pode ser representado da seguinte forma:
 
@@ -296,7 +297,7 @@ Uma vez definidas as regiões fuzzy (ou conjuntos fuzzy) dos dados de entrada e 
 \label{eq:repr_feat}
 \end{equation}
 
-onde, $x_1^k, x_2^k, ... , x_n^k$ são os vetores de características e $y^k$ é a polaridade, positiva ou negativa, final de um documento. Para gerar regras fuzzy a partir das  características, precisamos determinar os graus de pertinência de cada característica $x_i^k$ e $y^k$ para cada conjunto fuzzy que definimos anteriormente. Por exemplo, é preciso saber qual o grau de pertinência de $x_1^1$ para o conjunto $Alto$ e para o conjunto $Baixo$, assim como para $x_1^2$ e o grau de pertinência de $y^1$ e $y^2$ para os conjuntos $Positivo$ e $Negativo$. Em seguida, associa-se cada $x_i^k$ e $y^k$ ao conjunto fuzzy com maior grau de pertinência resultante (se $x_1^1$ teve maior grau de pertinência no conjunto $Baixo$, ele será associado a essa região, e assim sucessivamente). Assim, podemos definir a criação de uma regra fuzzy da seguinte forma:
+onde, $x_1^k, x_2^k, ... , x_n^k$ são os vetores de características e $y^k$ é a polaridade, positiva ou negativa, de um documento. Para gerar regras fuzzy a partir das  características, precisamos determinar os graus de pertinência de cada característica $x_i^k$ e $y^k$ para cada conjunto fuzzy que definimos anteriormente. Por exemplo, é preciso saber qual o grau de pertinência de $x_1^1$ para o conjunto $Alto$ e para o conjunto $Baixo$, assim como para $x_1^2$ e o grau de pertinência de $y^1$ e $y^2$ para os conjuntos $Positivo$ e $Negativo$. Em seguida, associa-se cada $x_i^k$ e $y^k$ ao conjunto fuzzy com maior grau de pertinência resultante (se $x_1^1$ teve maior grau de pertinência no conjunto $Baixo$, ele será associado a essa região, e assim sucessivamente). Assim, podemos definir a criação de uma regra fuzzy da seguinte forma:
 
 \begin{equation}
 \begin{split}
@@ -317,26 +318,33 @@ D(regra) = m_{CFI_n}(x_1) \cdot m_{CFI_m}(x_2) \cdot m_{CFI_o}(x_n) \cdot ... \c
 
 onde $m_{CFI_o}(x_n)$, por exemplo, é o grau de pertinência de $x_n$ no conjunto fuzzy $CFI_o$. Por exemplo, considere uma regra com duas características: "IF $x_1$ is Alto and $x_2$ is Alto, THEN $y$ is Positivo". O grau dessa regra, utilizando a estratégia \ref{eq:grau_regra}, é obtido assim:  $D(regra) = m_{Alto}(x_1) \cdot m_{Alto}(x_2) \cdot m_{Positivo}(y)$. Depois de eliminadas as regras conflitantes, as regras finais constituem o conjunto de regras fuzzy baseado nas características dos documentos. Com esse conjunto de regras é possível classificar os documentos da base de dados.
 
-\subsection{Classificação}
+\subsection{Raciocínio Fuzzy}
 
-O conjunto gerado de regras fuzzy é usado, agora, por um mecanismo de inferência fuzzy para determinar a polaridade final dos documentos da base de dados. Nós utilizamos dois mecanismos, com fins de comparação, que foram Método Geral do Raciocínio Fuzzy (MGRF) e o Método Clássico do Raciocínio Fuzzy (MCRF) \cite{cordon1999proposal}.
-Ambos mecanismos tem processos bastante similares e somente diferem na etapa de decisão na classificação. O mecanismo comum a ambos é: cada vetor de característica é avaliado por todas as regras fuzzy geradas e um grau de compatibilidade \ref{eq:compat_regra} é produzido para cada regra. 
+Após a modelagem fuzzy das variáveis de entrada e saída do sistema, e da construção das regras fuzzy, é necessário definir um mecanismo de inferência fuzzy, que será responsável em determinar a polaridade (positiva ou negativa) dos documentos da base de dados. Nós utilizamos dois mecanismos para fins de comparação, o Método de Raciocínio Fuzzy Geral (MRFG) e o Método de Raciocínio Fuzzy Clássico (MCRF) \cite{cordon1999proposal}.
+
+\todo[inline]{Eu mudei os nomes dos métodos para: Método de Raciocínio Fuzzy Geral (MRFG), Método de Raciocínio Fuzzy Clássico (MRFC), consequentemente, isso afetará as legendas de figuras, tabelas e texto :(}
+
+Ambos mecanismos tem processos bastante similares e somente diferem na etapa de decisão na classificação. O mecanismo comum a ambos é: cada vetor de característica é avaliado por todas as regras fuzzy e um grau de compatibilidade \ref{eq:compat_regra} é calculado para cada regra. 
+
+\todo[inline]{Quando for referenciar tabela, figura, equação, faça de forma direta. Exemplo: De acordo com a Equação 3.6, um grau de compatibilidade é calculado entre a regra i e a amostra j. A equação 3.6 deverá estar de acordo com a formalização que será apresentada na Fundamentação Teórica, ou seja, quando for descrever sobre as conjuntos fuzzy, funções de pertinência, etc.}
 
 \begin{equation}
 D(regra) = m_{CFI_n}(x_1) \cdot m_{CFI_m}(x_2) \cdot m_{CFI_o}(x_3) \cdot ...\cdot m_{CFI_p}(x_n)
 \label{eq:compat_regra}
 \end{equation}
 
-O MCRF escolhe a regra que ficou com o maior grau de compatibilidade após a avaliação das características e classifica o documento com a classe de saída dessa regra. Do outro lado, o MGRF considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MGRF calcula a média dos graus de compatibilidade entre as regras que tem o consequente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
+O MRFC escolhe a regra que ficou com o maior grau de compatibilidade após a avaliação das características e classifica o documento com a classe de saída dessa regra. \todo[inline]{Aqui tem um erro: o metodo calcula o grau de compatibilidade da regra i com todos os padroes j. Assim, a regra terá como saída, a saída do padrão com maior compatibilidade} Por outro lado, o MRFG considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MGRF calcula a média dos graus de compatibilidade entre as regras que tem o consequente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
 
-\section{Avaliação}
+\section{Métricas de Avaliação}
 
-A avaliação dos resultados do sistema de mineração de opinião desse trabalho foi feita usando validação cruzada de 10 dobras. As medidas para avaliar o desempenho da classificação do sistema foram a \textit{accuracy}, taxa real de positivos (TPR) e taxa real de negativos (TNR). A \textit{accuracy} \ref{eq:acccuracy} é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos classificados, sejam eles corretos ou não.
+A avaliação dos resultados deste trabalho foi feita usando validação cruzada de 10 dobras \todo[inline]{huuumm... dobras ficou esquisito... melhor usar folds mesmo. E accuracy pode ser acurácia.} As medidas para avaliar o desempenho da classificação do sistema foram a \textit{accuracy}, taxa real de positivos (TPR) e taxa real de negativos (TNR). A \textit{accuracy} \ref{eq:acccuracy} é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos classificados, sejam eles corretos ou não.\todo[inline]{aqui a divisão é feita pela quantidade total de documentos da base, ou seja, estes não foram classificados. Retire a parte de classificados, sejam eles corretos ou não}
 
 \begin{equation}
 Accuracy =  (TP + TN) / Total
 \label{eq:acccuracy}
 \end{equation}
+
+\todo[inline]{A tradução correta é: Taxa de verdadeiro positivo, verdadeiro negativo, falso positivo e falso negativo}
 
 A taxa real de positivos (TPR) mede a proporção de documentos positivos que são corretamente classificados como tal. Mais especificamente, a TPR mede a razão entre os documentos classificados como positivo sobre o universo de documentos realmente positivos (TP) e documentos positivos que foram classificados como negativos, conhecidos como falsos negativos (FN). A equação \ref{eq:tpr} ilustra como é feito o cálculo dessa medida. 
 
@@ -352,4 +360,8 @@ TNR = TN / (TN + FP)
 \label{eq:tnr}
 \end{equation}
 
-Além disso, para comparar os resultados, com fim de verificar se as diferenças entre os experimentos eram significativas ou não, nós utilizamos o teste \textit{Wilcoxon signed-rank} \cite{wilcoxon1945individual} usado para comparar resultados entre conjuntos de testes relacionados, resultados sucessivos sobre um único conjunto de teste, dentre outros. Por fim, também introduzimos um terceiro método, o \textit{Support Vector Machine} (SVM), bastante utilizado em trabalhos de mineração opinião dependentes de domínio e que, comumente, produz bons resultados \cite{ohana2009sentiment, moraes2012document}. Assim, podemos verificar como nossa proposta se comporta frente a métodos tradicionais utilizados nessa área. 
+\todo[inline]{De onde tirou as definições de TPR e TNR? No artigo de García-Pedrajas and Pérez-Rodríguez (2012) Multi-selection of instances: A straightforward way to improve evolutionary instance selection, Applied Soft Computing 12 (2012) 3590–3602. TPR é chamado de sensitivity e TNR é chamado de specificity}
+
+Além disso, com o objetivo de verificar se as diferenças entre os resultados dos experimentos são significativas ou não, nós utilizamos o teste de \textit{Wilcoxon signed-rank} \cite{wilcoxon1945individual}, usado para comparar resultados entre conjuntos de testes relacionados, resultados sucessivos sobre um único conjunto de teste, dentre outros. Por fim, também usamos um terceiro método, o \textit{Support Vector Machine} (SVM), bastante utilizado em trabalhos de mineração de opinião dependentes de domínio e que, comumente, produz bons resultados \cite{ohana2009sentiment, moraes2012document}. Assim, podemos verificar como nossa proposta se comporta frente aos métodos tradicionais utilizados nessa área. 
+
+\todo[inline]{SVM não é um classificador??? Aqui vc está dizendo que é um método estatístico?!}

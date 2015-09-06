@@ -216,17 +216,92 @@ Diferentemente da maioria dos trabalhos relacionados que consideram os n-grams c
 \subsection{Extração de características}
 
 Uma abordagem comumente utilizada na mineração de opiniões, é utilizar o diretamente o vetor de termos ou n-grams (bag-of-words) para gerar um classificador que determine a polaridade dos documentos. Esta abordagem no entanto produz um classificador fortemente dependente de termos individuais presentes no conjunto de dados de treinamento, com forte dependência de domínio. \todo[inline]{acho melhor apresentar primeiro o tradicional para depois contrastar com a nossa, tenta completar esse parágrafo}
+\todo[inline]{MATHEUS: acho que você mesmo modificou esse, não?}
 
-Por este motivo, realizamos uma sub-etapa de extração de características dos documentos a partir dos vetores de polaridades da etapa de transformação. Essa abordagem  analisa os documentos por suas características em vez de seu conteúdo específico para decidir a orientação semântica \todo[inline]{que orientação semantica?} destes. As características que utilizamos não são específicas para nenhum domínio e podem ser facilmente aplicadas para quaisquer outros tipos de base de dados \cite{pang2002thumbs}. Além disso, a extração dessas características reduz a dimensionalidade dos dados, já que os vetores resultantes da etapa é significativamente menor que um vetor comum de bag-of-words.
+Por este motivo, realizamos uma sub-etapa de extração de características dos documentos a partir dos vetores de polaridades da etapa de transformação. Essa abordagem analisa os documentos por suas características em vez de seu conteúdo específico para decidir \sout{a orientação semântica destes} a polaridade do sentimento geral dos documentos \todo[inline]{que orientação semantica?} . As características que utilizamos não são específicas para nenhum domínio e podem ser facilmente aplicadas para quaisquer outros tipos de base de dados \cite{pang2002thumbs}. Além disso, a extração dessas características reduz a dimensionalidade dos dados, já que os vetores resultantes da etapa é significativamente menor que um vetor comum de \textit{bag-of-words}.
 
-Por outro lado, abordagens de mineração de opinião que são dependentes de domínio, normalmente baseadas em métodos de aprendizado de máquina, conseguem taxas de acurácia iguais ou maiores que 95\%, pois alimentam o classificador com os vetores de palavras dos documentos. Assim, o classificador aprende com os documentos da base de dados quais palavras fazem parte dos documentos positivos e negativos. Contudo, para alcançar altas taxas de classificação, essa abordagens precisam de uma grande massa de dados anotadas para treinamento e considerável tempo de treino para poder classificar corretamente. Todavia, ainda, produzem resultados muito ruins entre domínios diferentes sem novas rodadas de treinamento, evidenciando uma superadaptação ao domínio de treinamento e pouca generalização.
+Por outro lado, abordagens de mineração de opinião que são dependentes de domínio, normalmente baseadas em métodos de aprendizado de máquina, conseguem taxas de acurácia iguais ou maiores que 95\%, pois alimentam o classificador com os vetores de palavras dos documentos. Assim, o classificador aprende com os documentos da base de dados quais palavras fazem parte dos positivos e negativos. Contudo, para alcançar altas taxas de classificação, essas abordagens precisam de uma grande massa de dados anotadas para treinamento e considerável tempo de treino para poder classificar corretamente. Ainda, produzem resultados muito ruins entre domínios diferentes sem novas rodadas de treinamento, evidenciando uma superadaptação ao domínio de treinamento e pouca generalização.
 
-Diferentes estudos propuseram diferentes características para descrever ou discriminar documentos para classificar suas polaridades \cite{wilson2005recognizing, ohana2009sentiment, taboada2011lexicon}. Com o objetivo de capturar diversos aspectos dos documentos, nós decidimos extrair um grande número de características. Assim, nós usamos as características apresentadas nesses trabalhos e criamos nossas próprias, derivando destas, resultando em 57 caraterísticas diferentes.
+Diferentes estudos propuseram diferentes características para descrever ou discriminar documentos para classificar suas polaridades \cite{wilson2005recognizing, ohana2009sentiment, taboada2011lexicon}. Com o objetivo de capturar diversos aspectos dos documentos, nós decidimos extrair um grande número de características. Assim, nós usamos as características apresentadas nesses trabalhos e criamos nossas próprias, resultando em 57 caraterísticas diferentes.
 
 \todo[inline]{ficou muito pesado esse próximo parágrafo, difícil de acompanhar, tenta quebrar e montar uma lista ou algo assim para deixar mais fácil entender, listando todas aqui e não no apendice}
-Três tipos de características foram definidas: somatório, contagem e valores máximos. Características de somatório envolvem a soma as polaridades dos diferentes tipos de n-grams, como a soma dos adjetivos de um documento e a soma dos advérbios. As características de contagem são criadas da mesma maneira para os n-grams selecionados, criando características como a quantidade de bigrams positivos formados por advérbios e adjetivos. As características de valores máximos se referem aos valores para um dado n-gram no documento. Por exemplo, se o valor máximo absoluto entre os unigrams de um documento for positivo, essa característica tem valor igual a 1. Por outro lado, se o valor máximo for negativo, a característica tem valor -1. Mais características foram derivadas dos três tipos que acaram de ser descritos, aplicando normalização e subtração entre elas. Por exemplo, a diferença entre bigrams positivos e negativos de um documento ou o somatório normalizado de adjetivos positivos são uma das características derivadas por este trabalho. A lista completa de características pode ser encontrada no apêndice \ref{sec:appendix1}.
+\sout{Três tipos de características foram definidas: somatório, contagem e valores máximos. Características de somatório envolvem a soma as polaridades dos diferentes tipos de n-grams, como a soma dos adjetivos de um documento e a soma dos advérbios. As características de contagem são criadas da mesma maneira para os n-grams selecionados, criando características como a quantidade de bigrams positivos formados por advérbios e adjetivos. As características de valores máximos se referem aos valores para um dado n-gram no documento. Por exemplo, se o valor máximo absoluto entre os unigrams de um documento for positivo, essa característica tem valor igual a 1. Por outro lado, se o valor máximo for negativo, a característica tem valor -1. Mais características foram derivadas dos três tipos que acaram de ser descritos, aplicando normalização e subtração entre elas. Por exemplo, a diferença entre bigrams positivos e negativos de um documento ou o somatório normalizado de adjetivos positivos são uma das características derivadas por este trabalho. A lista completa de características pode ser encontrada no apêndice \ref{sec:appendix1}.}
 
-Depois da extração de características, os vetores de polaridades da etapa de transformação são substituídos por vetores de características. Cada documento, agora, é representado por um vetor com 67 caraterísticas diferentes. \todo[inline]{67 ou 57?}
+Três tipos básicos de características foram definidas: somatório, contagem e valores máximos. Características de somatório envolvem a soma as polaridades dos n-grams; as características de contagem produzem a contagem dos tipos de n-grams e as respectivas polaridades associadas (e.g. 10 adjetivos positivos); e as características de valores máximos se referem aos valores extremos para um dado n-gram no documento (e.g. a maior polaridade absoluta num documento é de um termo negativo, assim o resultado é -1). Mais características foram derivadas a partir dos três tipos básicos, aplicando normalização e subtração entre elas. 
+
+As características de somatório foram:
+
+\begin{itemize}
+\item Soma dos adjetivos positivos
+\item Soma dos adjetivos negativos
+\item Soma dos advérbios positivos
+\item Soma dos advérbios negativos
+\item Soma normalizada dos adjetivos positivos
+\item Soma normalizada dos advérbios positivos
+\item Soma normalizada dos adjetivos negativos
+\item Soma normalizada dos advérbios negativos
+\item Diferença entre a soma dos adjetivos positivos e negativos
+\item Diferença entre a soma dos advérbios positivos e negativos
+\item Soma dos adjetivos e dos bigrams positivos formados por advérbio e adjetivo
+\item Soma dos adjetivos e dos bigrams negativos formados por advérbio e adjetivo
+\item Soma dos advérbios e dos bigrams positivos somente formados por advérbios
+\item Soma dos advérbios e dos bigrams negativos somente formados por advérbios
+\item Soma dos unigrams e bigrams positivos
+\item Soma dos unigrams e bigrams negativos
+\item Soma dos unigrams, bigrams e trigrams positivos
+\item Soma dos unigrams, bigrams e trigrams negativos
+\item Soma normalizada dos adjetivos e dos bigrams positivos formados por advérbio e adjetivo
+\item Soma normalizada dos adjetivos e dos bigrams negativos formados por advérbio e adjetivo
+\item Soma normalizada dos advérbios e dos bigrams positivos somente formados por advérbios
+\item Soma normalizada dos advérbios e dos bigrams negativos somente formados por advérbios
+\item Soma normalizada dos unigrams e bigrams positivos
+\item Soma normalizada dos unigrams e bigrams negativos
+\item Soma normalizada dos unigrams, bigrams e trigrams positivos
+\item Soma normalizada dos unigrams, bigrams e trigrams negativos
+\item Diferença entre a soma positiva e negativa dos adjetivos e dos bigrams formados por advérbio e adjetivo
+\item Diferença entre a soma positiva e negativa dos advérbios e dos bigrams formados somente por advérbios
+\item Diferença entre a soma positiva e negativa dos unigrams e bigrams
+\item Diferença entre a soma positiva e negativa dos unigrams, bigrams e trigrams
+\item Percentual de n-grams negados
+\end{itemize}
+
+De maneira análoga, as características de contagem foram as seguintes:
+
+\begin{itemize}
+\item Contagem dos adjetivos positivos
+\item Contagem dos adjetivos negativos
+\item Contagem dos advérbios positivos
+\item Contagem dos advérbios negativos
+\item Diferença entre a contagem de adjetivos positivos e negativos
+\item Diferença entre a contagem de advérbios positivos e negativos
+\item Contagem de adjetivos e bigrams positivos compostos por advérbio e adjetivo
+\item Contagem de adjetivos e bigrams negativos compostos por advérbio e adjetivo
+\item Contagem de advérbios e bigrams positivos compostos somente por advérbios
+\item Contagem de advérbios e bigrams negativos compostos somente por advérbios
+\item Contagem dos unigrams e bigrams positivos
+\item Contagem dos unigrams e bigrams negativos
+\item Contagem de unigrams, bigrams e trigrams positivos 
+\item Contagem de unigrams, bigrams e trigrams negativos
+\item Diferença entre a contagem positiva e negativa de adjetivos e bigrams compostos por advérbio e adjetivo
+\item Diferença entre a contagem positiva e negativa de advérbios e bigrams compostos somente por advérbios
+\item Diferença entre a contagem positiva e negativa de unigrams e bigrams
+\item Diferença entre a contagem positiva e negativa de unigrams, bigrams e trigrams
+\item Quantidade de n-grams extraídos do documento
+\item Tamanho do documento (contabiliza todos os n-grams existentes no documento)
+\end{itemize}
+
+E por fim, as características de valores máximos foram:
+
+\begin{itemize}
+\item Classe da polaridade máxima entre os adjetivos de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+\item Classe da polaridade máxima entre os advérbios de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+\item Classe da polaridade máxima entre adjetivos e bigrams formados por advérbio e adjetivo (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+\item Classe da polaridade máxima entre advérbios e bigrams formados somente por advérbios (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+\item Classe da polaridade máxima entre unigrams e bigrams de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+\item Classe da polaridade máxima entre unigrams, bigrams e trigrams de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+\end{itemize}
+
+Depois da extração de características, os vetores de polaridades da etapa de transformação são substituídos por vetores de características. Cada documento, agora, é representado por um vetor com 57 caraterísticas diferentes. \todo[inline]{67 ou 57?}
 
 \subsection{A seleção de características}
 

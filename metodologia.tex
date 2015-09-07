@@ -315,7 +315,7 @@ O algoritmo C4.5, por outro lado, gera uma árvore de decisão que é normalment
 
 Após a seleção das características mais aptas para representar os documentos do corpus escolhido, estas são passadas para a etapa de classificação. 
 
-\section{Classificação}\todo[inline]{Acho que esta seção deveria se chamar Construção do Sistema Baseado em Regras Fuzzy}
+\section{Construção do Sistema Baseado em Regras Fuzzy}\todo[inline]{Acho que esta seção deveria se chamar Construção do Sistema Baseado em Regras Fuzzy}
 
 %\begin{itemize}
 %\item Definição
@@ -335,9 +335,7 @@ A classificação do sentimento geral das opiniões de cada documento de uma det
 
 \subsection{Modelagem Fuzzy das Variáveis do Sistema Fuzzy}
 
-No processo da modelagem fuzzy das variáveis do SBRF, constatamos a necessidade de identificar os valores extremos (\textit{outliers}) nos vetores de características e limita-los a um determinado intervalo. \todo[inline]{Precisa explicar o motivo de identificar os outliers, qual foi o prejuizo com a presenca deles no sistema. Outra questao: está correto usar o termo outliers para este caso? Outra coisa: insira uma nota de rodapé explicando que as variáveis do SBRF são as caracteristicas das bases de dados, para nao confundir o leitor. O uso do termo variavel é quase impossível de não usar, pois se falar "as caracteriticas do SBRF" dá outro sentido, completamente diferente do que estamos dizendo}
-
-Nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média de um determinado conjunto de valores (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal. Os valores que ficam além deste intervalo foram reduzidos para os limites do mesmo.
+No processo da modelagem fuzzy das variáveis \footnote{As variáveis do SBRF são as características das bases de dados} do SBRF, constatamos a necessidade de padronizar a escolha dos intervalos de valores nos vetores de características, pois não podíamos depender da escolha subjetiva de pessoas para identificar quais seriam os melhores intervalos para cada vetor de característica. \todo[inline]{Precisa explicar o motivo de identificar os outliers, qual foi o prejuizo com a presenca deles no sistema. Outra questao: está correto usar o termo outliers para este caso? Outra coisa: insira uma nota de rodapé explicando que as variáveis do SBRF são as caracteristicas das bases de dados, para nao confundir o leitor. O uso do termo variavel é quase impossível de não usar, pois se falar "as caracteriticas do SBRF" dá outro sentido, completamente diferente do que estamos dizendo} Para isso, nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média de um determinado conjunto de valores (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal e os valores que ficaram além do intervalo foram reduzidos para os limites do mesmo. Assim, o mesmo critério foi usado para determinar o intervalo de dados de todas as características. 
 
 \begin{figure}[h]
 \caption{Regra dos 3 sigmas.}
@@ -346,27 +344,27 @@ Nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos 
 \label{figura:regra_3_sigmas}
 \end{figure}
 
-Após a delimitação dos valores das características de acordo com a regra do três-sigma, definimos um único formato de conjunto fuzzy para todas as variáveis do SBRF. O formato escolhido foi o triangular, por sua simplicidade, e também, pelo fato de ser muito utilizado na literatura.\todo[inline]{Inserir estas referencias: Integration of an Index to Preserve the Semantic Interpretabiliy in the MOE Rule Selection and Tuning of LFS (GACTO et al 2010), Multi-objective Evolutionary Rule and Condition Selection for Designing Fuzzy Rule-based Classifiers (Antonelli et al 2012), Alcala et al 2009 A MOEA to concurrently learn rule and data bases of linguistic FRBS, Multiobjective Genetic Generation of Fuzzy Classifiers using IRL (Cardenas e Camargo 2012) Inserir em ordem cronológica}
+Após a delimitação dos valores das características de acordo com a regra do três-sigma, definimos um único formato de conjunto fuzzy para todas as variáveis do SBRF. O formato escolhido foi o triangular, por sua simplicidade, e também, pelo fato de ser muito utilizado na literatura \cite{alcala2009multiobjective, gacto2010integration, antonelli2012multi, cardenas2012multiobjective}.\todo[inline]{Inserir estas referencias: Integration of an Index to Preserve the Semantic Interpretabiliy in the MOE Rule Selection and Tuning of LFS (GACTO et al 2010), Multi-objective Evolutionary Rule and Condition Selection for Designing Fuzzy Rule-based Classifiers (Antonelli et al 2012), Alcala et al 2009 A MOEA to concurrently learn rule and data bases of linguistic FRBS, Multiobjective Genetic Generation of Fuzzy Classifiers using IRL (Cardenas e Camargo 2012) Inserir em ordem cronológica}
 
-Para as variáveis de entrada do SBRF, nossa primeira modelagem foi dividir igualmente os dados em $2N + 1$ conjuntos fuzzy \cite{wang1992generating}, para $N$ igual a dois, resultando em cinco regiões fuzzy: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira modelagem.
+Para as variáveis de entrada do SBRF, nossa primeira modelagem foi dividir igualmente os dados em $2N + 1$ conjuntos fuzzy, conforme recomendado em \cite{wang1992generating}, para $N$ igual a dois, resultando em cinco regiões fuzzy: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira modelagem.
 
-Para as variáveis de entrada do SBRF testamos três modelagens diferentes: cinco, três e dois conjuntos fuzzy, uniformemente distribuídos no domínio de cada variável. Os conjuntos fuzzy foram denominados de: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira modelagem. As figuras \ref{figura:tres_conjuntos_fuzzy} e \ref{fig:conjuntos_fuzzy_entrada_final} ilustram as partições fuzzy com três e dois conjuntos fuzzy, respectivamente.
-
-\begin{figure}[h]
+\begin{figure}[H]
 \caption{Modelagem com 5 conjuntos fuzzy}
 \centering
 \includegraphics[scale=0.45]{cinco_conjuntos_fuzzy.png}
 \label{figura:cinco_conjuntos_fuzzy}
 \end{figure}
 
-\begin{figure}[h]
+Para as variáveis de entrada do SBRF testamos três modelagens diferentes: cinco, três e dois conjuntos fuzzy, uniformemente distribuídos no domínio de cada variável. Os conjuntos fuzzy foram denominados de: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira modelagem. As figuras \ref{figura:tres_conjuntos_fuzzy} e \ref{figura:conjuntos_fuzzy_entrada_final} ilustram as partições fuzzy com três e dois conjuntos fuzzy, respectivamente.
+
+\begin{figure}[H]
 \caption{Modelagem com 3 conjuntos fuzzy}
 \centering
 \includegraphics[scale=0.45]{tres_conjuntos_fuzzy.png}
 \label{figura:tres_conjuntos_fuzzy}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \caption{Modelagem com 2 conjuntos fuzzy}
 \centering
 \includegraphics[scale=0.45]{conjuntos_fuzzy_entrada_final.png}
@@ -375,9 +373,9 @@ Para as variáveis de entrada do SBRF testamos três modelagens diferentes: cinc
 
 \todo[inline]{Matheus, na figura, retire o m(x1), pois isso representa o grau de pertinencia de x1 no conjunto m. Mas como o objetivo eh apenas ilustrar a particao fuzzy da variavel linguistica X1, ele nao serah necessario. Faca isso nas outras figuras tambem!}
 
-Para a variável de saída, nós utilizamos dois conjuntos fuzzy, $Positivo (P)$ e $Negativo (N)$, distribuídos uniformemente. Isto porque, a nossa principal tarefa é classificar o sentimento geral dos documentos em positivo ou negativo. A figura \ref{fig:conjuntos_fuzzy_saida} mostra como ficou a modelagem da variável de saída.
+Para a variável de saída, nós utilizamos dois conjuntos fuzzy, $Positivo (P)$ e $Negativo (N)$, distribuídos uniformemente. Isto porque, a nossa principal tarefa é classificar o sentimento geral dos documentos em positivo ou negativo. A figura \ref{figura:conjuntos_fuzzy_saida} mostra como ficou a modelagem da variável de saída.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \caption{Modelagem da variável de saída em 2 conjuntos fuzzy}
 \centering
 \includegraphics[scale=0.45]{conjuntos_fuzzy_saida.png}

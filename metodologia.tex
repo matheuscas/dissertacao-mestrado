@@ -392,50 +392,87 @@ O método de Wang-Mendel é uma forma rápida para construção de regras fuzzy 
 
 \todo[inline]{Matheus, vc tem duas opções: 1.Descrever de forma geral o algoritmo, ou 2.Descrever detalhadamente o algoritmo. Se vc escolher 1. Eu recomendaria tirar toda definição formal de vetor de característica, de conjunto, etc., e deixar somente texto para explicar o algoritmo. Eu recomendaria a inserção de um pseudocodigo, após o texto explicativo. Se vc escolher 2. Vc deve fazer como está no artigo, ou seja, definir formalmente como estão os seus dados (vetores de características), mostrar a partição fuzzy das varíaveis, etc... em outras palavras, seria transcrever o exemplo do artigo de Wang-Mendel. O seu texto está entre as opções 1 e 2. A opção 1 é mais simples, vc teria menos trabalho. A opção 2, vc teria que melhorar mais a sua explicação. E ai? qual vai ser?}
 
-Uma vez definidas as regiões fuzzy (ou conjuntos fuzzy) dos dados de entrada e saída, a próxima tarefa é a criação do conjunto de regras baseadas nas características. Nosso conjunto de características pode ser representado da seguinte forma:
+Uma vez definidas as regiões fuzzy (ou conjuntos fuzzy) dos dados de entrada e saída, a próxima tarefa é a criação do conjunto de regras baseadas nas características. %Nosso conjunto de características pode ser representado da seguinte forma:
+%
+%\begin{equation}
+%( x_1^1, x_2^1, ... , x_n^1, y^1), ( x_1^2, x_2^2, ... , x_n^2, y^2), ...
+%\label{eq:repr_feat}
+%\end{equation}
 
-\begin{equation}
-( x_1^1, x_2^1, ... , x_n^1, y^1), ( x_1^2, x_2^2, ... , x_n^2, y^2), ...
-\label{eq:repr_feat}
-\end{equation}
+%onde, $x_1^k, x_2^k, ... , x_n^k$ são os vetores de características e $y^k$ é a polaridade, positiva ou negativa, de um documento. 
+%Para gerar regras fuzzy a partir das  características, precisamos determinar os graus de pertinência de cada característica $x_i^k$ e $y^k$ para cada conjunto fuzzy que definimos anteriormente. Por exemplo, é preciso saber qual o grau de pertinência de $x_1^1$ para o conjunto $Alto$ e para o conjunto $Baixo$, assim como para $x_1^2$ e o grau de pertinência de $y^1$ e $y^2$ para os conjuntos $Positivo$ e $Negativo$. Em seguida, associa-se cada $x_i^k$ e $y^k$ ao conjunto fuzzy com maior grau de pertinência resultante (se $x_1^1$ teve maior grau de pertinência no conjunto $Baixo$, ele será associado a essa região, e assim sucessivamente). Assim, podemos definir a criação de uma regra fuzzy da seguinte forma:
 
-onde, $x_1^k, x_2^k, ... , x_n^k$ são os vetores de características e $y^k$ é a polaridade, positiva ou negativa, de um documento. Para gerar regras fuzzy a partir das  características, precisamos determinar os graus de pertinência de cada característica $x_i^k$ e $y^k$ para cada conjunto fuzzy que definimos anteriormente. Por exemplo, é preciso saber qual o grau de pertinência de $x_1^1$ para o conjunto $Alto$ e para o conjunto $Baixo$, assim como para $x_1^2$ e o grau de pertinência de $y^1$ e $y^2$ para os conjuntos $Positivo$ e $Negativo$. Em seguida, associa-se cada $x_i^k$ e $y^k$ ao conjunto fuzzy com maior grau de pertinência resultante (se $x_1^1$ teve maior grau de pertinência no conjunto $Baixo$, ele será associado a essa região, e assim sucessivamente). Assim, podemos definir a criação de uma regra fuzzy da seguinte forma:
+Para gerar regras fuzzy a partir das características, precisamos determinar os graus de pertinência de cada característica para cada conjunto fuzzy que definimos anteriormente. Por exemplo, é preciso saber qual o grau de pertinência de uma dada característica de uma variável de entrada para o conjunto $Alto$ e para o conjunto $Baixo$. Em seguida, associa-se cada característica ao conjunto fuzzy com maior grau de pertinência resultante (se uma característica teve maior grau de pertinência no conjunto $Baixo$, ele será associado a essa região, e assim sucessivamente). O algoritmo \ref{alg-graus} ilustra esse processo. 
 
-\begin{equation}
-\begin{split}
-( x_1^k, x_2^k, ... , x_n^k, y^k) => [x_1^k (Pol(x_1^k) \, em \, CFI_n, max), \, ... \, , x_n^k (Pol(x_2^k) \, em \, CFI_m, max); \\
-y^k(Pol(y^k) \, em \, CFS_n, max)] => Regra \, k: \\ IF \, x_1^k \, is \, CFI_n \, and \, ... \, x_n^k \, is \, CFI_m, \, THEN \, y^k \, is \, CFS_n
-\label{eq:repr_fuzzy_rule}
-\end{split}
-\end{equation}
+\begin{algorithm}
+\begin{algorithmic}[1]
+\caption{Geração das regras fuzzy a partir das características}
+\label{alg-graus}
+\FOR{$V$ in $vetores\_caracteristica$}
+   \FOR{$caracteristica \, C$ in $V$}
+      \FOR{$CF$ in $conjuntos\_fuzzy$}
+      \STATE $Grau \leftarrow pertinencia(C)_{CF}$
+      \ENDFOR
+   \STATE $C \leftarrow max(Grau) $
+   \ENDFOR
+   \STATE $Regra \, V \leftarrow max(C, Grau) $
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 
-onde $(Pol(x_1^k) \, em \, CFI_n, max)$ é o grau máximo de pertinência alcançado por $x_1^k$ em um dos conjuntos fuzzy de entrada $CFI_n$ e $(Pol(y^k) \, em \, CFS_n, max)$ é o grau máximo de pertinência alcançado por $y^k$ um um dos conjuntos fuzzy de saída $CFS_n$. As regras geradas são do tipo "AND", que são regras em que as condições antecedentes, a parte do IF, tem de, simultaneamente ocorrer em ordem para que o conseqüente, a parte THEN, aconteça. 
+%\begin{equation}
+%\begin{split}
+%( x_1^k, x_2^k, ... , x_n^k, y^k) => [x_1^k (Pol(x_1^k) \, em \, CFI_n, max), \, ... \, , x_n^k (Pol(x_2^k) \, em \, CFI_m, max); \\
+%y^k(Pol(y^k) \, em \, CFS_n, max)] => Regra \, k: \\ IF \, x_1^k \, is \, CFI_n \, and \, ... \, x_n^k \, is \, CFI_m, \, THEN \, y^k \, is \, CFS_n
+%\label{eq:repr_fuzzy_rule}
+%\end{split}
+%\end{equation}
 
-A tarefa de geração de regras cria uma regra para cada vetor de característica. Devido a grande quantidade de vetores de características, é muito provável que regras conflitantes tenham sido geradas, como regras com mesmo antecedente, mas com conseqüente diferente. Uma maneira proposta pelo método de Wang-Mendel é associar um grau a cada regra e descartando a regra conflitante com menor grau. Além de eliminar regras contraditórias, esse método também reduz a quantidade de regras a serem usadas na classificação. A seguinte estratégia é utilizada para associar um grau $D(regra)$ a cada regra: 
+%onde $(Pol(x_1^k) \, em \, CFI_n, max)$ é o grau máximo de pertinência alcançado por $x_1^k$ em um dos conjuntos fuzzy de entrada $CFI_n$ e $(Pol(y^k) \, em \, CFS_n, max)$ é o grau máximo de pertinência alcançado por $y^k$ um um dos conjuntos fuzzy de saída $CFS_n$. As regras geradas são do tipo "AND", que são regras em que as condições antecedentes, a parte do IF, tem de, simultaneamente ocorrer em ordem para que o conseqüente, a parte THEN, aconteça. 
 
-\begin{equation}
-D(regra) = m_{CFI_n}(x_1) \cdot m_{CFI_m}(x_2) \cdot m_{CFI_o}(x_n) \cdot ... \cdot m_{CFS_n}(y)
-\label{eq:grau_regra}
-\end{equation}
+Ao fim do processo, são geradas regras do tipo "AND", que são regras em que as condições antecedentes, a parte do IF, tem de, simultaneamente ocorrer em ordem para que o conseqüente, a parte THEN, aconteça. A tarefa de geração de regras cria uma regra para cada vetor de característica. Devido a grande quantidade de vetores de características, é muito provável que regras conflitantes tenham sido geradas, como regras com mesmo antecedente, mas com conseqüente diferente. Uma maneira proposta pelo método de Wang-Mendel é associar um grau a cada regra e descartando a regra conflitante com menor grau. Além de eliminar regras contraditórias, esse método também reduz a quantidade de regras a serem usadas na classificação. O algoritmo \ref{alg-regras-final} ilustra essa filtragem final.
 
-onde $m_{CFI_o}(x_n)$, por exemplo, é o grau de pertinência de $x_n$ no conjunto fuzzy $CFI_o$. Por exemplo, considere uma regra com duas características: "IF $x_1$ is Alto and $x_2$ is Alto, THEN $y$ is Positivo". O grau dessa regra, utilizando a estratégia \ref{eq:grau_regra}, é obtido assim:  $D(regra) = m_{Alto}(x_1) \cdot m_{Alto}(x_2) \cdot m_{Positivo}(y)$. Depois de eliminadas as regras conflitantes, as regras finais constituem o conjunto de regras fuzzy baseado nas características dos documentos. Com esse conjunto de regras é possível classificar os documentos da base de dados.
+\begin{algorithm}
+\begin{algorithmic}[1]
+\caption{Eliminação de regras redundantes ou contraditórias}
+\label{alg-regras-final}
+\FOR{$R_i$ in $regras$}
+   \FOR{$R_j$ in $regras$}
+       \IF{$R_i == R_j$ \OR $(antecedente(R_i) == antecedente(R_j) \, \AND \, consequente(R_i) <> consequente(R_j))$}
+           \STATE $Regras\_finais \leftarrow max\_grau(R_i,R_j)$
+       \ENDIF    
+   \ENDFOR
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+%A seguinte estratégia é utilizada para associar um grau $D(regra)$ a cada regra: 
+
+%\begin{equation}
+%D(regra) = m_{CFI_n}(x_1) \cdot m_{CFI_m}(x_2) \cdot m_{CFI_o}(x_n) \cdot ... \cdot m_{CFS_n}(y)
+%\label{eq:grau_regra}
+%\end{equation}
+%
+%onde $m_{CFI_o}(x_n)$ é o grau de pertinência de $x_n$ no conjunto fuzzy $CFI_o$. Por exemplo, considere uma regra com duas características: "IF $x_1$ is Alto and $x_2$ is Alto, THEN $y$ is Positivo". O grau dessa regra, utilizando a estratégia \ref{eq:grau_regra}, é obtido assim:  $D(regra) = m_{Alto}(x_1) \cdot m_{Alto}(x_2) \cdot m_{Positivo}(y)$. 
+
+Depois de eliminadas as regras conflitantes, as regras finais constituem o conjunto de regras fuzzy baseado nas características dos documentos. Com esse conjunto de regras é possível classificar os documentos da base de dados. 
 
 \subsection{Raciocínio Fuzzy}
 
-Após a modelagem fuzzy das variáveis de entrada e saída do sistema, e da construção das regras fuzzy, é necessário definir um mecanismo de inferência fuzzy, que será responsável em determinar a polaridade (positiva ou negativa) dos documentos da base de dados. Nós utilizamos dois mecanismos para fins de comparação, o Método de Raciocínio Fuzzy Geral (MRFG) e o Método de Raciocínio Fuzzy Clássico (MCRF) \cite{cordon1999proposal}.
+Após a modelagem fuzzy das variáveis de entrada e saída do sistema, e da construção das regras fuzzy, é necessário definir um mecanismo de inferência fuzzy, que será responsável em determinar a polaridade (positiva ou negativa) dos documentos da base de dados. Nós utilizamos dois mecanismos para fins de comparação, o Método de Raciocínio Fuzzy Geral (MRFG) e o Método de Raciocínio Fuzzy Clássico (MRFC) \cite{cordon1999proposal}.
 
 \todo[inline]{Eu mudei os nomes dos métodos para: Método de Raciocínio Fuzzy Geral (MRFG), Método de Raciocínio Fuzzy Clássico (MRFC), consequentemente, isso afetará as legendas de figuras, tabelas e texto :(}
 
-Ambos mecanismos tem processos bastante similares e somente diferem na etapa de decisão na classificação. O mecanismo comum a ambos é: cada vetor de característica é avaliado por todas as regras fuzzy e um grau de compatibilidade \ref{eq:compat_regra} é calculado para cada regra. 
+Ambos mecanismos tem processos bastante similares e somente diferem na etapa de decisão na classificação. O mecanismo comum a ambos é: cada vetor de característica é avaliado por todas as regras fuzzy e um grau de compatibilidade é calculado para cada regra A equação \ref{eq:compat_regra} mostra como esse grau de compatibilidade é calculado. 
 
 \todo[inline]{Quando for referenciar tabela, figura, equação, faça de forma direta. Exemplo: De acordo com a Equação 3.6, um grau de compatibilidade é calculado entre a regra i e a amostra j. A equação 3.6 deverá estar de acordo com a formalização que será apresentada na Fundamentação Teórica, ou seja, quando for descrever sobre as conjuntos fuzzy, funções de pertinência, etc.}
 
 \begin{equation}
-D(regra) = m_{CFI_n}(x_1) \cdot m_{CFI_m}(x_2) \cdot m_{CFI_o}(x_3) \cdot ...\cdot m_{CFI_p}(x_n)
+D(regra_i) = m_{CFI_n}(x_j^1) \cdot m_{CFI_m}(x_j^2) \cdot m_{CFI_o}(x_j^3) \cdot ...\cdot m_{CFI_p}(x_j^n)
 \label{eq:compat_regra}
 \end{equation}
 
-O MRFC escolhe a regra que ficou com o maior grau de compatibilidade após a avaliação das características e classifica o documento com a classe de saída dessa regra. \todo[inline]{Aqui tem um erro: o metodo calcula o grau de compatibilidade da regra i com todos os padroes j. Assim, a regra terá como saída, a saída do padrão com maior compatibilidade} Por outro lado, o MRFG considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MGRF calcula a média dos graus de compatibilidade entre as regras que tem o consequente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
+O MRFC escolhe a regra que ficou com o maior grau de compatibilidade após a avaliação das características e classifica o documento com a classe de saída dessa regra. \todo[inline]{Aqui tem um erro: o metodo calcula o grau de compatibilidade da regra i com todos os padrões j. Assim, a regra terá como saída, a saída do padrão com maior compatibilidade} Por outro lado, o MRFG considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MRFG calcula a média dos graus de compatibilidade entre as regras que tem o conseqüente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
 
 \section{Métricas de Avaliação}
 

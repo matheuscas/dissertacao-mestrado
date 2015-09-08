@@ -476,23 +476,23 @@ O MRFC escolhe a regra que ficou com o maior grau de compatibilidade após a ava
 
 \section{Métricas de Avaliação}
 
-A avaliação dos resultados deste trabalho foi feita usando validação cruzada de 10 dobras \todo[inline]{huuumm... dobras ficou esquisito... melhor usar folds mesmo. E accuracy pode ser acurácia.} As medidas para avaliar o desempenho da classificação do sistema foram a \textit{accuracy}, taxa real de positivos (TPR) e taxa real de negativos (TNR). A \textit{accuracy} \ref{eq:acccuracy} é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos classificados, sejam eles corretos ou não.\todo[inline]{aqui a divisão é feita pela quantidade total de documentos da base, ou seja, estes não foram classificados. Retire a parte de classificados, sejam eles corretos ou não}
+A avaliação dos resultados deste trabalho foi feita usando validação cruzada de 10 folds \todo[inline]{huuumm... dobras ficou esquisito... melhor usar folds mesmo. E acurácia pode ser acurácia.} As medidas para avaliar o desempenho da classificação do sistema foram a \textit{acurácia}, taxa de verdadeiros positivos (TPR) e taxa de verdadeiros negativos (TNR) \cite{garcia2012multi}. A \textit{acurácia} \ref{eq:acccuracy} é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos.\todo[inline]{aqui a divisão é feita pela quantidade total de documentos da base, ou seja, estes não foram classificados. Retire a parte de classificados, sejam eles corretos ou não}
 
 \begin{equation}
-Accuracy =  (TP + TN) / Total
+acuracia =  (TP + TN) / Total
 \label{eq:acccuracy}
 \end{equation}
 
 \todo[inline]{A tradução correta é: Taxa de verdadeiro positivo, verdadeiro negativo, falso positivo e falso negativo}
 
-A taxa real de positivos (TPR) mede a proporção de documentos positivos que são corretamente classificados como tal. Mais especificamente, a TPR mede a razão entre os documentos classificados como positivo sobre o universo de documentos realmente positivos (TP) e documentos positivos que foram classificados como negativos, conhecidos como falsos negativos (FN). A equação \ref{eq:tpr} ilustra como é feito o cálculo dessa medida. 
+A taxa de verdadeiros positivos (TPR) mede a proporção de documentos positivos que são corretamente classificados como tal. Mais especificamente, a TPR mede a razão entre os documentos classificados como positivo sobre o universo de documentos realmente positivos (TP) e documentos positivos que foram classificados como negativos, conhecidos como falsos negativos (FN). A equação \ref{eq:tpr} ilustra como é feito o cálculo dessa medida. 
 
 \begin{equation}
 TPR = TP / (TP + FN)
 \label{eq:tpr}
 \end{equation}
 
-A taxa real de negativos (TNR), por outro lado, mede a proporção de documentos negativos que são corretamente classificados como tal. Mais especificamente, a TNR mede a razão entre os documentos classificados como negativo sobre o universo de documentos realmente negativos (TN) e documentos negativos que foram classificados como positivos, conhecidos como falsos positivos (FP). A equação \ref{eq:tnr} ilustra como é feito o cálculo dessa medida. 
+A taxa de verdadeiros negativos (TNR), por outro lado, mede a proporção de documentos negativos que são corretamente classificados como tal. Mais especificamente, a TNR mede a razão entre os documentos classificados como negativo sobre o universo de documentos realmente negativos (TN) e documentos negativos que foram classificados como positivos, conhecidos como falsos positivos (FP). A equação \ref{eq:tnr} ilustra como é feito o cálculo dessa medida. 
 
 \begin{equation}
 TNR = TN / (TN + FP)
@@ -500,7 +500,9 @@ TNR = TN / (TN + FP)
 \end{equation}
 
 \todo[inline]{De onde tirou as definições de TPR e TNR? No artigo de García-Pedrajas and Pérez-Rodríguez (2012) Multi-selection of instances: A straightforward way to improve evolutionary instance selection, Applied Soft Computing 12 (2012) 3590–3602. TPR é chamado de sensitivity e TNR é chamado de specificity}
+\todo[inline]{Da wikipedia, mas la cita as denominacoes que voce falou, mas eu preferi usar taxas para ficar mais claro.}
 
-Além disso, com o objetivo de verificar se as diferenças entre os resultados dos experimentos são significativas ou não, nós utilizamos o teste de \textit{Wilcoxon signed-rank} \cite{wilcoxon1945individual}, usado para comparar resultados entre conjuntos de testes relacionados, resultados sucessivos sobre um único conjunto de teste, dentre outros. Por fim, também usamos um terceiro método, o \textit{Support Vector Machine} (SVM), bastante utilizado em trabalhos de mineração de opinião dependentes de domínio e que, comumente, produz bons resultados \cite{ohana2009sentiment, moraes2012document}. Assim, podemos verificar como nossa proposta se comporta frente aos métodos tradicionais utilizados nessa área. 
+Além disso, com o objetivo de verificar se as diferenças entre os resultados dos experimentos são significativas ou não, nós utilizamos o teste de \textit{Wilcoxon signed-rank} \cite{wilcoxon1945individual}, usado para comparar resultados entre conjuntos de testes relacionados, resultados sucessivos sobre um único conjunto de teste, dentre outros. Por fim, também usamos um terceiro método de classificação, o \textit{Support Vector Machine} (SVM), bastante utilizado em trabalhos de mineração de opinião dependentes de domínio e que, comumente, produz bons resultados \cite{ohana2009sentiment, moraes2012document}. Assim, podemos verificar como nossa proposta se comporta frente aos métodos tradicionais de classificação utilizados nessa área. 
 
 \todo[inline]{SVM não é um classificador??? Aqui vc está dizendo que é um método estatístico?!}
+\todo[inline]{De forma alguma. Adicionei a menção a classificador repetidamente para não deixar duvidas.}

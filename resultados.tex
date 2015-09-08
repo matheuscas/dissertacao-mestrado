@@ -1,6 +1,6 @@
 \xchapter{Resultados obtidos}{}
 
-Nessa seção são descritos e discutidos os experimentos realizados e os resultados obtidos desses experimentos. O objetivo principal não é comparar qual cenário obtém melhor \textit{accuracy} ou TPR e TNR, mas também discutir em quais contextos os classificadores produzem melhores ou piores resultados.
+Nessa seção são descritos e discutidos os experimentos realizados e os resultados obtidos desses experimentos. O objetivo principal não é comparar qual cenário obtém melhor \textit{acuracia} ou TPR e TNR, mas também discutir em quais contextos os classificadores produzem melhores ou piores resultados.
 
 \section{Datasets}
 \todo[inline]{Pelo que vi nos comentários da seção de metodologia essa seção deve sumir daqui e subir para para metodologia, certo?}
@@ -13,21 +13,21 @@ A terceira base, um conjunto de documentos retirados do site Epinions por \cite{
 
 \section{Design dos experimentos}
 
-Nós focamos em comparar os métodos de classificação MGRF e MCRF, variando as configurações em diferentes etapas do processo de mineração de opinião, comparando \textit{accuracy}, TPR e TNR. Nós também avaliamos a influência dos algoritmos de seleção de características, os sistemas de inferência fuzzy em si, a quantidade usada de conjuntos fuzzy, a eficiência das regras entre domínios e usadas em outro e as características mais selecionadas entre as bases utilizadas. 
+Nós focamos em comparar os métodos de classificação MRFG e MRFC, variando as configurações em diferentes etapas do processo de mineração de opinião, comparando \textit{acuracia}, TPR e TNR. Nós também avaliamos a influência dos algoritmos de seleção de características, os sistemas de inferência fuzzy em si, a quantidade usada de conjuntos fuzzy, a eficiência das regras entre domínios e usadas em outro e as características mais selecionadas entre as bases utilizadas. 
 
 Para cada base de dados, o processo de mineração de opinião é idêntico para as etapas de pré-processamento, transformação e extração de características. A partir da seleção de características, as etapas seguintes foram executadas com validação cruzada de 10 dobras, utilizando somente as treinamento. Por exemplo, a dobra 1 não é usada para a seleção de características, pois é usada como teste nas etapas seguintes de classificação e avaliação. As dobras restantes são usadas na seleção de características e na construção da base de regras fuzzy para aquela dobra de teste 1. O mesmo processo é repetido para cada dobra e os resultados, para todas as métricas usadas, são a média dos valores obtidos nas dobras de teste. 
 %Conseqüentemente, todos os tipos de n-grams combinados com todas as técnicas de transformação descritas nesse trabalho passam pela seleção de características para encontrar quais delas são mais apropriadas para representar os documentos. 
 
 \subsection{Avaliação dos algoritmos de seleção de características}
 
-Para avaliar os algoritmos de seleção de características, CFS e C45, foi definido o seguinte cenário: 3 conjuntos fuzzy para as variáveis de entrada e o uso do MCRF para ambas bases de dados, filmes e a base mista da Amazon. Assim, deixando os demais parâmetros inalterados, nós podemos avaliar o desempenho dos algoritmos de seleção de características. Além de avaliar \textit{accuracy}, TPR e TNR, foi avaliado também a quantidade média de características selecionadas para cada algoritmo de seleção. A tabela (\ref{table:movies}) e tabela (\ref{table:amazon}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon. 
+Para avaliar os algoritmos de seleção de características, CFS e C45, foi definido o seguinte cenário: 3 conjuntos fuzzy para as variáveis de entrada e o uso do MRFC para ambas bases de dados, filmes e a base mista da Amazon. Assim, deixando os demais parâmetros inalterados, nós podemos avaliar o desempenho dos algoritmos de seleção de características. Além de avaliar \textit{acuracia}, TPR e TNR, foi avaliado também a quantidade média de características selecionadas para cada algoritmo de seleção. A tabela (\ref{table:movies}) e tabela (\ref{table:amazon}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon. 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
     Movies         				 				& CFS                                 	 	& c4.5                                  \\ \hline
     TNR                   						& 40.3\% $\pm$ 6.09\% 			 	& 47.1\% $\pm$ 42.67\% \\
     TPR                        					& 64.2\% $\pm$ 30.55\% 		    & 61.7\% $\pm$ 43.93\% \\
-    Accuracy                   				& 52.25\% $\pm$ 4.92\% 			 & 54.4\% $\pm$ 1.72\% \\
+    acuracia                   				& 52.25\% $\pm$ 4.92\% 			 & 54.4\% $\pm$ 1.72\% \\
     Características selecionadas & 4.7 $\pm$ 1.1            			 	 & 1                                     \\
     \end{tabular}
     \caption{Resultados da base de filmes}
@@ -40,7 +40,7 @@ Para avaliar os algoritmos de seleção de características, CFS e C45, foi defi
 %Standard Deviation:  7.3 %
 %---> Avg TNR:  72.1 %
 %Standard Deviation:  6.87677249878 %
-%---> Avg Accuracy:  70.6 %
+%---> Avg acuracia:  70.6 %
 %Standard Deviation:  3.44818792991 %
 
 %WILCOXON
@@ -57,7 +57,7 @@ Para avaliar os algoritmos de seleção de características, CFS e C45, foi defi
     Movies         										& CFS                          		& c4.5                                  \\ \hline
     TNR                     								& 51.3\% $\pm$ 13.56\% 	& 34.0\% $\pm$ 43.26\%  \\
     TPR                          						& 77.5\% $\pm$ 13.9\% 		& 74.5\% $\pm$ 38.82\% \\
-    Accuracy                     					& 64.4\% $\pm$ 8.12\% 		& 54.25\% $\pm$ 2.82\% \\\
+    acuracia                     					& 64.4\% $\pm$ 8.12\% 		& 54.25\% $\pm$ 2.82\% \\\
     Características selecionadas 		& 5.3 $\pm$ 0.64               & 1 $\pm$                                  \\
     \end{tabular}
     \caption{Resultados da base da Amazon}
@@ -70,7 +70,7 @@ Para avaliar os algoritmos de seleção de características, CFS e C45, foi defi
 %Standard Deviation:  4.6432747065 %
 %---> Avg TNR:  75.5 %
 %Standard Deviation:  3.20156211872 %
-%---> Avg Accuracy:  70.65 %
+%---> Avg acuracia:  70.65 %
 %Standard Deviation:  2.99207286008 %
 
 %WILCOSOX
@@ -144,7 +144,7 @@ Um outro comportamento comum para ambas as bases foi expressivo desvio padrão d
     Movies         				 					  & c4.5 - Altura 3                                 	 	 & c4.5 - Altura 1                               \\ \hline
     TNR                   					  		  & 55.6\% $\pm$ 43.49\% 			 				& 47.1\% $\pm$ 42.67\% \\
     TPR                        					  	  & 53.4\% $\pm$ 44.50\% 		 					& 61.7\% $\pm$ 43.93\% \\
-    Accuracy                   					  & 54.5\% $\pm$ 1.76\% 			 				& 54.4\% $\pm$ 1.72\% \\
+    acuracia                   					  & 54.5\% $\pm$ 1.76\% 			 				& 54.4\% $\pm$ 1.72\% \\
     Características selecionadas      & 1.1 $\pm$ 0.3            			 					& 1                                     \\
     \end{tabular}
     \caption{Resultados da base de filmes}
@@ -164,7 +164,7 @@ Um outro comportamento comum para ambas as bases foi expressivo desvio padrão d
     Movies         										& c4.5 - Altura 3                          		& c4.5 - Altura 1                              \\ \hline
     TNR                     								& 73.7\% $\pm$ 35.86\% 					& 34.0\% $\pm$ 43.26\%  \\
     TPR                          						& 47.1\% $\pm$ 34.22\% 					& 74.5\% $\pm$ 38.82\% \\
-    Accuracy                     					& 60.4\% $\pm$ 5.75\% 						& 54.25\% $\pm$ 2.82\% \\
+    acuracia                     					& 60.4\% $\pm$ 5.75\% 						& 54.25\% $\pm$ 2.82\% \\
     Características selecionadas 		& 1.9 $\pm$ 0.7               					& 1 $\pm$                                  \\
     \end{tabular}
     \caption{Resultados da base da Amazon}
@@ -183,14 +183,14 @@ Mais uma vez, os resultados apresentados em ambas as bases para o aumento da alt
 
 \subsection{Avaliação dos sistemas de inferência}
 
-Nessa subseção é avaliado o desempenho dos sistemas de inferência escolhidos, o Método Geral do Raciocínio Fuzzy (MGRF) e o Método Clássico do Raciocínio Fuzzy (MCRF). Da mesma maneira que foi feita na seção anterior, nós fixamos os demais parâmetros do experimento para melhor avaliar os sistemas de inferência, mantendo o algoritmo de seleção de característica c4.5 (com altura 1, para continuar buscando a geração de regras claras e de fácil leitura para humanos) e 3 conjuntos fuzzy nas variáveis de entrada. A tabela (\ref{table:movies2}) e tabela (\ref{table:amazon2}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon.
+Nessa subseção é avaliado o desempenho dos sistemas de inferência escolhidos, o Método Geral do Raciocínio Fuzzy (MRFG) e o Método Clássico do Raciocínio Fuzzy (MRFC). Da mesma maneira que foi feita na seção anterior, nós fixamos os demais parâmetros do experimento para melhor avaliar os sistemas de inferência, mantendo o algoritmo de seleção de característica c4.5 (com altura 1, para continuar buscando a geração de regras claras e de fácil leitura para humanos) e 3 conjuntos fuzzy nas variáveis de entrada. A tabela (\ref{table:movies2}) e tabela (\ref{table:amazon2}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon.
 
 \begin{table}[!h]
     \begin{tabular}{lll}
  	~         			& CFRM 								& GFRM \\ \hline
     TNR 				& 47.1\% $\pm$ 42.67\%   & 53.8\% $\pm$ 34.96\%    \\
     TPR    			& 61.7\% $\pm$ 43.93\%   & 64.6\% $\pm$ 37.08\%   \\
-    Accuracy  		& 54.4\% $\pm$ 1.72\%    	& 59.2\% $\pm$ 1.83\%    \\
+    acuracia  		& 54.4\% $\pm$ 1.72\%    	& 59.2\% $\pm$ 1.83\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base de filmes}
 	\label{table:movies2}
@@ -209,7 +209,7 @@ Nessa subseção é avaliado o desempenho dos sistemas de inferência escolhidos
     ~         			& CFRM 									& GFRM \\ \hline
     TNR 				& 34.0\% $\pm$ 43.26\%    	& 44.6\% $\pm$ 35.73\%    \\
     TPR    			& 74.5\% $\pm$ 38.82\%    	& 75.5\% $\pm$ 34.80\%    \\
-    Accuracy  		& 54.25\% $\pm$ 2.82\%    	& 60.05\% $\pm$ 2.37\%   \\
+    acuracia  		& 54.25\% $\pm$ 2.82\%    	& 60.05\% $\pm$ 2.37\%   \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base da Amazon}
 	\label{table:amazon2}
@@ -223,7 +223,7 @@ Nessa subseção é avaliado o desempenho dos sistemas de inferência escolhidos
 %
 %The W-value is 0. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is significant at p≤ 0.01.
 
-Os resultados mostram que Método Geral do Raciocínio Fuzzy (MGRF) aumenta o \textit{accuracy} sobre o MCRF, em ambas bases,  mantendo a seleção de características e a quantidade de conjuntos fuzzy inalterados. O resultado do teste \textit{Wilcoxon signed-rank} confirma a melhora significativa do MGRF sobre o MCRF, para $p <= 0.01$. Assim, nessa tarefa de classificação de somente duas classes, positivo e negativo, os resultados mostraram que uma melhor abordagem é considerar todas as regras de uma classe, em vez de uma única com maior grau. Daí, o MGRF foi a nossa escolha para prosseguir nos próximos experimentos com o fim de alcançar melhores resultados nesse trabalho.
+Os resultados mostram que Método Geral do Raciocínio Fuzzy (MRFG) aumenta o \textit{acuracia} sobre o MRFC, em ambas bases,  mantendo a seleção de características e a quantidade de conjuntos fuzzy inalterados. O resultado do teste \textit{Wilcoxon signed-rank} confirma a melhora significativa do MRFG sobre o MRFC, para $p <= 0.01$. Assim, nessa tarefa de classificação de somente duas classes, positivo e negativo, os resultados mostraram que uma melhor abordagem é considerar todas as regras de uma classe, em vez de uma única com maior grau. Daí, o MRFG foi a nossa escolha para prosseguir nos próximos experimentos com o fim de alcançar melhores resultados nesse trabalho.
 
 \subsection{Avaliação de uso de pesos nas regras dos sistemas de inferência}
 
@@ -236,14 +236,14 @@ P_j = |\beta_{positivo} - \beta_{negativo}| / (\beta_{positivo} + \beta_{negativ
 
 onde $P_j$ é o peso da regra, para $0 <= P_j <= 1$. 
 
-Uma vez que todas as regras tiveram seus pesos calculados, estes são adicionados ao processo de classificação de ambos os métodos utilizados até aqui, o MGRF e o MCRF. O peso torna-se um fator multiplicador do grau de cada regra. Assim, o MCRF em vez de somente levar em consideração a regra com maior grau de compatibilidade com o documento de teste, vai, agora, levar em consideração a regra com maior grau multiplicado pelo peso da regra. O mesmo acontece para o MGRF ao considerar o grau médio entre as classes positivo e negativo. A tabela (\ref{table:movies2_pesos}) e tabela (\ref{table:amazon2_pesos}) mostram, respectivamente, os resultados para o uso dos pesos nas bases de filmes e da Amazon usando os parâmetros até agora estabelecidos. 
+Uma vez que todas as regras tiveram seus pesos calculados, estes são adicionados ao processo de classificação de ambos os métodos utilizados até aqui, o MRFG e o MRFC. O peso torna-se um fator multiplicador do grau de cada regra. Assim, o MRFC em vez de somente levar em consideração a regra com maior grau de compatibilidade com o documento de teste, vai, agora, levar em consideração a regra com maior grau multiplicado pelo peso da regra. O mesmo acontece para o MRFG ao considerar o grau médio entre as classes positivo e negativo. A tabela (\ref{table:movies2_pesos}) e tabela (\ref{table:amazon2_pesos}) mostram, respectivamente, os resultados para o uso dos pesos nas bases de filmes e da Amazon usando os parâmetros até agora estabelecidos. 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
  	~         			& S/ Pesos 								& C/ Pesos \\ \hline
     TNR 				& 53.8\% $\pm$ 34.96\%   	& 70.4\% $\pm$ 7.11\%    \\
     TPR    			& 64.6\% $\pm$ 37.08\%   	& 69.7\% $\pm$ 9.81\%   \\   
-    Accuracy  		& 59.2\% $\pm$ 1.83\%    	& 70.05\% $\pm$ 4.00\%    \\
+    acuracia  		& 59.2\% $\pm$ 1.83\%    	& 70.05\% $\pm$ 4.00\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base de filmes utilizando pesos nas regras}
 	\label{table:movies2_pesos}
@@ -262,7 +262,7 @@ Uma vez que todas as regras tiveram seus pesos calculados, estes são adicionado
     ~         			& S/ Pesos									& C / Pesos \\ \hline
     TNR 				& 44.6\% $\pm$ 35.73\%    	& 76.80\% $\pm$ 4.57\%    \\
     TPR    			& 75.5\% $\pm$ 34.80\%    	& 64.9\% $\pm$ 5.50\%    \\
-    Accuracy  		& 60.05\% $\pm$ 2.37\%    	& 70.85\% $\pm$ 3.09\%   \\
+    acuracia  		& 60.05\% $\pm$ 2.37\%    	& 70.85\% $\pm$ 3.09\%   \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base da Amazon utilizando pesos nas regras}
 	\label{table:amazon2_pesos}
@@ -276,7 +276,7 @@ Uma vez que todas as regras tiveram seus pesos calculados, estes são adicionado
 %
 %The W-value is 0. The critical value of W for N = 10 at p≤ 0.05 is 8. Therefore, the result is significant at p≤ 0.05.
 
-Os resultados corroboraram as conclusões de \cite{ishibuchi2001effect} que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada apenas aplicando pesos às regras geradas. O resultado do teste \textit{Wilcoxon signed-rank} também confirma a melhora significativa do MGRF usando pesos nas regras em vez de somente o grau de compatibilidade, para $p <= 0.01$.
+Os resultados corroboraram as conclusões de \cite{ishibuchi2001effect} que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada apenas aplicando pesos às regras geradas. O resultado do teste \textit{Wilcoxon signed-rank} também confirma a melhora significativa do MRFG usando pesos nas regras em vez de somente o grau de compatibilidade, para $p <= 0.01$.
 
 \subsection{Avaliação da quantidade de conjuntos fuzzy usados}
 
@@ -287,7 +287,7 @@ Através das últimas seções, foram mostrados resultados utilizando 3 conjunto
     ~         			& 3 conjuntos fuzzy 							& 2 conjuntos fuzzy \\ \hline
     TNR 		  		& 70.4\% $\pm$ 7.11\%         			& 71.2\% $\pm$ 4.33\%    \\
     TPR    		 	& 69.7\% $\pm$ 9.81\%        			& 70.6\% $\pm$ 3.35\%   \\
-    Accuracy  	 	& 70.05\% $\pm$ 4.00\%    			& 70.9\% $\pm$ 3.07\%    \\
+    acuracia  	 	& 70.05\% $\pm$ 4.00\%    			& 70.9\% $\pm$ 3.07\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base de filmes utilizando 2 conjuntos fuzzy na entrada}
 	\label{table:movies2_pesos_2fs}
@@ -306,7 +306,7 @@ Através das últimas seções, foram mostrados resultados utilizando 3 conjunto
     ~         			& 3 conjuntos fuzzy 							& 2 conjuntos fuzzy \\ \hline
     TNR 				& 76.80\% $\pm$ 4.57\%            	& 77.2\% $\pm$ 3.54\%    \\
     TPR    			& 64.9\% $\pm$ 5.50\% 					& 64.4\% $\pm$ 3.46\%   \\
-    Accuracy  		& 70.85\% $\pm$ 3.09\%         		& 70.8\% $\pm$ 3.27\%    \\
+    acuracia  		& 70.85\% $\pm$ 3.09\%         		& 70.8\% $\pm$ 3.27\%    \\
     \end{tabular}
     \caption{Resultados dos sistemas de inferência na base da Amazon utilizando 2 conjuntos fuzzy na entrada}
 	\label{table:amazon2_pesos_2fs}
@@ -351,7 +351,7 @@ Outra avaliação que fizemos foi a validação do uso de regras entre domínios
     ~         		& Regras da Amazon 					& Regras dos Filmes \\ \hline
     TNR 			& 47.05\% $\pm$ 0.35\%           & 61.7\% $\pm$ 1.41\%    \\
     TPR    		& 90.5\% $\pm$ 1.11\% 				& 85.8\% $\pm$ 1.22\%   \\
-    Accuracy  	& 68.77\% $\pm$ .0.17\%         	& 73.75\% $\pm$ 0.27\%    \\
+    acuracia  	& 68.77\% $\pm$ .0.17\%         	& 73.75\% $\pm$ 0.27\%    \\
     \end{tabular}
     \caption{Resultados da aplicação de regras da base de filmes e Amazon na base Epinions}
 	\label{table:epinions}
@@ -377,7 +377,7 @@ Também comparamos a configuração final do nosso classificador com um método 
     ~         			& Wang-Mendel 2 conjuntos fuzzy						& SVM \\ \hline
     TNR 				& 71.2\% $\pm$ 4.33\%            								& 72.9\% $\pm$ 5.80\%    \\
     TPR    			& 70.6\% $\pm$ 3.35\%     									& 68.6\% $\pm$ 7.04\%   \\
-    Accuracy  		& 70.9\% $\pm$ 3.07\%             							& 70.75\% $\pm$ 3.70\%    \\
+    acuracia  		& 70.9\% $\pm$ 3.07\%             							& 70.75\% $\pm$ 3.70\%    \\
     \end{tabular}
     \caption{Comparação entre os resultados do método de Wang-Mendel e SVM na base de filmes}
 	\label{table:movies_svm}
@@ -396,7 +396,7 @@ Também comparamos a configuração final do nosso classificador com um método 
     ~         				& Wang-Mendel 2 conjuntos fuzzy 							& SVM \\ \hline
     TNR 			     	& 77.2\% $\pm$ 3.54\%            									& 75.5\% $\pm$ 3.20\%    \\
     TPR    			   	& 64.4\% $\pm$ 3.46\%   											& 65.8\% $\pm$ 4.64\%   \\
-    Accuracy  		   & 70.8\% $\pm$ 3.27\%       										& 70.65\% $\pm$ 2.99\%    \\
+    acuracia  		   & 70.8\% $\pm$ 3.27\%       										& 70.65\% $\pm$ 2.99\%    \\
     \end{tabular}
     \caption{Comparação entre os resultados do método de Wang-Mendel e SVM na base da Amazon}
 	\label{table:amazon_svm}

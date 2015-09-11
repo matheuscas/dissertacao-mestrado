@@ -93,27 +93,27 @@ A etapa de transformação produz representações numéricas a partir dos vetor
 
 \subsection{SentiWordNet 3.0}
 
-O SentiWordNet 3.0 (SWN) é a terceira versão do SentiWordNet, apresentado por \cite{esuli2006sentiwordnet}. É um dicionário criado pela anotação automática de sentimento de cada \textit{synset} (conjuntos de sinônimos) do Wordnet 3.0, outro dicionário na língua inglesa \cite{fellbaum2005wordnet}. Cada \textit{synset} $s$ é associado pelo SWN a três  escores numéricos $Pos(s)$, $Neg(s)$ e $Obj(s)$ que indicam o quanto positivos, negativos e "objetivos" (ou neutros) são os termos existentes no \textit{synset} \cite{baccianella2010sentiwordnet}. 
+O SentiWordNet 3.0 (SWN) é a terceira versão do SentiWordNet, apresentado por \cite{esuli2006sentiwordnet}. É um dicionário criado pela anotação automática dos sentimentos de cada \textit{synset} (conjuntos de sinônimos) do Wordnet 3.0, outro dicionário na língua inglesa \cite{fellbaum2005wordnet}. Todos os \textit{synsets} do Wordnet se conectam entre si através de uma relação conceitual chamada de \textit{gloss}. Um \textit{gloss} contém uma breve definição e, na maioria dos casos, um ou mais curtas sentenças ilustrando o uso dos termos dentro um \textit{synset}. Assim, como existe essa grande quantidade de conexões entre os \textit{synsets}, muitos termos pertencem a mais de um \textit{synset} e podem, por conseguinte, possuir definições e usos diferentes. A anotação automática feita pelo SWN associa três escores numéricos a cada \textit{synset} $s$, $Pos(s)$, $Neg(s)$ e $Obj(s)$, que indicam o quanto positivos, negativos e "objetivos" (ou neutros) são os termos existentes no \textit{synset} \cite{baccianella2010sentiwordnet}. 
 
- 
  \todo[inline]{ainda falta explicação sobre synsets, não foi dito que um termo pode pertencer a mais de um synset, que cada synset representaria um possível sentido de um termo e que em um synset estão termos que possuem o mesmo sentido, ou seja, que podem ser sinonimos entre si neste sentido}
+ \todo[inline]{matheus: peguei a definição da estruura que está em https://wordnet.princeton.edu/ que acho que cobre parte do que você falou e adicionei o que não cobria}
 
 O método de criação do SWN se baseia num conjunto de classificadores ternários \footnote{Um classificador \textit{n-ário} é um dispositivo que atribui a cada objeto exatamente um rótulo a partir de um conjunto pré-definido de $n$ rótulos.} que são capazes de decidir quando um \textit{synset} é positivo, negativo ou objetivo \cite{esuli2006sentiwordnet}. Cada classificador difere um do outro pelos conjuntos de treinos, produzindo diferentes resultados para os \textit{synsets} do Wordnet. O escore final do \textit{synset} é determinado pela proporção normalizada dos classificadores ternários que conseguiram associar um rótulo ao \textit{synset}. Se todos os classificadores concordarem em associar o mesmo rótulo para um \textit{synset}, aquele rótulo (e.g. positivo) terá escore máximo para aquele \textit{synset}. De outra forma, cada rótulo terá um escore proporcional ao número de classificadores que associaram um rótulo a ele. Por exemplo, 3 classificadores assinalaram positivo para um dado \textit{synset}, um outro classificou o \textit{synset} como negativo, e nenhum conseguiu classifica-lo como objetivo. Assim o \textit{synset} terá $Pos(s) = 0.75$, $Neg(s) = 0.25$ e $Obj(s) = 0$. Como a proporção é normalizada, os valores estão num intervalo $[0,1]$ e a soma dos três escores também sempre será igual a 1. Assim, é possível que existam (e existem) \textit{synsets} que tenham todos os três graus diferentes de zero, indicando que há termos positivos, negativos e objetivos ao mesmo tempo \cite{esuli2006sentiwordnet}. 
 
 \begin{figure}[h]
-\caption{Exemplo do \textit{synset} do unigram \textit{bad}}
+\caption{Exemplo dos \textit{synsets} do unigram \textit{happy} no SWN}
 \centering
-\includegraphics[scale=0.5]{bad_synset}
-\label{figura:bad_synset}
+\includegraphics[scale=0.35]{happy_synsets}
+\label{figura:happy_synsets}
 \end{figure}
  
  \todo[inline]{pensei em um exemplo de synset do sentiwordnet, talvez um termo mais simples que bad, com menos synsets}
  
-A figura \ref{figura:bad_synset} ilustra o \textit{synset} do termo \textit{bad}. A palavra \textit{bad} liga-se aos seus sinônimos através de relações chamadas \textit{glosses} (retângulo em cinza escuro) que são significados que aqueles sinônimos tem num determinado contexto. Na figura, \textit{bad} liga-se a \textit{awful} e \textit{terrible}, por exemplo, através de uma relação em que eles significam ter "indesejada ou qualidade negativa".
+ A figura \ref{figura:happy_synsets} ilustra os \textit{synsets} do termo \textit{happy}. Esse termo, como adjetivo, está contido em 4 \textit{synsets} diferentes, cada um com um \textit{gloss} com uma definição (primeira frase abaixo termos) e curtas sentenças exemplificando o uso (frases entre aspas), dos termos. Além disso, em 3 dos quatro \textit{synsets}, são exibidos outros termos sinônimos a \textit{happy} nos respectivos \textit{synsets}.
  
-Para que pudéssemos extrair as características, seleciona-las e, então, principalmente, gerar a base de regras fuzzy nas etapas seguintes, foi preciso transformar a tupla de três valores dos termos do SWN em um valor único. Em \cite{ohana2009sentiment} e \cite{khan2011sentiment}, a tupla do SWN também foi simplificada para um único valor para determinar a polaridade de cada termo. Inicialmente, nós definimos a polaridade resultante $Pol(n)$ de um termo  $n$, marcado gramaticalmente (e.g. adjetivo, advérbio, etc.), como $Pol(n) = Pos(s) - Neg(s)$ ,subtraindo o grau de positividade do grau de negatividade do \textit{synset} $s$ mais freqüente a que pertence o unigram. Por exemplo, o \textit{synset} mais freqüente de \textit{good} é o próprio \textit{good}, com grau $Pos(s)$ de 0.75, $Neg(s)$ de 0.0 e $Obj(s)$ de 0.25. A polaridade resultante $Pol(n)$ será de 0.5.
-
-Como uma mesma palavra pode pertencer a mais de um \textit{synset}, há ainda um problema em escolher um \textit{synset} adequado para uma palavra. No trabalho de \cite{guerini2013sentiment} é demonstrado que escolher o \textit{synset} mais freqüente pode não ser melhor que escolher um qualquer de maneira aleatória. No mesmo trabalho, também são demonstradas outras fórmulas de se calcular a partir do SWN a polaridade termos isoladamente, chamados pelos autores de palavras fora de contexto (do inglês \textit{word’s prior polarity}). Palavras fora de contexto são típicas de abordagens \textit{bag-of-words} e devem ter um tratamento diferente para se adequar ao problema da perda do contexto causada na etapa de pré-processamento, com a tokenização do documento \cite{guerini2013sentiment}. Assim, nós utilizamos uma das fórmulas de \cite{guerini2013sentiment} para calcular a polaridade $Pol(n)$ de um termo do SentiWordNet. 
+%A figura \ref{figura:happy_synsets} ilustra o \textit{synset} do termo \textit{bad}. A palavra \textit{bad} liga-se aos seus sinônimos através de relações chamadas \textit{glosses} (retângulo em cinza escuro) que são significados que aqueles sinônimos tem num determinado contexto. Na figura, \textit{bad} liga-se a \textit{awful} e \textit{terrible}, por exemplo, através de uma relação em que eles significam ter "indesejada ou qualidade negativa".
+ 
+Para que pudéssemos extrair as características, seleciona-las e, então, principalmente, gerar a base de regras fuzzy nas etapas seguintes, foi preciso transformar a tupla de três valores dos termos do SWN em um valor único. Em \cite{ohana2009sentiment} e \cite{khan2011sentiment}, a tupla do SWN também foi simplificada para um único valor para determinar a polaridade de cada termo. Como uma mesma palavra pode pertencer a mais de um \textit{synset}, há ainda um problema em escolher um \textit{synset} adequado para uma palavra. No trabalho de \cite{guerini2013sentiment} é demonstrado que escolher o \textit{synset} mais freqüente pode não ser melhor que escolher um qualquer de maneira aleatória. No mesmo trabalho, também são demonstradas outras fórmulas de se calcular a partir do SWN a polaridade dos termos isoladamente, chamados pelos autores de palavras fora de contexto (do inglês \textit{word’s prior polarity}). Palavras fora de contexto são típicas de abordagens \textit{bag-of-words} e devem ter um tratamento diferente para se adequar ao problema da perda do contexto causada na etapa de pré-processamento, com a tokenização do documento \cite{guerini2013sentiment}. Assim, nós utilizamos uma das fórmulas de \cite{guerini2013sentiment} para calcular a polaridade $Pol(n)$ de um termo do SentiWordNet. 
 
 \todo[inline]{continua confuso aqui, no parágrafo anterior foi dito que inicialmente foi usada uma formula e mostra a formula, no paragrafo acima, diz que usou a formula de guerini mas não mostra a formula. É a mesma coisa? então deixe claro, se for diferente fale somente sobre o que usamos em definitivo, fica confuso dizer que inicialmente usou uma formula depois mudou, mas não tem resultados ainda}  
 
@@ -135,9 +135,10 @@ Outra análise relacionada a definição da polaridade de um unigram, foi o envi
 
 \subsubsection{Bigrams e trigrams}
 
-O dicionário de opiniões provê a polaridade somente para os unigrams. Para bigrams e trigrams, tivemos de considerar a influência entre as palavras desses n-grams. Conforme vimos na etapa de pré-processamento, os bigrams e trigrams propostos nesse trabalho são compostos por advérbios e adjetivos ou somente por advérbios. Os advérbios que antecedem os adjetivos ou advérbios nos n-grams são chamados de modificadores, intensificadores ou atenuadores, pois alteram a polaridade das palavras que os acompanham \cite{voll2007not}. Os intensificadores aumentam o grau da polaridade do unigram, seja ele positivo ou negativo, e os atenuadores diminuem. O exemplo abaixo, com polaridades retiradas do SWN, ilustram a influência dos advérbios sobre os adjetivos.  
+O dicionário de opiniões provê a polaridade somente para os unigrams. Para bigrams e trigrams, tivemos de considerar a influência entre as palavras desses n-grams. Conforme vimos na etapa de pré-processamento, os bigrams e trigrams propostos nesse trabalho são compostos por advérbios e adjetivos ou somente por advérbios. Os advérbios que antecedem os adjetivos ou advérbios nos n-grams são chamados de modificadores, intensificadores ou atenuadores, pois alteram a polaridade das palavras que os acompanham \cite{voll2007not}. Os intensificadores aumentam o grau da polaridade do unigram, seja ele positivo ou negativo, e os atenuadores diminuem. O exemplo abaixo, com polaridades retiradas do SWN, e modificação dos adjetivos pelos advérbios realizada nesse trabalho, ilustram a influência dos advérbios sobre os adjetivos.  
 
 \todo[inline]{a polaridade de very good e very bad veio do SWN ou foi o seu cálculo?}
+\todo[inline]{matheus: meu calculo. explicitei no texto}
 
 \begin{itemize}
 \item \label{itm:very_exem} $Pos(\textit{good}) = 0,72259$; $Pos(\textit{very good}) = 0,90323$
@@ -211,10 +212,12 @@ Diferentemente da maioria dos trabalhos relacionados que consideram os n-grams c
 
 \subsection{Extração de características}
 
-Uma abordagem comumente utilizada na mineração de opiniões, é utilizar o diretamente o vetor de termos ou n-grams (bag-of-words) para gerar um classificador que determine a polaridade dos documentos. Esta abordagem no entanto produz um classificador fortemente dependente de termos individuais presentes no conjunto de dados de treinamento, com forte dependência de domínio. \todo[inline]{acho melhor apresentar primeiro o tradicional para depois contrastar com a nossa, tenta completar esse parágrafo. PS: eu comecei a modificar mas peço que tente complementar a diferença (Vant e desvant), por exemplo, bag of words tente a ter melhor acurácia embora seja dependente da base}
+Uma abordagem comumente utilizada na mineração de opiniões, é utilizar diretamente o vetor de termos ou n-grams (bag-of-words) para gerar um classificador que determine a polaridade dos documentos. Esse tipo de técnica tende a produzir maior acurácia, pois o classificador é treinado numa coleção representativa de dados do corpus. Essa abordagem é comumente chamada de "aprendizado supervisionado". No entanto, essa técnica mas produz um classificador fortemente dependente do conjunto de dados de treinamento e assim demandando uma nova rodada de treinamento se for aplicada e novos tipos de dados. Essa abordagem ainda está sujeita a quantidade e qualidade da base de treinamento. Em contraste, a abordagem de definir o sentimento geral das opiniões através de suas polaridades não requer um prévio treinamento e não depende de um tipo específico de dados, embora produza um classificador com menor acurácia e mais geral. Essa abordagem é comumente chamada de "aprendizado não supervisionado" \cite{chaovalit2005movie}.
+
+\todo[inline]{acho melhor apresentar primeiro o tradicional para depois contrastar com a nossa, tenta completar esse parágrafo. PS: eu comecei a modificar mas peço que tente complementar a diferença (Vant e desvant), por exemplo, bag of words tente a ter melhor acurácia embora seja dependente da base}
 \todo[inline]{MATHEUS: acho que você mesmo modificou esse, não?}
 
-Por este motivo, realizamos uma sub-etapa de extração de características dos documentos a partir dos vetores de polaridades da etapa de transformação. Essa abordagem analisa os documentos por suas características em vez de seu conteúdo específico para decidir a polaridade do sentimento geral dos documentos. As características que utilizamos não são específicas para nenhum domínio e podem ser facilmente aplicadas para quaisquer outros tipos de base de dados \cite{pang2002thumbs}. Além disso, a extração dessas características reduz a dimensionalidade dos dados, já que os vetores resultantes da etapa é significativamente menor que um vetor comum de \textit{bag-of-words}.
+Por estes motivos, realizamos uma sub-etapa de extração de características dos documentos a partir dos vetores de polaridades da etapa de transformação. Essa abordagem analisa os documentos por suas características em vez de seu conteúdo específico para decidir a polaridade do sentimento geral dos documentos. As características que utilizamos não são específicas para nenhum domínio e podem ser facilmente aplicadas para quaisquer outros tipos de base de dados \cite{pang2002thumbs}. Além disso, a extração dessas características reduz a dimensionalidade dos dados, já que os vetores resultantes da etapa é significativamente menor que um vetor comum de \textit{bag-of-words}.
 
 Por outro lado, abordagens de mineração de opinião que são dependentes de domínio, normalmente baseadas em métodos de aprendizado de máquina, conseguem taxas de acurácia iguais ou maiores que 95\%, pois alimentam o classificador com os vetores de palavras dos documentos. Assim, o classificador aprende com os documentos da base de dados quais palavras fazem parte dos positivos e negativos. Contudo, para alcançar altas taxas de classificação, essas abordagens precisam de uma grande massa de dados anotadas para treinamento e considerável tempo de treino para poder classificar corretamente. Ainda, produzem resultados muito ruins entre domínios diferentes sem novas rodadas de treinamento, evidenciando uma superadaptação ao domínio de treinamento e pouca generalização.
 
@@ -223,7 +226,7 @@ Diferentes estudos propuseram diferentes características para descrever ou disc
 \todo[inline]{como comentei, essa lista poderia ser agrupada para ficar mais simples, veja como ficou e continue}
 
 
-Três tipos básicos de características de n-grams foram definidas: somatório, contagem e valores máximos. Características de somatório envolvem a soma as polaridades dos n-grams; as características de contagem produzem a contagem dos tipos de n-grams e as respectivas polaridades associadas (por exemplo, 10 adjetivos positivos); e as características de valores máximos se referem aos valores extremos de polaridade para um dado n-gram no documento (por exemplo, a maior polaridade absoluta num documento). Além disso, mais características foram derivadas a partir dos três tipos básicos, aplicando normalização e subtração entre elas. 
+Três tipos básicos de características de n-grams foram definidas: somatório, contagem e valores máximos. Características de somatório envolvem a soma as polaridades dos n-grams; as características de contagem produzem a contagem dos tipos de n-grams e as respectivas polaridades associadas (por exemplo, 10 adjetivos positivos); e as características de valores máximos se referem aos valores extremos de polaridade para um dado n-gram no documento (por exemplo, a maior polaridade absoluta num documento). Além disso, mais características foram derivadas a partir dos três tipos básicos, aplicando normalização e subtração entre elas. A normalização foi feita pela divisão da soma das polaridades dos n-grams pela quantidade de termos no documento.
 
 \todo[inline]{a normalização foi pela divisão de todos os valores de soma pelo o maior valor de soma obtido em um documento? coloca uma frase sobre isso}
 
@@ -238,86 +241,40 @@ Desta forma, as características extraídas dos documentos foram as seguintes:
      \item adjetivos negativos
      \item advérbios positivos
      \item advérbios negativos
-     \item adjetivos e dos bigrams positivos formados por advérbio e adjetivo
-     \item etc!!!!!!!!!!!!!!
+     \item adjetivos e bigrams positivos compostos por advérbio e adjetivo
+     \item adjetivos e bigrams negativos compostos por advérbio e adjetivo
+     \item advérbios e bigrams positivos compostos somente por advérbios
+	 \item advérbios e bigrams negativos compostos somente por advérbios
+	 \item unigrams e bigrams positivos
+	 \item unigrams e bigrams negativos
+	 \item unigrams, bigrams e trigrams positivos 
+	 \item unigrams, bigrams e trigrams negativos
   \end{enumerate}
-  \item Diferença entre a soma positiva e negativa, Diferença entre a contagem positiva e negativa para os n-grams:
+  \item Diferença entre a soma e a contagem: 
   \begin{enumerate}
-     \item etc!!!!!!!!!!!!!!
+     \item Dos adjetivos positivos e negativos
+     \item Dos advérbios positivos e negativos
+     \item positiva e negativa de adjetivos e bigrams compostos por advérbio e adjetivo
+     \item positiva e negativa de advérbios e bigrams compostos somente por advérbios
+     \item positiva e negativa de unigrams e bigrams
+     \item positiva e negativa de unigrams, bigrams e trigrams
+  \end{enumerate}
+  \item Valores máximos para:
+  \begin{enumerate}
+	\item Classe da polaridade máxima entre os adjetivos de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+	\item Classe da polaridade máxima entre os advérbios de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+	\item Classe da polaridade máxima entre adjetivos e bigrams formados por advérbio e adjetivo (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+	\item Classe da polaridade máxima entre advérbios e bigrams formados somente por advérbios (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+	\item Classe da polaridade máxima entre unigrams e bigrams de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+	\item Classe da polaridade máxima entre unigrams, bigrams e trigrams de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
+  \end{enumerate}
+  \item Outras:
+  \begin{enumerate}
+  	\item Quantidade de n-grams extraídos do documento
+	\item Tamanho do documento (contabiliza todos os n-grams existentes no documento)
+	\item Percentual de n-grams negados
   \end{enumerate}
 \end{enumerate}
-
-As características de somatório foram:
-
-\begin{itemize}
-\item Soma dos adjetivos positivos
-\item Soma dos adjetivos negativos
-\item Soma dos advérbios positivos
-\item Soma dos advérbios negativos
-\item Soma normalizada dos adjetivos positivos
-\item Soma normalizada dos advérbios positivos
-\item Soma normalizada dos adjetivos negativos
-\item Soma normalizada dos advérbios negativos
-\item Diferença entre a soma dos adjetivos positivos e negativos
-\item Diferença entre a soma dos advérbios positivos e negativos
-\item Soma dos adjetivos e dos bigrams positivos formados por advérbio e adjetivo
-\item Soma dos adjetivos e dos bigrams negativos formados por advérbio e adjetivo
-\item Soma dos advérbios e dos bigrams positivos somente formados por advérbios
-\item Soma dos advérbios e dos bigrams negativos somente formados por advérbios
-\item Soma dos unigrams e bigrams positivos
-\item Soma dos unigrams e bigrams negativos
-\item Soma dos unigrams, bigrams e trigrams positivos
-\item Soma dos unigrams, bigrams e trigrams negativos
-\item Soma normalizada dos adjetivos e dos bigrams positivos formados por advérbio e adjetivo
-\item Soma normalizada dos adjetivos e dos bigrams negativos formados por advérbio e adjetivo
-\item Soma normalizada dos advérbios e dos bigrams positivos somente formados por advérbios
-\item Soma normalizada dos advérbios e dos bigrams negativos somente formados por advérbios
-\item Soma normalizada dos unigrams e bigrams positivos
-\item Soma normalizada dos unigrams e bigrams negativos
-\item Soma normalizada dos unigrams, bigrams e trigrams positivos
-\item Soma normalizada dos unigrams, bigrams e trigrams negativos
-\item Diferença entre a soma positiva e negativa dos adjetivos e dos bigrams formados por advérbio e adjetivo
-\item Diferença entre a soma positiva e negativa dos advérbios e dos bigrams formados somente por advérbios
-\item Diferença entre a soma positiva e negativa dos unigrams e bigrams
-\item Diferença entre a soma positiva e negativa dos unigrams, bigrams e trigrams
-\item Percentual de n-grams negados
-\end{itemize}
-
-De maneira análoga, as características de contagem foram as seguintes:
-
-\begin{itemize}
-\item Contagem dos adjetivos positivos
-\item Contagem dos adjetivos negativos
-\item Contagem dos advérbios positivos
-\item Contagem dos advérbios negativos
-\item Diferença entre a contagem de adjetivos positivos e negativos
-\item Diferença entre a contagem de advérbios positivos e negativos
-\item Contagem de adjetivos e bigrams positivos compostos por advérbio e adjetivo
-\item Contagem de adjetivos e bigrams negativos compostos por advérbio e adjetivo
-\item Contagem de advérbios e bigrams positivos compostos somente por advérbios
-\item Contagem de advérbios e bigrams negativos compostos somente por advérbios
-\item Contagem dos unigrams e bigrams positivos
-\item Contagem dos unigrams e bigrams negativos
-\item Contagem de unigrams, bigrams e trigrams positivos 
-\item Contagem de unigrams, bigrams e trigrams negativos
-\item Diferença entre a contagem positiva e negativa de adjetivos e bigrams compostos por advérbio e adjetivo
-\item Diferença entre a contagem positiva e negativa de advérbios e bigrams compostos somente por advérbios
-\item Diferença entre a contagem positiva e negativa de unigrams e bigrams
-\item Diferença entre a contagem positiva e negativa de unigrams, bigrams e trigrams
-\item Quantidade de n-grams extraídos do documento
-\item Tamanho do documento (contabiliza todos os n-grams existentes no documento)
-\end{itemize}
-
-E por fim, as características de valores máximos foram:
-
-\begin{itemize}
-\item Classe da polaridade máxima entre os adjetivos de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
-\item Classe da polaridade máxima entre os advérbios de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
-\item Classe da polaridade máxima entre adjetivos e bigrams formados por advérbio e adjetivo (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
-\item Classe da polaridade máxima entre advérbios e bigrams formados somente por advérbios (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
-\item Classe da polaridade máxima entre unigrams e bigrams de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
-\item Classe da polaridade máxima entre unigrams, bigrams e trigrams de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
-\end{itemize}
 
 Depois da extração de características, os vetores de polaridades da etapa de transformação são substituídos por vetores de características. Cada documento, agora, é representado por um vetor com 57 caraterísticas diferentes. 
 
@@ -327,7 +284,7 @@ Depois de extraídas as características dos documentos, é preciso selecionar q
 
 Para fazer essa seleção, nós usamos dois algoritmos de seleção de características, o \textit{Correlation-based Feature Selection} (CFS) e o algoritmo de seleção de características do algoritmo de classificação C4.5 \cite{cintra2008fuzzy}. Em \citeonline{cintra2008fuzzy} é apresentado o uso destes algoritmos de seleção de características no âmbito da lógica fuzzy e de regras fuzzy, conceitos chave do nosso trabalho. 
 
-O CFS se baseia na hipótese de que bons subconjuntos de características contém características altamente correlacionadas com a classe final, mas que são altamente não relacionadas entre si \cite{hall1999correlation}. O CFS testa individualmente se uma característica é apta a classificar bem e mais documentos, mas também se esta característica contribui para a performance da classificação do conjunto que ela se inserirá, mesmo que a característica não tenha qualquer relação com as demais. Dessa etapa de seleção, o CFS produz uma lista das características mais aptas a classificar os documentos da base. 
+A hipótese central do CFS é que um bom conjunto de características contém características que são altamente correlacionadas com a classe, mas sem qualquer correlação umas com as outras. O CFS é um algoritmo que junta essa hipótese com uma medida de correlação apropriada e uma heurística de estratégia de busca \cite{hall1999correlation}. Dessa etapa de seleção, o CFS produz uma lista das características mais aptas a classificar os documentos da base. 
 
 \todo[inline]{essa explicação do CFS não está boa, pode partir da tese de Hall: 'The central hypothesis is that good feature sets contain features that are highly correlated with the class, yet uncorrelated with each other. [..] CFS
 (Correlation based Feature Selection) is an algorithm that couples this evaluation formula with an appropriate correlation measure and a heuristic search strategy'}

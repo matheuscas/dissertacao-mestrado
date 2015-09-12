@@ -1,3 +1,6 @@
+\documentclass[template.tex]{subfiles}
+\begin{document}
+
 \xchapter{Metodologia}{}
 
 %O processo de mineração de opinião
@@ -27,7 +30,7 @@
 %\end{itemize}
 %\end{itemize}
 
-Dada nossa proposta de projetar e avaliar um sistema fuzzy de mineração de opinião para classificar o sentimento geral de opiniões encontradas em textos de documentos, iniciamos definindo com mais propriedade nosso problema e a tarefa a ser desempenhada. A partir de documentos de bases selecionadas, a análise dos documentos a ser realizada pelo sistema fuzzy deve ser capaz de classifica-los em positivos, que exprimem um sentimento geral positivo sobre um determinado assunto, ou em negativos, que exprimem um sentimento geral negativo, definindo, portanto, um problema de classificação binária. Como abordagem para classificação, a escolha foi por uma pouco dependente do domínio em que as opiniões são expressas, como cinema, livros ou automóveis. Nossa abordagem utiliza características extraídas dos próprios documentos, comuns a documentos de outros domínios, ao invés de usar diretamente, por exemplo, os termos existentes nos textos, como realizado em \citeonline{pang2002thumbs, pang2004sentimental, pang:2008}.
+Dada nossa proposta de projetar e avaliar um sistema fuzzy de mineração de opinião para classificar o sentimento geral de opiniões encontradas em textos de documentos, iniciamos definindo com mais propriedade nosso problema e a tarefa a ser desempenhada. A partir de documentos de bases selecionadas, a análise dos documentos a ser realizada pelo sistema fuzzy deve ser capaz de classifica-los em positivos, que exprimem um sentimento geral positivo sobre um determinado assunto, ou em negativos, que exprimem um sentimento geral negativo, definindo, portanto, um problema de classificação binária. A escolha do tipo da classificação foi por uma pouco dependente do domínio em que as opiniões são expressas, como cinema, livros ou automóveis. Nossa abordagem utiliza características extraídas dos próprios documentos, comuns a documentos de outros domínios, ao invés de usar diretamente, por exemplo, os termos existentes nos textos, como realizado em \citeonline{pang2002thumbs, pang2004sentimental, pang:2008}.
 
 \todo[inline]{Neste primeiro parágrafo, o termo abordagem está sendo usado também para classificar o tipo do nosso problema, que é um problema de classificação. Recomendo nao fazer isso.}
 
@@ -52,7 +55,7 @@ Para filmes, nós selecionamos a largamente utilizada base de dados \textit{Movi
 
 As opiniões sobre livros, carros, computadores, panelas, hotéis, músicas, celulares estão reunidos numa base de dados balanceada com 400 documentos,  produzida por \citeonline{taboada2011lexicon}, chamada ``Epinions 1`` \footnote{Disponível em: \url{http://www.sfu.ca/~mtaboada/research/SFU_Review_Corpus.html}}. Os documentos com as opiniões foram extraídas do site Epinions\footnote{\url{http://www.epinions.com/}}, das categorias já citadas. Cada categoria possui 50 documentos, 25 positivos e 25 negativos, os quais foram classificados como positivos ou negativos pelos autores através de uma marcação, "recomendado" ou "não recomendado", nos textos opiniativos inseridos pelos próprios usuários. Todos os demais dados originais foram removidos, como data, autor, gênero, assunto, título, dentre outros, restando somente o texto original das opiniões.
 
-Em relação às opiniões de domínios de mp3, pen-drives, dispositivos gps, wifi e câmeras fotográficas, nós utilizamos um recorte balanceado de 2000 documentos de uma base de dados chamada  "Amazon-83713" \footnote{Disponível em: \url{http://patty.isti.cnr.it/~baccianella/reviewdata/index.php?download}}, que contém opiniões sobre os produtos do site da Amazon.com. Parte dessa base já foi utilizada em outros trabalhos, como o de \citeonline{baccianella2010selecting} e \citeonline{baccianella2014feature}. Cada documento contém três informações: um identificador único, o texto original e escore, dentro de uma escala de 1 a 5. Este trabalho utilizou o escore para classificar os documentos da seguinte forma. Todos os documentos com escore igual ou menor que 2 foram considerados negativos, e documentos com escore igual a 4 ou 5 foram considerados positivos. Documentos com escore igual a 3 foram descartados, por não se encaixarem nem em uma classe nem em outra. É importante frisar também que nós fizemos o recorte balanceado de 2000 documentos, pois essa base é originalmente altamente desbalanceada, com muito mais documentos positivos que negativos.  
+Em relação às opiniões de domínios de mp3, pen-drives, dispositivos gps, wifi e câmeras fotográficas, nós utilizamos um recorte balanceado de 2000 documentos de uma base de dados chamada  "Amazon-83713" \footnote{Disponível em: \url{http://patty.isti.cnr.it/~baccianella/reviewdata/index.php?download}}, que contém opiniões sobre os produtos do site da Amazon.com. Parte dessa base já foi utilizada em outros trabalhos, como o de \citeonline{baccianella2010selecting} e \citeonline{baccianella2014feature}. Cada documento contém três informações: um identificador único, o texto original e escore, dentro de uma escala de 1 a 5. Este trabalho utilizou o escore para classificar os documentos da seguinte forma. Todos os documentos com escore igual ou menor que 2 foram considerados negativos, e documentos com escore igual a 4 ou 5 foram considerados positivos. Documentos com escore igual a 3 foram descartados, conforme realizado em \cite{khan2011sentiment} e  \cite{pang2004sentimental}, além de nossa tarefa de classificação ser binária (positivo e negativo) . É importante frisar também que nós fizemos o recorte balanceado de 2000 documentos, pois essa base é originalmente altamente desbalanceada, com muito mais documentos positivos que negativos.  
 
 \todo[inline]{Esse descarte de documentos com 3 de score vai ser motivo de questionamentos}
 
@@ -219,7 +222,6 @@ Diferentemente da maioria dos trabalhos relacionados que consideram os n-grams c
 Uma abordagem comumente utilizada na mineração de opiniões, é utilizar diretamente o vetor de termos ou n-grams (bag-of-words) para gerar um classificador que determine a polaridade dos documentos. Esse tipo de técnica tende a produzir maior acurácia, pois o classificador é treinado numa coleção representativa de dados do corpus. Essa abordagem é comumente chamada de "aprendizado supervisionado". No entanto, essa técnica mas produz um classificador fortemente dependente do conjunto de dados de treinamento e assim demandando uma nova rodada de treinamento se for aplicada e novos tipos de dados. Essa abordagem ainda está sujeita a quantidade e qualidade da base de treinamento. Em contraste, a abordagem de definir o sentimento geral das opiniões através de suas polaridades não requer um prévio treinamento e não depende de um tipo específico de dados, embora produza um classificador com menor acurácia e mais geral. Essa abordagem é comumente chamada de "aprendizado não supervisionado" \cite{chaovalit2005movie}.
 
 \todo[inline]{acho melhor apresentar primeiro o tradicional para depois contrastar com a nossa, tenta completar esse parágrafo. PS: eu comecei a modificar mas peço que tente complementar a diferença (Vant e desvant), por exemplo, bag of words tente a ter melhor acurácia embora seja dependente da base}
-\todo[inline]{MATHEUS: acho que você mesmo modificou esse, não?}
 
 Por estes motivos, realizamos uma sub-etapa de extração de características dos documentos a partir dos vetores de polaridades da etapa de transformação. Essa abordagem analisa os documentos por suas características em vez de seu conteúdo específico para decidir a polaridade do sentimento geral dos documentos. As características que utilizamos não são específicas para nenhum domínio e podem ser facilmente aplicadas para quaisquer outros tipos de base de dados \cite{pang2002thumbs}. Além disso, a extração dessas características reduz a dimensionalidade dos dados, já que os vetores resultantes da etapa é significativamente menor que um vetor comum de \textit{bag-of-words}.
 
@@ -317,7 +319,12 @@ A classificação do sentimento geral das opiniões de cada documento de uma det
 
 \subsection{Modelagem Fuzzy das Variáveis do Sistema Fuzzy}
 
-No processo da modelagem fuzzy das variáveis \footnote{As variáveis do SBRF são as características das bases de dados} do SBRF, constatamos a necessidade de padronizar a escolha dos intervalos de valores nos vetores de características, pois não podíamos depender da escolha subjetiva de pessoas para identificar quais seriam os melhores intervalos para cada vetor de característica. \todo[inline]{Para mim, ainda não está claro o porque de delimitar o intervalo de valores das características. Se o usuário não pode fazer isso, ok. Mas porque fazer isso?} Para isso, nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média de um determinado conjunto de valores (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal e os valores que ficaram além do intervalo foram reduzidos para os limites do mesmo. Assim, o mesmo critério foi usado para determinar o intervalo de dados de todas as características. 
+No processo da modelagem fuzzy das variáveis \footnote{As variáveis do SBRF são as características das bases de dados} do SBRF, constatamos a necessidade de padronizar a escolha dos intervalos de valores nos vetores de características, pois não podíamos depender da escolha subjetiva de pessoas para identificar quais seriam os melhores intervalos para cada vetor de característica. 
+
+\todo[inline]{Para mim, ainda não está claro o porque de delimitar o intervalo de valores das características. Se o usuário não pode fazer isso, ok. Mas porque fazer isso?}
+\todo[inline]{matheus cardoso: não é o usuario. Essas "pessoas" aí somos nós. Tivemos de fazer isso, pois sem isso ficava a meu cargo verificar no olhometro o inicio e fim dos intervalos de dados das características para pegar a maior parte possível de dados.} 
+
+Para isso, nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média de um determinado conjunto de valores (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal e os valores que ficaram além do intervalo foram reduzidos para os limites do mesmo. Assim, o mesmo critério foi usado para determinar o intervalo de dados de todas as características. 
 
 \begin{figure}[h]
 \caption{Regra dos 3 sigmas.}
@@ -327,6 +334,7 @@ No processo da modelagem fuzzy das variáveis \footnote{As variáveis do SBRF s�
 \end{figure}
 
 Após a delimitação dos valores das características de acordo com a regra do três-sigma, definimos um único formato de conjunto fuzzy para todas as variáveis do SBRF. O formato escolhido foi o triangular, por sua simplicidade, e também, pelo fato de ser muito utilizado na literatura \cite{alcala2009multiobjective, gacto2010integration, antonelli2012multi, cardenas2012multiobjective}.\todo[inline]{Matheus, a forma como aparece a citação está estranha. O trabalho de Cárdenas e Camargo, há apenas dois autores, mas aparece a palavra et al. E no trabalho de Gacto, Alcalá, Herrera, deveria aparecer apenas o nome do primeiro autor, seguido de et al.}
+\todo[inline]{matheus cardoso: eu ajeitei o de Cardenas, pois tinha um "Others" lá, mas o et al de Gacto eu estou por fora, é o latex que está fazendo assim. Já verifiquei na referencia e só tem 3 autores mesmo.}
 
 Para as variáveis de entrada do SBRF, nossa primeira modelagem foi dividir igualmente os dados em $2N + 1$ conjuntos fuzzy, conforme recomendado em \cite{wang1992generating}, para $N$ igual a dois, resultando em cinco regiões fuzzy: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira modelagem.
 
@@ -419,15 +427,29 @@ Para gerar as regras fuzzy precisamos determinar os graus de pertinência de cad
 
 O operador lógico usado nos antecedentes das regras geradas é do tipo "AND", ou seja, as condições antecedentes tem de simultaneamente ocorrer, para que o conseqüente aconteça.
 
-Portanto, ao fim do processo, uma regra é gerada para cada vetor de características. Devido a grande quantidade de vetores de características, é muito provável que regras duplicadas e/ou conflitantes, isto é, regras com mesmo antecedente, mas com conseqüente diferente, tenham sido geradas. Uma maneira proposta pelo método de Wang-Mendel de eliminar tais regras é associar um grau a cada regra e descartar a regra conflitante com menor grau. Além de eliminar regras contraditórias, esse processo também reduz a quantidade de regras a serem usadas na classificação. O algoritmo \ref{alg-regras-final} ilustra essa filtragem final.
+Portanto, ao fim do processo, uma regra é gerada para cada vetor de características. Devido a grande quantidade de vetores de características, é muito provável que regras duplicadas e/ou conflitantes, isto é, regras com mesmo antecedente, mas com conseqüente diferente, tenham sido geradas. Uma maneira proposta pelo método de Wang-Mendel de eliminar tais regras é associar um grau a cada regra e descartar a regra conflitante com menor grau. Além de eliminar regras contraditórias, esse processo também reduz a quantidade de regras a serem usadas na classificação. O algoritmo \ref{alg-regras-repetidas} e \ref{alg-regras-contraditorias} ilustram essa filtragem final.
 
 \begin{algorithm}
 \begin{algorithmic}[1]
-\caption{Eliminação de regras redundantes e contraditórias}
-\label{alg-regras-final}
+\caption{Eliminação de regras redundantes}
+\label{alg-regras-repetidas}
 \FOR{$R_i$ in $regras$}
    \FOR{$R_j$ in $regras$}
-       \IF{$R_i == R_j$ \OR $(antecedente(R_i) == antecedente(R_j) \, \AND \, consequente(R_i) <> consequente(R_j))$}
+       \IF{$R_i == R_j$}
+           \STATE $Regras\_finais \leftarrow R_i$
+       \ENDIF    
+   \ENDFOR
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\begin{algorithmic}[1]
+\caption{Eliminação de regras contraditórias}
+\label{alg-regras-contraditorias}
+\FOR{$R_i$ in $regras$}
+   \FOR{$R_j$ in $regras$}
+       \IF{$(antecedente(R_i) == antecedente(R_j) \, \AND \, consequente(R_i) <> consequente(R_j))$}
            \STATE $Regras\_finais \leftarrow max\_grau(R_i,R_j)$
        \ENDIF    
    \ENDFOR
@@ -499,3 +521,5 @@ Pois acho melhor que o Wikipedia :)}
 %\todo[inline]{Da wikipedia, mas la cita as denominacoes que voce falou, mas eu preferi usar taxas para ficar mais claro.}
 
 Além disso, com o objetivo de verificar se as diferenças entre os resultados dos experimentos são significativas ou não, nós utilizamos o teste de \textit{Wilcoxon signed-rank} \cite{wilcoxon1945individual}, usado para comparar resultados entre conjuntos de testes relacionados, resultados sucessivos sobre um único conjunto de teste, dentre outros. Por fim, também usamos um terceiro método de classificação, o \textit{Support Vector Machine} (SVM), bastante utilizado em trabalhos de mineração de opinião dependentes de domínio e que, comumente, produz bons resultados \cite{ohana2009sentiment, moraes2012document}. Assim, podemos verificar como nossa proposta se comporta frente aos métodos tradicionais de classificação utilizados nessa área. 
+
+\end{document}

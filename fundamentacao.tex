@@ -1,3 +1,6 @@
+\documentclass[template.tex]{subfiles}
+\begin{document}
+
 \xchapter{Fundamentação Teórica e revisão da literatura}{}
 
 %\begin{itemize}
@@ -84,3 +87,5 @@ A marcação gramatical das palavras do texto é o processo de identificação d
 Depois do texto identificado e marcado é preciso definir quais n-grams serão selecionados para a próxima etapa. Adjetivos são centrais para identificar subjetividade e, por conseguinte, opiniões em textos. Em \cite{hatzivassiloglou2000effects} foi desenvolvido um algoritmo para determinar o sentimento final somente de adjetivos. Neste trabalho foi notado que há relação entre adjetivos e conjunções, como "but", "and", dentre outros. A conjunção "And", por exemplo, mantem a mesma polaridade da opinião expressa pelo adjetivo, enquanto que "but", essa polaridade é invertida, em geral. Utilizando um algoritmo de aprendizado de máquina, esse artigo conseguiu classificar os adjetivos com acurácias entre 78\% e 92\%, dependendo da quantidade de dados de treino disponíveis. Outros trabalhos como os de\cite{wiebe2000learning} também utilizaram somente adjetivos como indicadores de subjetividade e presença de conteúdo opinativo.
 
 \cite{turney2002thumbs}, por sua vez, apontou que adjetivos isolados podem indicar opiniões, mas podem não ser suficientes para determinar o sentimento geral de documentos. Turney considera o contexto como fator determinante, exemplificando que "unpredictable" pode ser uma opinião negativa para automóveis, quando associado a "unpredictable steering" ou positivo quando for direcionado a filmes, quando associado a "unpredictable plot". Assim, Turney expande os adjetivos e acrescenta advérbios, verbos e substantivos associados aos adjetivos e entre eles, extraindo dos textos os chamados bigrams, n-grams compostos por dois elementos textuais. Utilizando \textit{mutual information} (PMI) para medir a força semântica entre duas palavras, técnicas de IR (\textit{Information Retrieval}) para determinar um valor numérico para a polaridade dos bigrams, e calculando a média final das polaridades dos bigrams, \cite{turney2002thumbs} alcançou uma média de acurácia de 74\% entre opiniões sobre automóveis e filmes.
+
+\end{document}

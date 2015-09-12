@@ -13,6 +13,7 @@
 \usepackage{float}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage{subfiles}
 
 \newcounter{example}[section]
 \newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
@@ -114,13 +115,21 @@ Opiniões são centrais em quase todas as atividades humanas, porque exercem rel
 %
 % Importante: Use \xchapter ao invés de \chapter, conforme exemplo abaixo.
 
-\include{introducao}
+%\include{introducao}
+%
+%\include{fundamentacao}
+%
+%\include{metodologia}
+%
+%\include{resultados}
 
-\include{fundamentacao}
+\subfile{introducao}
 
-\include{metodologia}
+\subfile{fundamentacao}
 
-\include{resultados}
+\subfile{metodologia}
+
+\subfile{resultados}
 
 \xchapter{Considerações finais e trabalhos futuros}{}
 
@@ -144,7 +153,7 @@ Opiniões são centrais em quase todas as atividades humanas, porque exercem rel
 % Para ajuda na criação do arquivo .bib e utilização do BibTeX, recorra ao
 % BibTeXpress em www.cin.ufpe.br/~paguso/bibtexpress
 \bibliographystyle{abnt-alf}
-\bibliography{pesquisa}
+\bibliography{../pesquisa}
 
 %% Fim do documento
 \end{document}

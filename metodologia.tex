@@ -27,13 +27,13 @@
 %\end{itemize}
 %\end{itemize}
 
-Dada nossa proposta de projetar e avaliar um sistema fuzzy de mineração de opinião para classificar o sentimento geral de opiniões encontradas em textos de documentos, iniciamos definindo com mais propriedade nosso problema e a tarefa a ser desempenhada. A partir de documentos de bases selecionadas, a análise dos documentos a ser realizada pelo sistema fuzzy deve ser capaz de classifica-los em positivos, que exprimem um sentimento geral positivo sobre um determinado assunto, ou em negativos, que exprimem um sentimento geral negativo, definindo portanto um problema de classificação binária. Como abordagem para classificação, a escolha foi por uma pouco dependente do domínio em que as opiniões são expressas, como cinema, livros ou automóveis. Nossa abordagem utiliza características extraídas dos próprios documentos, comuns a documentos de outros domínios, ao invés de usar diretamente, por exemplo, os termos existentes nos textos, como realizado em \citeonline{pang2002thumbs, pang2004sentimental, pang:2008}.
+Dada nossa proposta de projetar e avaliar um sistema fuzzy de mineração de opinião para classificar o sentimento geral de opiniões encontradas em textos de documentos, iniciamos definindo com mais propriedade nosso problema e a tarefa a ser desempenhada. A partir de documentos de bases selecionadas, a análise dos documentos a ser realizada pelo sistema fuzzy deve ser capaz de classifica-los em positivos, que exprimem um sentimento geral positivo sobre um determinado assunto, ou em negativos, que exprimem um sentimento geral negativo, definindo, portanto, um problema de classificação binária. Como abordagem para classificação, a escolha foi por uma pouco dependente do domínio em que as opiniões são expressas, como cinema, livros ou automóveis. Nossa abordagem utiliza características extraídas dos próprios documentos, comuns a documentos de outros domínios, ao invés de usar diretamente, por exemplo, os termos existentes nos textos, como realizado em \citeonline{pang2002thumbs, pang2004sentimental, pang:2008}.
 
-Para executarmos nossa tarefa de classificação da polaridade dos documentos, é preciso seguir seis etapas comumente utilizadas em processos de mineração de opinião: a i) definição do domínio, ii) pré-processamento, iii) transformação, iv) extração e seleção de características, v) classificação e vi) análise dos resultados \cite{moraes2012document}. 
+\todo[inline]{Neste primeiro parágrafo, o termo abordagem está sendo usado também para classificar o tipo do nosso problema, que é um problema de classificação. Recomendo nao fazer isso.}
 
+Para executarmos nossa tarefa de classificação da polaridade dos documentos, é preciso seguir seis etapas comumente utilizadas em processos de mineração de opinião: i) definição do domínio, ii) pré-processamento, iii) transformação, iv) extração e seleção de características, v) classificação e vi) análise dos resultados \cite{moraes2012document}.
 
-
-Primeiramente, na definição do domínio são selecionadas as bases de dados disponíveis nos trabalhos relacionados ou em outras origens, estabelecendo a quantidade e os tipos de domínios que serão uti. O pré-processamento é a etapa em que as bases escolhidas são preparadas para serem utilizadas nas próximas etapas, estruturando e filtrando os termos originais dos textos. A transformação é o momento em que os termos estruturados do pré-processamento são transformados em dados numéricos. A extração e seleção de características envolve a obtenção de características descritivas dos documentos a partir dos dados anteriores, assim como seleção das características mais relevantes. Na etapa de classificação, a base de regras fuzzy é gerada a partir das características selecionadas e aplicada para classificar os documentos. E, por fim, a etapa de avaliação realiza uma análise do desempenho da classificação em conjunto com as demais etapas. 
+Primeiramente, na definição do domínio são selecionadas as bases de dados disponíveis nos trabalhos relacionados ou em outras origens, estabelecendo a quantidade e os tipos de domínios que serão utilizados. O pré-processamento é a etapa em que as bases escolhidas são preparadas para serem utilizadas nas próximas etapas, estruturando e filtrando os termos originais dos textos. A transformação é o momento em que os termos estruturados do pré-processamento são transformados em dados numéricos. A extração e seleção de características envolve a obtenção de características descritivas dos documentos a partir dos dados anteriores, assim como, a seleção das características mais relevantes. Na etapa de classificação, a base de regras fuzzy é gerada a partir das características selecionadas e aplicada para classificar os documentos. E, por fim, a etapa de avaliação realiza uma análise do desempenho da classificação em conjunto com as demais etapas. A figura \ref{figura:processo_mineracao} ilustra todo o processo de mineração de opinião.
 
 \begin{figure}[h]
 \caption{Etapas do processo de mineração de opinião.}
@@ -46,32 +46,36 @@ Primeiramente, na definição do domínio são selecionadas as bases de dados di
 
 \section{Definição do domínio e o pré-processamento dos dados}
 
-Domínios diversos foram escolhidos para serem analisados por essa pesquisa, dentre eles filmes, livros, carros, computadores, panelas, hotéis, músicas, celulares, mp3, pen-drives, dispositivos gps, wifi e câmeras fotográficas. Essa diversidade de domínios é importante para avaliar nossa proposta em contextos variados, assim como para buscar um classificador menos dependente de domínio. Foram escolhidas bases já conhecidas para avaliação de pesquisas na área, desta forma todas as bases de dados são da língua inglesa.
+Domínios diversos foram escolhidos para serem analisados por essa pesquisa, dentre eles filmes, livros, carros, computadores, panelas, hotéis, músicas, celulares, mp3, pen-drives, dispositivos gps, wifi e câmeras fotográficas. Essa diversidade de domínios é importante para avaliar nossa proposta em contextos variados, assim como para buscar um classificador menos dependente de domínio. Foram escolhidas bases conhecidas pela comunidade científica da área, desta forma, todas as bases de dados são da língua inglesa.
 
-Para filmes, nós selecionamos a largamente utilizada base de dados \textit{Movie Review Sentiment Polarity Dataset v2.0}\footnote{Disponível em: \url{https://www.cs.cornell.edu/people/pabo/movie-review-data/}. Veja uma lista de trabalhos utilizando esta base em \url{https://www.cs.cornell.edu/people/pabo/movie-review-data/otherexperiments.html}}, desenvolvida e utilizada inicialmente por \cite{pang2004sentimental}. Ela é uma base de dados balanceada, pois tem a mesma quantidade de documentos positivos e negativos. Ela possui 2000 documentos com opiniões sobre filmes, 1000 positivos e 1000 negativos, retirados do site IMDB\footnote{\url{http://www.imdb.com}}. Os documentos foram previamente classificados pelos autores e todos os demais dados originais foram removidos, como data, autor, gênero, assunto, título, dentre outros, restando somente o texto original das opiniões. Os textos ainda foram divididos em sentenças, onde cada linha é uma frase do documento.
+Para filmes, nós selecionamos a largamente utilizada base de dados \textit{Movie Review Sentiment Polarity Dataset v2.0}\footnote{Disponível em: \url{https://www.cs.cornell.edu/people/pabo/movie-review-data/}. Veja uma lista de trabalhos utilizando esta base em \url{https://www.cs.cornell.edu/people/pabo/movie-review-data/otherexperiments.html}}, desenvolvida e utilizada inicialmente por \citeonline{pang2004sentimental}. Ela é uma base de dados balanceada, pois tem a mesma quantidade de documentos positivos e negativos. Ela possui 2000 documentos com opiniões sobre filmes, 1000 positivos e 1000 negativos, retirados do site IMDB\footnote{\url{http://www.imdb.com}}. Os documentos foram previamente classificados pelos autores e todos os demais dados originais foram removidos, como data, autor, gênero, assunto, título, dentre outros, restando somente o texto original das opiniões. Os textos ainda foram divididos em sentenças, onde cada linha é uma frase do documento.
 
-As opiniões sobre livros, carros, computadores, panelas, hotéis, músicas, celulares estão reunidos numa base de dados balanceada com 400 documentos  produzida por \cite{taboada2011lexicon}, chamada de ``Epinions 1`` \footnote{Disponível em: \url{http://www.sfu.ca/~mtaboada/research/SFU_Review_Corpus.html}}. Os documentos com as opiniões foram extraídas do site Epinions\footnote{\url{http://www.epinions.com/}}, das categorias já citadas. Cada categoria possui 50 documentos, 25 positivos e 25 negativos e eles foram classificados como positivos ou negativos pelos autores através de uma marcação, "recomendado" ou "não recomendado", nos textos opiniativos inseridos pelos próprios usuários. Todos os demais dados originais foram removidos, como data, autor, gênero, assunto, título, dentre outros, restando somente o texto original das opiniões.
+As opiniões sobre livros, carros, computadores, panelas, hotéis, músicas, celulares estão reunidos numa base de dados balanceada com 400 documentos,  produzida por \citeonline{taboada2011lexicon}, chamada ``Epinions 1`` \footnote{Disponível em: \url{http://www.sfu.ca/~mtaboada/research/SFU_Review_Corpus.html}}. Os documentos com as opiniões foram extraídas do site Epinions\footnote{\url{http://www.epinions.com/}}, das categorias já citadas. Cada categoria possui 50 documentos, 25 positivos e 25 negativos, os quais foram classificados como positivos ou negativos pelos autores através de uma marcação, "recomendado" ou "não recomendado", nos textos opiniativos inseridos pelos próprios usuários. Todos os demais dados originais foram removidos, como data, autor, gênero, assunto, título, dentre outros, restando somente o texto original das opiniões.
 
-E para opiniões de domínios de mp3, pen-drives, dispositivos gps, wifi e câmeras fotográficas, nós utilizamos um recorte balanceado de 2000 documentos de uma base de dados chamada  "Amazon-83713" \footnote{Disponível em: \url{http://patty.isti.cnr.it/~baccianella/reviewdata/index.php?download}}, que contém opiniões sobre os produtos do site da Amazon.com. Parte dessa base já foi utilizada em outros trabalhos como \cite{baccianella2010selecting} e \cite{baccianella2014feature}. Cada documento contém três informações: um identificador único, o texto original e escore, dentro de uma escala de 1 a 5. Este trabalho utilizou o escore para classificar os documentos e serem usados nessa pesquisa. Todos os documentos com escore igual ou menor que 2 foram considerados negativos e com escore igual a 4 ou 5, considerados como positivos. Documentos com escore igual a 3 foram descartados, por não se encaixarem nem em uma classe ou em outra. É importante frisar também que nós fizemos o recorte balanceado de 2000 documentos, pois essa base é originalmente altamente desbalanceada, com muito mais documentos positivos que negativos.  
+Em relação às opiniões de domínios de mp3, pen-drives, dispositivos gps, wifi e câmeras fotográficas, nós utilizamos um recorte balanceado de 2000 documentos de uma base de dados chamada  "Amazon-83713" \footnote{Disponível em: \url{http://patty.isti.cnr.it/~baccianella/reviewdata/index.php?download}}, que contém opiniões sobre os produtos do site da Amazon.com. Parte dessa base já foi utilizada em outros trabalhos, como o de \citeonline{baccianella2010selecting} e \citeonline{baccianella2014feature}. Cada documento contém três informações: um identificador único, o texto original e escore, dentro de uma escala de 1 a 5. Este trabalho utilizou o escore para classificar os documentos da seguinte forma. Todos os documentos com escore igual ou menor que 2 foram considerados negativos, e documentos com escore igual a 4 ou 5 foram considerados positivos. Documentos com escore igual a 3 foram descartados, por não se encaixarem nem em uma classe nem em outra. É importante frisar também que nós fizemos o recorte balanceado de 2000 documentos, pois essa base é originalmente altamente desbalanceada, com muito mais documentos positivos que negativos.  
 
+\todo[inline]{Esse descarte de documentos com 3 de score vai ser motivo de questionamentos}
 
 %Existem três níveis básicos de análise de documentos em mineração de opinião: i) nível de análise de documento, ii) sentenças e iii) entidades e seus aspectos. O primeiro nível foca em classificar a opinião geral de um documento expressando-a como positiva ou negativa. O segundo nível, o de sentenças, em vez de considerar o sentimento geral das opiniões presentes em um documento como todo, classifica as opiniões de cada sentença separadamente. E o último nível foca em descobrir todos os alvos existentes nas sentenças do documento, e classifica as opiniões direcionadas a eles \cite{bing:2012}. 
 %--------------> Comentei, pois vai para o capitulo 2 <--------------
 
+Após a definição dos domínios é preciso, antes de iniciar a etapa de pré-processamento, definir o nível da análise que será feita sobre os documentos. Este trabalho decidiu realizar o nível de análise de documento por ser o nível mais encontrado entre os trabalhos relacionados, como os trabalhos de \citeonline{joachims1998text, pang2002thumbs, gamon2004sentiment, mullen2004sentiment, pang2004sentimental, cui2006comparative}. 
 
-Após a definição de um ou mais domínios é preciso, antes de iniciar a etapa de pré-processamento, definir o nível da análise que será feita sobre os documentos. Este trabalho decidiu utilizar o nível de análise de documento por ser o nível mais utilizado entre os trabalhos relacionados, como os trabalhos de \citeonline{joachims1998text, pang2002thumbs, gamon2004sentiment, mullen2004sentiment, pang2004sentimental, cui2006comparative}. 
+As bases selecionadas devem passar pela etapa de pré-processamento para se adequarem às etapas seguintes. Isto envolveu as seguintes tarefas: a tokenização dos documentos, marcação gramatical das palavras (do inglês, \textit{Part of Speech Tagging} ou POST) e definição dos n-grams que serão utilizados para construir o modelo que represente o documento. 
 
-As bases selecionadas devem passar pela etapa de pré-processamento para se adequarem às etapas seguintes. Isto envolveu as tarefas seguintes tarefas:    a tokenização dos documentos, marcação gramatical das palavras (do inglês, \textit{Part of Speech Tagging} ou POST) e definição os n-grams que serão utilizados para construir o modelo que represente o documento. 
+A tokenização dos documentos divide o conteúdo de cada documento em sentenças e, por sua vez, em palavras para que o marcador gramatical (ou \textit{tagger}) possa identificar as classes gramaticais das palavras do documento. O marcador gramatical usado foi o proposto por \citeonline{brill1995transformation}, e também usado em trabalhos relacionados a esta pesquisa \cite{chaovalit2005movie, taboada2008extracting, taboada2011lexicon}. O marcador gramatical é um sistema que processa um texto num determinado idioma, identifica e atribui rótulos para cada palavra nesse texto, como substantivos, verbos, adjetivos, advérbios, dentre outros \footnote{A lista completa dos rótulos para o idioma inglês pode ser encontrado em: \url{https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html}}. 
 
-A tokenização dos documentos divide o conteúdo de cada documento em sentenças e, por sua vez, em palavras para que o marcador gramatical (ou \textit{tagger}) possa identificar as classes gramaticais das palavras do documento. O marcador gramatical usado foi o proposto por \citeonline{brill1995transformation} e também usado em trabalhos relacionados a esta pesquisa \cite{chaovalit2005movie, taboada2008extracting, taboada2011lexicon}. O marcador gramatical é um sistema que processa um texto num determinado idioma, identifica e atribui partes de discurso para cada palavra nesse texto, como substantivos, verbos, adjetivos, advérbios, dentre outros \footnote{A lista completa das partes do discurso para o idioma inglês pode ser encontrado em: \url{https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html}}. 
+\todo[inline]{Eu substitui "partes de discurso" por "rótulos". }
 
-A tarefa final é definir como compor o modelo que representará o documento. O tipo de modelo inicial utilizado nessa pesquisa é o popular saco de palavras (\textit{bag-of-words}), em que cada documento é representado por um vetor de termos (ou n-grams) do documento \cite{moraes2012document}. Neste caso, são considerados N-grams, unigrams (uma palavra), bigrams (duas palavras) ou trigrams (três palavras). 
+A tarefa final é definir como compor o modelo que representará o documento. O tipo de modelo inicial utilizado nessa pesquisa é o popular saco de palavras (\textit{bag-of-words}), em que cada documento é representado por um vetor de termos (ou n-grams) do documento \cite{moraes2012document}. Neste caso, são considerados n-grams, unigrams (uma palavra), bigrams (duas palavras) ou trigrams (três palavras). 
 
-Os trabalhos de \citeonline{hatzivassiloglou2000effects} e \cite{wiebe2000learning} demonstraram que adjetivos são bons indicadores de subjetividade e sentenças opinativas. Contudo, embora adjetivos isolados possam indicar a presença de opiniões, é possível que não haja contexto suficiente para determinar se o sentimento geral das opiniões é positivo ou negativo. Em \citeonline{chaovalit2005movie}, foi reiterado a importância dos adjetivos e adicionou os advérbios como elementos que também provêem subjetividade, enquanto que os demais termos provêem contexto; e \citeonline{benamara2007sentiment} demonstrou que advérbios são importantes modificadores de intensidade dos adjetivos e influenciam significativamente na determinação do sentimento geral das opiniões de um documento. Dessa forma, nós definimos 5 tipos de n-grams: adjetivos e advérbios como unigrams; advérbios com adjetivos (e.g. \textit{very good}), advérbios com advérbios como bigrams; e a combinação de dois advérbios e um adjetivo como trigram (e.g. \textit{not very nice}) \cite{pang2002thumbs, turney2002thumbs, taboada2008extracting, karamibekr2012verb}. 
+Os trabalhos de \citeonline{hatzivassiloglou2000effects} e \citeonline{wiebe2000learning} demonstraram que adjetivos são bons indicadores de subjetividade e sentenças opinativas. Contudo, embora adjetivos isolados possam indicar a presença de opiniões, é possível que não haja contexto suficiente para determinar se o sentimento geral das opiniões é positivo ou negativo. Em \citeonline{chaovalit2005movie}, foi reiterado a importância dos adjetivos e  foi adicionado os advérbios como elementos que também provêem subjetividade, enquanto que os demais termos provêem contexto. \citeonline{benamara2007sentiment} demonstraram que advérbios são importantes modificadores de intensidade dos adjetivos e influenciam significativamente na determinação do sentimento geral das opiniões de um documento. Dessa forma, nós definimos 5 tipos de n-grams: adjetivos e advérbios como unigrams; advérbios com adjetivos (e.g. \textit{very good}), advérbios com advérbios como bigrams; e a combinação de dois advérbios e um adjetivo como trigram (e.g. \textit{not very nice}) \cite{pang2002thumbs, turney2002thumbs, taboada2008extracting, karamibekr2012verb}. 
 
-Neste processo,também extraímos tipos especiais de bigrams e trigrams: n-grams negados (e.g. \textit{not bad}, \textit{nothing special}). Nós aplicamos uma versão simplificada da técnica usada em \cite{das2001yahoo} para detecção de negação. N-grams negados podem tanto inverter a polaridade local de um termo ou sentimento geral de uma frase ou documento, quanto podem intensificar a polaridade geral (e.g. \textit{not only good but amazing}). Além disso, \citeonline{taboada2008extracting} demonstrou que, embora pequeno, o tratamento de negação em mineração de opinião, na média, produz melhores resultados na classificação dos documentos. 
+Neste processo,também extraímos tipos especiais de bigrams e trigrams: n-grams negados (e.g. \textit{not bad}, \textit{nothing special}). Nós aplicamos uma versão simplificada da técnica usada por \citeonline{das2001yahoo} para detecção de negação. N-grams negados podem tanto inverter a polaridade local de um termo ou sentimento geral de uma frase ou documento, quanto podem intensificar a polaridade geral (e.g. \textit{not only good but amazing}). Além disso, \citeonline{taboada2008extracting} demonstraram que, embora pequeno, o tratamento de negação em mineração de opinião, na média, produz melhores resultados na classificação dos documentos. 
 
 Ao fim do estágio de pré-processamento, cada documento é transformado num vetor de n-grams associado às respectivas partes de discurso (advérbio, adjetivo) de cada termo do vetor e é passado para a etapa de transformação.  
+
+\todo[inline]{Este último parágrafo não pode ser: Ao fim do estágio de pré-processamento, cada documento é transformado num vetor de n-grams, o qual é passado para a etapa de transformação.}
 
 \section{Transformação}
 
@@ -109,7 +113,7 @@ O método de criação do SWN se baseia num conjunto de classificadores ternári
  
  \todo[inline]{pensei em um exemplo de synset do sentiwordnet, talvez um termo mais simples que bad, com menos synsets}
  
- A figura \ref{figura:happy_synsets} ilustra os \textit{synsets} do termo \textit{happy}. Esse termo, como adjetivo, está contido em 4 \textit{synsets} diferentes, cada um com um \textit{gloss} com uma definição (primeira frase abaixo termos) e curtas sentenças exemplificando o uso (frases entre aspas), dos termos. Além disso, em 3 dos quatro \textit{synsets}, são exibidos outros termos sinônimos a \textit{happy} nos respectivos \textit{synsets}.
+A figura \ref{figura:happy_synsets} ilustra os \textit{synsets} do termo \textit{happy}. Esse termo, como adjetivo, está contido em 4 \textit{synsets} diferentes, cada um com um \textit{gloss} com uma definição (primeira frase abaixo termos) e curtas sentenças exemplificando o uso (frases entre aspas), dos termos. Além disso, em 3 dos quatro \textit{synsets}, são exibidos outros termos sinônimos a \textit{happy} nos respectivos \textit{synsets}.
  
 %A figura \ref{figura:happy_synsets} ilustra o \textit{synset} do termo \textit{bad}. A palavra \textit{bad} liga-se aos seus sinônimos através de relações chamadas \textit{glosses} (retângulo em cinza escuro) que são significados que aqueles sinônimos tem num determinado contexto. Na figura, \textit{bad} liga-se a \textit{awful} e \textit{terrible}, por exemplo, através de uma relação em que eles significam ter "indesejada ou qualidade negativa".
  
@@ -293,7 +297,7 @@ O algoritmo C4.5, por outro lado, gera uma árvore de decisão que é normalment
 
 Após a seleção das características mais aptas para representar os documentos do corpus escolhido, estas são passadas para a etapa de classificação. 
 
-\section{Construção do Sistema Baseado em Regras Fuzzy}\todo[inline]{Acho que esta seção deveria se chamar Construção do Sistema Baseado em Regras Fuzzy}
+\section{Construção do Sistema Baseado em Regras Fuzzy}
 
 %\begin{itemize}
 %\item Definição
@@ -313,7 +317,7 @@ A classificação do sentimento geral das opiniões de cada documento de uma det
 
 \subsection{Modelagem Fuzzy das Variáveis do Sistema Fuzzy}
 
-No processo da modelagem fuzzy das variáveis \footnote{As variáveis do SBRF são as características das bases de dados} do SBRF, constatamos a necessidade de padronizar a escolha dos intervalos de valores nos vetores de características, pois não podíamos depender da escolha subjetiva de pessoas para identificar quais seriam os melhores intervalos para cada vetor de característica. \todo[inline]{Precisa explicar o motivo de identificar os outliers, qual foi o prejuizo com a presenca deles no sistema. Outra questao: está correto usar o termo outliers para este caso? Outra coisa: insira uma nota de rodapé explicando que as variáveis do SBRF são as caracteristicas das bases de dados, para nao confundir o leitor. O uso do termo variavel é quase impossível de não usar, pois se falar "as caracteriticas do SBRF" dá outro sentido, completamente diferente do que estamos dizendo} Para isso, nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média de um determinado conjunto de valores (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal e os valores que ficaram além do intervalo foram reduzidos para os limites do mesmo. Assim, o mesmo critério foi usado para determinar o intervalo de dados de todas as características. 
+No processo da modelagem fuzzy das variáveis \footnote{As variáveis do SBRF são as características das bases de dados} do SBRF, constatamos a necessidade de padronizar a escolha dos intervalos de valores nos vetores de características, pois não podíamos depender da escolha subjetiva de pessoas para identificar quais seriam os melhores intervalos para cada vetor de característica. \todo[inline]{Para mim, ainda não está claro o porque de delimitar o intervalo de valores das características. Se o usuário não pode fazer isso, ok. Mas porque fazer isso?} Para isso, nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média de um determinado conjunto de valores (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal e os valores que ficaram além do intervalo foram reduzidos para os limites do mesmo. Assim, o mesmo critério foi usado para determinar o intervalo de dados de todas as características. 
 
 \begin{figure}[h]
 \caption{Regra dos 3 sigmas.}
@@ -322,7 +326,7 @@ No processo da modelagem fuzzy das variáveis \footnote{As variáveis do SBRF s�
 \label{figura:regra_3_sigmas}
 \end{figure}
 
-Após a delimitação dos valores das características de acordo com a regra do três-sigma, definimos um único formato de conjunto fuzzy para todas as variáveis do SBRF. O formato escolhido foi o triangular, por sua simplicidade, e também, pelo fato de ser muito utilizado na literatura \cite{alcala2009multiobjective, gacto2010integration, antonelli2012multi, cardenas2012multiobjective}.\todo[inline]{Inserir estas referencias: Integration of an Index to Preserve the Semantic Interpretabiliy in the MOE Rule Selection and Tuning of LFS (GACTO et al 2010), Multi-objective Evolutionary Rule and Condition Selection for Designing Fuzzy Rule-based Classifiers (Antonelli et al 2012), Alcala et al 2009 A MOEA to concurrently learn rule and data bases of linguistic FRBS, Multiobjective Genetic Generation of Fuzzy Classifiers using IRL (Cardenas e Camargo 2012) Inserir em ordem cronológica}
+Após a delimitação dos valores das características de acordo com a regra do três-sigma, definimos um único formato de conjunto fuzzy para todas as variáveis do SBRF. O formato escolhido foi o triangular, por sua simplicidade, e também, pelo fato de ser muito utilizado na literatura \cite{alcala2009multiobjective, gacto2010integration, antonelli2012multi, cardenas2012multiobjective}.\todo[inline]{Matheus, a forma como aparece a citação está estranha. O trabalho de Cárdenas e Camargo, há apenas dois autores, mas aparece a palavra et al. E no trabalho de Gacto, Alcalá, Herrera, deveria aparecer apenas o nome do primeiro autor, seguido de et al.}
 
 Para as variáveis de entrada do SBRF, nossa primeira modelagem foi dividir igualmente os dados em $2N + 1$ conjuntos fuzzy, conforme recomendado em \cite{wang1992generating}, para $N$ igual a dois, resultando em cinco regiões fuzzy: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira modelagem.
 
@@ -333,7 +337,7 @@ Para as variáveis de entrada do SBRF, nossa primeira modelagem foi dividir igua
 \label{figura:cinco_conjuntos_fuzzy}
 \end{figure}
 
-Para as variáveis de entrada do SBRF testamos três modelagens diferentes: cinco, três e dois conjuntos fuzzy, uniformemente distribuídos no domínio de cada variável. Os conjuntos fuzzy foram denominados de: $Muito Baixo (MB)$, $Baixo (B)$, $Medio (M)$, $Alto (A)$ e $Muito Alto (MA)$. A figura \ref{figura:cinco_conjuntos_fuzzy} ilustra essa primeira modelagem. As figuras \ref{figura:tres_conjuntos_fuzzy} e \ref{figura:conjuntos_fuzzy_entrada_final} ilustram as partições fuzzy com três e dois conjuntos fuzzy, respectivamente.
+Para as variáveis de entrada testamos também outras duas modelagens diferentes, com três e dois conjuntos fuzzy, uniformemente distribuídos no domínio de cada variável. As figuras \ref{figura:tres_conjuntos_fuzzy} e \ref{figura:conjuntos_fuzzy_entrada_final} ilustram as partições fuzzy com três e dois conjuntos fuzzy, respectivamente.
 
 \begin{figure}[H]
 \caption{Modelagem com 3 conjuntos fuzzy}
@@ -351,10 +355,10 @@ Para as variáveis de entrada do SBRF testamos três modelagens diferentes: cinc
 
 \todo[inline]{Matheus, na figura, retire o m(x1), pois isso representa o grau de pertinencia de x1 no conjunto m. Mas como o objetivo eh apenas ilustrar a particao fuzzy da variavel linguistica X1, ele nao serah necessario. Faca isso nas outras figuras tambem!}
 
-Para a variável de saída, nós utilizamos dois conjuntos fuzzy, $Positivo (P)$ e $Negativo (N)$, distribuídos uniformemente. Isto porque, a nossa principal tarefa é classificar o sentimento geral dos documentos em positivo ou negativo. A figura \ref{figura:conjuntos_fuzzy_saida} mostra como ficou a modelagem da variável de saída.
+Para a variável de saída, nós utilizamos dois conjuntos fuzzy, $Positivo (P)$ e $Negativo (N)$, distribuídos uniformemente. Isto porque, a nossa principal tarefa é classificar o sentimento geral dos documentos em positivo ou negativo. A figura \ref{figura:conjuntos_fuzzy_saida} ilustra a modelagem da variável de saída.
 
 \begin{figure}[H]
-\caption{Modelagem da variável de saída em 2 conjuntos fuzzy}
+\caption{Modelagem da variável de saída com 2 conjuntos fuzzy}
 \centering
 \includegraphics[scale=0.45]{conjuntos_fuzzy_saida.png}
 \label{figura:conjuntos_fuzzy_saida}
@@ -380,7 +384,7 @@ Uma vez definidas as regiões fuzzy (ou conjuntos fuzzy) dos dados de entrada e 
 %onde, $x_1^k, x_2^k, ... , x_n^k$ são os vetores de características e $y^k$ é a polaridade, positiva ou negativa, de um documento. 
 %Para gerar regras fuzzy a partir das  características, precisamos determinar os graus de pertinência de cada característica $x_i^k$ e $y^k$ para cada conjunto fuzzy que definimos anteriormente. Por exemplo, é preciso saber qual o grau de pertinência de $x_1^1$ para o conjunto $Alto$ e para o conjunto $Baixo$, assim como para $x_1^2$ e o grau de pertinência de $y^1$ e $y^2$ para os conjuntos $Positivo$ e $Negativo$. Em seguida, associa-se cada $x_i^k$ e $y^k$ ao conjunto fuzzy com maior grau de pertinência resultante (se $x_1^1$ teve maior grau de pertinência no conjunto $Baixo$, ele será associado a essa região, e assim sucessivamente). Assim, podemos definir a criação de uma regra fuzzy da seguinte forma:
 
-Para gerar regras fuzzy a partir das características, precisamos determinar os graus de pertinência de cada característica para cada conjunto fuzzy que definimos anteriormente. Por exemplo, é preciso saber qual o grau de pertinência de uma dada característica de uma variável de entrada para o conjunto $Alto$ e para o conjunto $Baixo$. Em seguida, associa-se cada característica ao conjunto fuzzy com maior grau de pertinência resultante (se uma característica teve maior grau de pertinência no conjunto $Baixo$, ele será associado a essa região, e assim sucessivamente). O algoritmo \ref{alg-graus} ilustra esse processo. 
+Para gerar as regras fuzzy precisamos determinar os graus de pertinência de cada característica para cada conjunto fuzzy que definimos anteriormente. Por exemplo, considerando a modelagem com três conjuntos, é preciso saber qual o grau de pertinência de uma dada característica em cada conjunto fuzzy, ou seja, calcular o grau de pertinência nos conjuntos fuzzy $Baixo$, $Medio$ e $Alto$. Em seguida, associa-se a característica ao conjunto fuzzy com maior grau de pertinência (se uma característica teve maior grau de pertinência no conjunto $Baixo$, ela será associado a essa região). Isto é feito para todas as características de um exemplo (ou amostra) da base de dados. O algoritmo \ref{alg-graus} ilustra esse processo. 
 
 \begin{algorithm}
 \begin{algorithmic}[1]
@@ -389,14 +393,19 @@ Para gerar regras fuzzy a partir das características, precisamos determinar os 
 \FOR{$V$ in $vetores\_caracteristica$}
    \FOR{$caracteristica \, C$ in $V$}
       \FOR{$CF$ in $conjuntos\_fuzzy$}
-      \STATE $Grau \leftarrow pertinencia(C)_{CF}$
+      %\STATE $Grau \leftarrow pertinencia(caracteristica\,C)_{CF}$
+      %\STATE $Grau \leftarrow pertinencia(caracteristica\,C,CF)$
+      \STATE $[idxCF,Grau] \leftarrow pertinencia(caracteristica\,C,CF)$
       \ENDFOR
-   \STATE $C \leftarrow max(Grau) $
+   %\STATE $C \leftarrow max(Grau) $
+   \STATE $Regra \, V \leftarrow max([idxCF,Grau]) $
    \ENDFOR
-   \STATE $Regra \, V \leftarrow max(C, Grau) $
+   %\STATE $Regra \, V \leftarrow max(C, Grau) $   
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
+
+\todo[inline]{Matheus, alterei um pouco o pseudocodigo. O meu objetivo foi mostrar que para cada conjunto fuzzy, a função "pertinencia" irá calcular e retornar o grau de pertinencia, além do índice do conjunto fuzzy. Depois, a regra receberá o índice do conjunto fuzzy com maior grau de pertinencia}
 
 %\begin{equation}
 %\begin{split}
@@ -408,11 +417,13 @@ Para gerar regras fuzzy a partir das características, precisamos determinar os 
 
 %onde $(Pol(x_1^k) \, em \, CFI_n, max)$ é o grau máximo de pertinência alcançado por $x_1^k$ em um dos conjuntos fuzzy de entrada $CFI_n$ e $(Pol(y^k) \, em \, CFS_n, max)$ é o grau máximo de pertinência alcançado por $y^k$ um um dos conjuntos fuzzy de saída $CFS_n$. As regras geradas são do tipo "AND", que são regras em que as condições antecedentes, a parte do IF, tem de, simultaneamente ocorrer em ordem para que o conseqüente, a parte THEN, aconteça. 
 
-Ao fim do processo, são geradas regras do tipo "AND", que são regras em que as condições antecedentes, a parte do IF, tem de, simultaneamente ocorrer em ordem para que o conseqüente, a parte THEN, aconteça. A tarefa de geração de regras cria uma regra para cada vetor de característica. Devido a grande quantidade de vetores de características, é muito provável que regras conflitantes tenham sido geradas, como regras com mesmo antecedente, mas com conseqüente diferente. Uma maneira proposta pelo método de Wang-Mendel é associar um grau a cada regra e descartando a regra conflitante com menor grau. Além de eliminar regras contraditórias, esse método também reduz a quantidade de regras a serem usadas na classificação. O algoritmo \ref{alg-regras-final} ilustra essa filtragem final.
+O operador lógico usado nos antecedentes das regras geradas é do tipo "AND", ou seja, as condições antecedentes tem de simultaneamente ocorrer, para que o conseqüente aconteça.
+
+Portanto, ao fim do processo, uma regra é gerada para cada vetor de características. Devido a grande quantidade de vetores de características, é muito provável que regras duplicadas e/ou conflitantes, isto é, regras com mesmo antecedente, mas com conseqüente diferente, tenham sido geradas. Uma maneira proposta pelo método de Wang-Mendel de eliminar tais regras é associar um grau a cada regra e descartar a regra conflitante com menor grau. Além de eliminar regras contraditórias, esse processo também reduz a quantidade de regras a serem usadas na classificação. O algoritmo \ref{alg-regras-final} ilustra essa filtragem final.
 
 \begin{algorithm}
 \begin{algorithmic}[1]
-\caption{Eliminação de regras redundantes ou contraditórias}
+\caption{Eliminação de regras redundantes e contraditórias}
 \label{alg-regras-final}
 \FOR{$R_i$ in $regras$}
    \FOR{$R_j$ in $regras$}
@@ -433,7 +444,9 @@ Ao fim do processo, são geradas regras do tipo "AND", que são regras em que as
 %
 %onde $m_{CFI_o}(x_n)$ é o grau de pertinência de $x_n$ no conjunto fuzzy $CFI_o$. Por exemplo, considere uma regra com duas características: "IF $x_1$ is Alto and $x_2$ is Alto, THEN $y$ is Positivo". O grau dessa regra, utilizando a estratégia \ref{eq:grau_regra}, é obtido assim:  $D(regra) = m_{Alto}(x_1) \cdot m_{Alto}(x_2) \cdot m_{Positivo}(y)$. 
 
-Depois de eliminadas as regras conflitantes, as regras finais constituem o conjunto de regras fuzzy baseado nas características dos documentos. Com esse conjunto de regras é possível classificar os documentos da base de dados. 
+Depois de eliminadas as regras duplicadas e conflitantes, as regras finais constituem o conjunto de regras fuzzy baseado nas características dos documentos. Com esse conjunto de regras é possível classificar os documentos da base de dados. 
+
+\todo[inline]{Matheus, eu acho que neste pseudocodigo, vc deveria separar a eliminação das regras duplicadas, das regras conflitantes. Isto porque, se a regra está duplicada, não é necessário calcular grau, apenas se exclui uma delas}
 
 \subsection{Raciocínio Fuzzy}
 
@@ -453,22 +466,18 @@ D(regra_i) = m_{CFI_n}(x_j^1) \cdot m_{CFI_m}(x_j^2) \cdot m_{CFI_o}(x_j^3) \cdo
 O MRFC escolhe a regra que ficou com o maior grau de compatibilidade após a avaliação das características e classifica o documento com a classe de saída dessa regra. \todo[inline]{Aqui tem um erro: o metodo calcula o grau de compatibilidade da regra i com todos os padrões j. Assim, a regra terá como saída, a saída do padrão com maior compatibilidade} Por outro lado, o MRFG considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MRFG calcula a média dos graus de compatibilidade entre as regras que tem o conseqüente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
 
 \section{Método e Medidas de Avaliação}
-\todo[inline]{chame de medidas e não de métricas}
 
 A avaliação dos resultados deste trabalho foi feita usando a metodologia validação cruzada de 10-folds, buscando avaliar como um todo o sistema proposto de mineração de opinião. Assim cada base escolhida foi dividida em 10 partes do mesmo tamanho, sendo realizada em 9 partes o pré-processamento, transformação, extração e seleção de características, e construção do sistema de classificação baseado em regras fuzzy. A única parte restante foi então utilizada para teste de avaliação, realizando o pré-processamento, transformação,  extração somente das características selecionadas na etapa anterior (não há nova avaliação das características), e classificação aplicando as regras obtidas também na etapa anterior. Desta forma, tanto o processo de seleção de características quanto o de classificação estão sob avaliação, sendo repetido este processo 10 vezes, utilizando partes diferentes para teste.
 
-\todo[inline]{angelo: veja se a metodologia de avaliação foi essa mesma acima que eu descrevi}
-\todo[inline]{huuumm... dobras ficou esquisito... melhor usar folds mesmo. E acurácia pode ser acurácia.} 
+\todo[inline]{angelo: veja se a metodologia de avaliação foi essa mesma acima que eu descrevi} 
 
 \todo[inline]{porque foram selecionadas estas medidas?}
-As medidas para avaliar o desempenho da classificação do sistema foram a \textit{acurácia}, taxa de verdadeiros positivos (TPR) e taxa de verdadeiros negativos (TNR) \cite{garcia2012multi}. A \textit{acurácia} (equação \ref{eq:acccuracy}) é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos.\todo[inline]{aqui a divisão é feita pela quantidade total de documentos da base, ou seja, estes não foram classificados. Retire a parte de classificados, sejam eles corretos ou não}
+As medidas usadas para avaliar o desempenho da classificação do sistema foram a \textit{acurácia}, a taxa de verdadeiros positivos (TPR) e a taxa de verdadeiros negativos (TNR) \cite{garcia2012multi}. A \textit{acurácia} (equação \ref{eq:acccuracy}) é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos.
 
 \begin{equation}
 acuracia =  (TP + TN) / Total
 \label{eq:acccuracy}
 \end{equation}
-
-\todo[inline]{A tradução correta é: Taxa de verdadeiro positivo, verdadeiro negativo, falso positivo e falso negativo}
 
 A taxa de verdadeiros positivos (TPR) mede a proporção de documentos positivos que são corretamente classificados como tal. Mais especificamente, a TPR mede a razão entre os documentos classificados como positivo sobre o universo de documentos realmente positivos (TP) e documentos positivos que foram classificados como negativos, conhecidos como falsos negativos (FN). A equação \ref{eq:tpr} ilustra como é feito o cálculo dessa medida. 
 
@@ -484,10 +493,9 @@ TNR = TN / (TN + FP)
 \label{eq:tnr}
 \end{equation}
 
-\todo[inline]{De onde tirou as definições de TPR e TNR? No artigo de García-Pedrajas and Pérez-Rodríguez (2012) Multi-selection of instances: A straightforward way to improve evolutionary instance selection, Applied Soft Computing 12 (2012) 3590–3602. TPR é chamado de sensitivity e TNR é chamado de specificity}
-\todo[inline]{Da wikipedia, mas la cita as denominacoes que voce falou, mas eu preferi usar taxas para ficar mais claro.}
+\todo[inline]{Acho bom inserir uma referencia para estas medidas. Poderia ser esse: García-Pedrajas and Pérez-Rodríguez (2012) Multi-selection of instances: A straightforward way to improve evolutionary instance selection, Applied Soft Computing 12 (2012) 3590–3602. 
+Pois acho melhor que o Wikipedia :)}
+
+%\todo[inline]{Da wikipedia, mas la cita as denominacoes que voce falou, mas eu preferi usar taxas para ficar mais claro.}
 
 Além disso, com o objetivo de verificar se as diferenças entre os resultados dos experimentos são significativas ou não, nós utilizamos o teste de \textit{Wilcoxon signed-rank} \cite{wilcoxon1945individual}, usado para comparar resultados entre conjuntos de testes relacionados, resultados sucessivos sobre um único conjunto de teste, dentre outros. Por fim, também usamos um terceiro método de classificação, o \textit{Support Vector Machine} (SVM), bastante utilizado em trabalhos de mineração de opinião dependentes de domínio e que, comumente, produz bons resultados \cite{ohana2009sentiment, moraes2012document}. Assim, podemos verificar como nossa proposta se comporta frente aos métodos tradicionais de classificação utilizados nessa área. 
-
-\todo[inline]{SVM não é um classificador??? Aqui vc está dizendo que é um método estatístico?!}
-\todo[inline]{De forma alguma. Adicionei a menção a classificador repetidamente para não deixar duvidas.}

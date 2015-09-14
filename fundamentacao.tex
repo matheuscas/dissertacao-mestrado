@@ -143,6 +143,89 @@ Há outras abordagens de transformação das polaridades dos termos relativas ao
 
 \todo[inline]{Algumas tecnicas de transformacao que falei aqui n foram mencionandas da metodologia. Teoricamente eu terei de inseri-las na parte devida na metodologia, certo?}
 
+\section{Extração e seleção de características}
+
+%- Poucos trabalhos foram encontrados que extraem características
+%
+%- Que trabalhos foram esses, quais tipos de caracteristicas eles extrairam, como fizeram e o que fizeram com elas?
+%
+%- Selecao de caracteristicas é a etapa de selectionar melhores caracteristicas e diminuir a dimensionalidade dos vetores para melhorar a performance da classificacao
+%
+%- Não ha metodo de selecao de caracteristica que tenha se mostrado predominante na linha de pesquisa. Information Gain parece ser promissor. (Rodrigo Morais)
+%
+%- Cita trabalhos que fizeram seleção, qual tecnica usaram, como fizeram e como utilizaram
+%
+%- Cita tambem o trabalho que usou o CFS e o C45
+
+\subsection{Extração de características}
+
+A extração de características é o processo determinação de quais características serão discriminadas e usadas para serem selecionadas. Essa não é uma etapa comumente encontrada nos trabalhos relacionados nessa linha de pesquisa. Usualmente, os dados da etapa de transformação já são consideradas características e são utilizados diretamente na seleção.
+
+Em \cite{wilson2005recognizing}, que foca em classificar o sentimento geral das opiniões em nível de sentenças, definiu 5 categorias de características: palavras, modificação, estrutura, sentença e documento. As características de palavras e de modificação são os próprios n-grams, nesse caso, trigrams, uma sequência de três palavras num outra sequencia textual. \cite{wilson2005recognizing} estrutura os documentos numa árvore de dependencia entre os elementos do texto de um documento e alguns tipos de relacionamento entre os elementos são elencados como características, como por exemplo, se um elemento é o sujeito de uma sentença ou não. As características de sentença se aproximam mais das características utilizadas em nossa pesquisa. \cite{wilson2005recognizing} utiliza o dicionário de opiniões \textit{Subjectivity Clues} criado pelos próprios autores e com ele, procuraram registrar como características a quantidade de "pistas de subjetividade" na sentenças. Foram elas:
+
+\begin{itemize}
+\item Quantidade de:
+\begin{enumerate}
+\item "pistas fortes de subjetividade" (\textit{strongsubj}) na sentença corrente
+\item "pistas fortes de subjetividade" (\textit{strongsubj}) na sentença anterior
+\item "pistas fortes de subjetividade" (\textit{strongsubj}) na sentença seguinte
+\item "pistas fracas de subjetividade" (\textit{weaksubj}) na sentença corrente
+\item "pistas fracas de subjetividade" (\textit{weaksubj}) na sentença anterior
+\item "pistas fracas de subjetividade" (\textit{weaksubj}) na sentença seguinte
+\item adjetivos numa sentença
+\item advérbios numa sentença (exceto \textit{not})
+\item números cardinais numa sentença
+\item pronomes numa sentença
+\item modais numa sentença (exceto \textit{will})
+\end{enumerate}
+\end{itemize}
+
+Por fim, na categoria de características de documento, somente uma foi definida que foi o tópico do documento, que pode estar em 15 tipos diferentes de tópicos definidos pelos autores. 
+
+O trabalho de \cite{ohana2009sentiment} foi outro que extraiu características dos documentos para classifica-los. Eles definiram 5 categorias: geral, normalização, diferença entre escores positivos e negativos, negação e escores por segmento dos documentos. Nossa pesquisa utilizou grande parte das categorias de características de \cite{ohana2009sentiment} para definir e extrair as nossas próprias. As características foram as seguintes:
+\begin{enumerate}
+\item Gerais:
+\begin{enumerate}
+\item Soma dos escores dos adjetivos positivos e negativos
+\item Soma dos escores dos advérbios positivos e negativos
+\item Soma dos escores dos verbos positivos e negativos
+\end{enumerate}
+\item Normalização:
+\begin{enumerate}
+\item Soma normalizada dos escores dos adjetivos positivos e negativos
+\item Soma normalizada dos escores dos advérbios positivos e negativos
+\item Soma normalizada dos escores dos verbos positivos e negativos
+\end{enumerate}
+\item Diferença entre os escores positivos e negativos de:
+\begin{enumerate}
+\item Adjetivos
+\item Advérbios
+\item Verbos
+\end{enumerate}
+\item Escores por segmento dos documentos (cada documento foi segmentado em 10 partições de tamanhos iguais em número de termos):
+\begin{enumerate}
+\item Todas as características acima para cada segmento dos documentos
+\end{enumerate}
+\item Negação
+\begin{enumerate}
+\item Percentual de termos negados nos documentos
+\end{enumerate}
+\end{enumerate}
+
+Até o presente momento da escrita dessa dissertação, não foram encontrados outros trabalhos que tenha extraído características dos documentos da maneira que os trabalhos de \cite{wilson2005recognizing} e \cite{ohana2009sentiment}.
+
+\subsection{Seleção de características}
+
+A seleção de características é a etapa onde as características mais relevantes para serem consideradas na etapa de classificação são selecionadas, além de o montante de dados a ser analisado é reduzido, tornando o classificador mais eficiente e efetivo \cite{moraes2012document}. Métodos de seleção de características comuns nos trabalhos relacionados são \textit{document frequency} \cite{pang2002thumbs}, \textit{mutual information} \cite{turney2002thumbs} e \textit{information gain} \cite{wiebe2006word}. Contudo, nenhum deles tem sido largamente aceito como o melhor algoritmo de seleção de características para mineração de opiniões, embora o \textit{information gain} tenha mostrado resultados competitivos \cite{moraes2012document}.
+
+\cite{cintra2008fuzzy} apresenta uma proposta de seleção de características utilizando lógica fuzzy, utilizando o método de Wang-Mendel \cite{wang1992generating} para gerar sistemas fuzzy baseados em regras. \cite{cintra2008fuzzy} compara sua a performance de sua proposta com algoritmos clássicos de seleção de características, como CFS \cite{hall1999correlation}, ReliefF \cite{kira1992practical} e \textit{Consistency} \cite{liu1996probabilistic}. Além disso, também utilizou a versão original do c4.5 \cite{salzberg1994c4}. 
+
+O c4.5 é um algoritmo de árvore de decisão bem conhecido que utiliza \textit{information gain} e entropia para decidir a importância das características, tornando possível selecionar características com o ranking gerado dos galhos da árvore. ReliefF, por sua vez, cria um ranking das características por sua utilidade em distinguir entre exemplos bastante similares pertencentes a diferentes classes, além de terem uma média no ranking acima de um determinado limite \cite{cintra2008fuzzy}. A hipótese central do CFS é que um bom conjunto de características contém características que são altamente correlacionadas com a classe, mas sem qualquer correlação umas com as outras. O CFS é um algoritmo que junta essa hipótese com uma medida de correlação apropriada e uma heurística de estratégia de busca \cite{hall1999correlation}. E o algoritmo \textit{Consistency} utiliza medidas de consistência para avaliar a relevância de subconjuntos de características. Uma medida de consistência  mede a distância entre um subconjunto de características e um estado consistente, ou a capacidade de o subconjunto classificar bem os documentos \cite{liu1996probabilistic}.
+
+O trabalho de \cite{cintra2008fuzzy} foi o único encontrado, até o presente momento de nossa pesquisa, que utiliza algoritmos clássicos de seleção de características no contexto de lógica fuzzy, método de Wang-Mendel e sistemas fuzzy baseados em regras. Tais assuntos são centrais deste trabalho e, assim, \cite{cintra2008fuzzy} foi a principal referência para a escolha dos algoritmos de seleção de características para esta pesquisa.
+
+
+
 \ifcsdef{mainfile}{}{\bibliography{../pesquisa}}
 
 \end{document}

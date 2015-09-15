@@ -224,7 +224,44 @@ O c4.5 é um algoritmo de árvore de decisão bem conhecido que utiliza \textit{
 
 O trabalho de \cite{cintra2008fuzzy} foi o único encontrado, até o presente momento de nossa pesquisa, que utiliza algoritmos clássicos de seleção de características no contexto de lógica fuzzy, método de Wang-Mendel e sistemas fuzzy baseados em regras. Tais assuntos são centrais deste trabalho e, assim, \cite{cintra2008fuzzy} foi a principal referência para a escolha dos algoritmos de seleção de características para esta pesquisa.
 
+\subsection{Classificação}
 
+%- Etapa que classifica os documentos com as caracteristicas selecionadas nas etapas de extração e seleção de características
+%
+%- Visao geral das tecnicas usadas na literatura com citacao
+%
+%- Fala de alguns artigos com um pouco mais de detalhes
+%
+%- Em relacao a fuzzy, poucos trbalhos foram encontrados utilziando essa abordagem. Menos ainda, dentre os encontrados, proviam resultados ou metodologias consistentes. 
+%
+%- Cita, se houver, e fala detalhadamente do artigo que utiliza sistemas fuzz e/ou baseado em regras
+%
+%- Fala dos assuntos centrais que permeiam o trabalho e cria sub secoes para eles
+%- Logica Fuzzy e conjuntos Fuzzy
+%- Sistemas fuzzy 
+%- Regras Fuzzy IF-Then
+%- Wang-Mendel
+%- Metodos de classificacao
+
+É nessa etapa que o sentimento geral das opiniões dos documentos são classificadas em positivo ou negativo. Diferentes técnicas de classificação podem ser encontradas na literatura, mas o \textit{Support Vector Machine} (SVM) \cite{pang2002thumbs, pang2004sentimental, tsutsumi2007movie, prabowo2009sentiment}, Naive Bayes \cite{pang2002thumbs, pang2004sentimental}, soma \cite{ohana2011domain, avancco2014lexicon} e a média \cite{turney2002thumbs, voll2007not, taboada2008extracting, taboada2011lexicon} das polaridades foram as abordagens mais encontradas nos trabalhos relacionados.
+
+O SVM é uma popular técnica de aprendizado supervisionado, largamente utilizada na área de mineração de opinião e, possivelmente, é o método que produz os resultados com maior acurácia dentre os métodos existentes na literatura \cite{moraes2012document}. O SVM é um método de aprendizado linear que procura um hiperplano ótimo para separar duas classes, além de buscar maximizar a distância para o ponto de treino mais próximo de cada classe, com o fim de alcançar melhor performance de generalização/classificação nos dados de teste \cite{friedman2001elements}.
+
+No trabalho de \cite{pang2002thumbs}, por exemplo, o SVM é comparado com Naive Bayes e \textit{Maximum Entropy} na classificação de opiniões sobre filmes, usando uma base de dados criada pelos próprios autores. Os resultados mostraram que Naive Bayes tende a produzir os piores resultados e o SVM os melhores resultados. Em \cite{pang2004sentimental}, uma nova proposta de aprendizado de máquina para mineração de opiniões é apresentada para extrair dos textos somente porções subjetivas. Os autores utilizam Naive Bayes e SVM para testar a eficácia da proposta e o SVM produziu os melhores resultados, produzindo entre 87\% e 90\% de acurácia na classificação dos documentos.
+
+A técnica de soma é a simples comparação entre a soma das polaridade positivas e negativa dos n-grams. Se a soma positiva for maior que a negativa, o documento é classificado com positivo, de outra forma, negativo. O trabalho realizado em \cite{ohana2011domain} é proposta uma abordagem de mineração de opinião que utiliza diferentes dicionários de opiniões, como o Sentiwordnet (SWN), \textit{Subjectivity Clues} e \textit{General Inquirer}, para classificar as opiniões e, por conseguinte, os documentos das diferentes bases de dados utilizadas (e.g. filmes, hotéis, livros, dentre outros). Usando o SWN, a comparação das somas das polaridades produziu uma acurácia de quase 72\% de acurácia. Em \cite{avancco2014lexicon} também é avaliada uma estratégia de uso de vários dicionários de opiniões, utilizando a comparação das somas das polaridades. Diferentemente de todos os outros trabalhos relacionados, este abordou a mineração de opinião em bases de dados da língua portuguesa. 
+Os resultados mostraram que a estratégia de uso de vários dicionários também é promissora para a língua portuguesa, produzindo 74\% de acurácia.
+
+A técnica da média consiste em calcular a média resultante das polaridades. Se essa média for menor que zero, o documento é classificado como negativo e, de outra maneira, positivo. No trabalho de \cite{turney2002thumbs}, já descrito nessa seção, o uso da média como técnica de classificação, produziu uma acurácia média de 74\% sobre uma base de opiniões com 410 documentos com diferentes domínios (automóveis, bancos, filmes, dentre outros). A acurácia vai desde 66\% para filmes até 84\% para automóveis. 
+Em \cite{taboada2008extracting}, técnica da média também é utilizada. O artigo apresenta uma abordagem que explora a influência de partes dos textos sobre os principais elementos indicativos de opiniões, os adjetivos: amplificadores e amenizadores, incluindo o tratamento da negação dos termos. Os resultados foram promissores, alcançando 76\% de acurácia numa base de filmes \cite{pang2004sentimental} até 90\% numa base de músicas.
+
+Não obstante, em relação a aplicação de lógica fuzzy a mineração de opinião, poucos trabalhos relacionados foram encontrados na literatura. Isso pode indicar que ainda é limitada a pesquisa sobre o uso dessa metodologia, embora a lógica fuzzy seja reconhecida como uma abordagem apropriada para lidar com dados imprecisos e vagos, como opiniões e sentimentos. Essa pouca quantidade de trabalhos pode indicar uma área de pesquisa em aberto em mineração de opinião. O resto dessa seção aborda os principais conceitos relacionados a lógica fuzzy, aplicada a este trabalho, relacionando, quando possível, trabalhos relacionados a nossa pesquisa e/ou aos assuntos contidos nelas.
+
+\subsubsection{Lógica Fuzzy}
+
+A lógica clássica ou Aristotélica é vista como o mecanismo empregado para descrever o raciocínio humano clássico em que uma conclusão precisa é deduzida de uma coleção de premissas igualmente acuradas e corretas. Todavia, o mundo real não funciona, necessariamente assim. Muitas das informações com as quais os seres humanos lidam são imperfeitas, podendo ser caracterizadas como imprecisas, incertas, vagas ou que correspondam a verdades parciais e subjetivas \citep{araujo2009palestra}.  Situações como "o carro está muito rápido, pise no freio" ou "a palestra não será ministrada devido aos poucos alunos", possuem informações que não são nitidamente definidas e não podem ser precisamente descritas, principalmente pela lógica clássica. No entanto, pessoas tomam decisões todos os dias, como pisar no freio ou cancelar palestras, baseadas nessas informações imprecisas e vagas \citep{araujo2009palestra}. 
+
+A Lógica Fuzzy, proposta por \cite{zadeh1965fuzzy}, é uma metodologia da Inteligência Computacional criada para lidar com informações imprecisas. Estas informações imprecisas são modeladas por meio de conjuntos chamados Conjuntos Nebulosos \citep{zadeh1965fuzzy}. As subseções a seguir descrevem alguns conceitos relacionados aos Conjuntos Fuzzy e aos Sistemas Fuzzy.
 
 \ifcsdef{mainfile}{}{\bibliography{../pesquisa}}
 

@@ -33,6 +33,7 @@
 Dada nossa proposta de projetar e avaliar um sistema fuzzy de mineração de opinião para classificar o sentimento geral de opiniões encontradas em textos de documentos, iniciamos definindo com mais propriedade nosso problema e a tarefa a ser desempenhada. A partir de documentos de bases selecionadas, a análise dos documentos a ser realizada pelo sistema fuzzy deve ser capaz de classifica-los em positivos, que exprimem um sentimento geral positivo sobre um determinado assunto, ou em negativos, que exprimem um sentimento geral negativo, definindo, portanto, um problema de classificação binária. A escolha do tipo da classificação foi por uma pouco dependente do domínio em que as opiniões são expressas, como cinema, livros ou automóveis. Nossa abordagem utiliza características extraídas dos próprios documentos, comuns a documentos de outros domínios, ao invés de usar diretamente, por exemplo, os termos existentes nos textos, como realizado em \citeonline{pang2002thumbs, pang2004sentimental, pang:2008}.
 
 \todo[inline]{Neste primeiro parágrafo, o termo abordagem está sendo usado também para classificar o tipo do nosso problema, que é um problema de classificação. Recomendo nao fazer isso.}
+\todo[inline]{Alterei}
 
 Para executarmos nossa tarefa de classificação da polaridade dos documentos, é preciso seguir seis etapas comumente utilizadas em processos de mineração de opinião: i) definição do domínio, ii) pré-processamento, iii) transformação, iv) extração e seleção de características, v) classificação e vi) análise dos resultados \cite{moraes2012document}.
 
@@ -67,6 +68,7 @@ As bases selecionadas devem passar pela etapa de pré-processamento para se adeq
 A tokenização dos documentos divide o conteúdo de cada documento em sentenças e, por sua vez, em palavras para que o marcador gramatical (ou \textit{tagger}) possa identificar as classes gramaticais das palavras do documento. O marcador gramatical usado foi o proposto por \citeonline{brill1995transformation}, e também usado em trabalhos relacionados a esta pesquisa \cite{chaovalit2005movie, taboada2008extracting, taboada2011lexicon}. O marcador gramatical é um sistema que processa um texto num determinado idioma, identifica e atribui rótulos para cada palavra nesse texto, como substantivos, verbos, adjetivos, advérbios, dentre outros \footnote{A lista completa dos rótulos para o idioma inglês pode ser encontrado em: \url{https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html}}. 
 
 \todo[inline]{Eu substitui "partes de discurso" por "rótulos". }
+\todo[inline]{Ok}
 
 A tarefa final é definir como compor o modelo que representará o documento. O tipo de modelo inicial utilizado nessa pesquisa é o popular saco de palavras (\textit{bag-of-words}), em que cada documento é representado por um vetor de termos (ou n-grams) do documento \cite{moraes2012document}. Neste caso, são considerados n-grams, unigrams (uma palavra), bigrams (duas palavras) ou trigrams (três palavras). 
 
@@ -77,6 +79,7 @@ Neste processo,também extraímos tipos especiais de bigrams e trigrams: n-grams
 Ao fim do estágio de pré-processamento, cada documento é transformado num vetor de n-grams associado aos seus rótulos gramaticais, o qual é passado para a etapa de transformação.  
 
 \todo[inline]{Este último parágrafo não pode ser: Ao fim do estágio de pré-processamento, cada documento é transformado num vetor de n-grams, o qual é passado para a etapa de transformação.}
+\todo[inline]{matheus: ja estava alterado. Voce quem mudou?}
 
 \section{Transformação}
 
@@ -101,6 +104,7 @@ A etapa de transformação produz representações numéricas a partir dos vetor
 O SentiWordNet 3.0 (SWN) é a terceira versão do SentiWordNet, apresentado por \cite{esuli2006sentiwordnet}. É um dicionário criado pela anotação automática dos sentimentos de cada \textit{synset} (conjuntos de sinônimos) do Wordnet 3.0, outro dicionário na língua inglesa \cite{fellbaum2005wordnet}. Cada \textit{synset} do Wordnet reune palavras que denotam um mesmo conceito, mas como uma mesma palavra pode ter mais de um sentido, uma mesma palavra pode pertencer a vários synsets dependendo do conceito que denota. Cada synset possui um \textit{gloss}, uma breve definição e, na maioria dos casos, um ou mais curtas sentenças ilustrando o uso dos termos dentro um \textit{synset}. A anotação automática feita pelo SWN associa três escores numéricos a cada \textit{synset} $s$, $Pos(s)$, $Neg(s)$ e $Obj(s)$, que indicam o quanto positivos, negativos e "objetivos" (ou neutros) são os termos existentes no \textit{synset} \cite{baccianella2010sentiwordnet}. 
 
  \todo[inline]{ajustei e corrigi a definição, gloss não é a relação, é somente uma descrição}
+ \todo[inline]{Ok, mas eu tirei a definição do Wordnel.}
 
 O método de criação do SWN se baseia num conjunto de classificadores ternários \footnote{Um classificador \textit{n-ário} é um dispositivo que atribui a cada objeto exatamente um rótulo a partir de um conjunto pré-definido de $n$ rótulos.} que são capazes de decidir quando um \textit{synset} é positivo, negativo ou objetivo \cite{esuli2006sentiwordnet}. Cada classificador difere um do outro pelos conjuntos de treinos, produzindo diferentes resultados para os \textit{synsets} do Wordnet. O escore final do \textit{synset} é determinado pela proporção normalizada dos classificadores ternários que conseguiram associar um rótulo ao \textit{synset}. Se todos os classificadores concordarem em associar o mesmo rótulo para um \textit{synset}, aquele rótulo (e.g. positivo) terá escore máximo para aquele \textit{synset}. De outra forma, cada rótulo terá um escore proporcional ao número de classificadores que associaram um rótulo a ele. Por exemplo, 3 classificadores assinalaram positivo para um dado \textit{synset}, um outro classificou o \textit{synset} como negativo, e nenhum conseguiu classifica-lo como objetivo. Assim o \textit{synset} terá $Pos(s) = 0.75$, $Neg(s) = 0.25$ e $Obj(s) = 0$. Como a proporção é normalizada, os valores estão num intervalo $[0,1]$ e a soma dos três escores também sempre será igual a 1. Assim, é possível que existam (e existem) \textit{synsets} que tenham todos os três graus diferentes de zero, indicando que há termos positivos, negativos e objetivos ao mesmo tempo \cite{esuli2006sentiwordnet}. 
 
@@ -112,6 +116,7 @@ O método de criação do SWN se baseia num conjunto de classificadores ternári
 \end{figure}
  
  \todo[inline]{pensei em um exemplo de synset do sentiwordnet, talvez um termo mais simples que bad, com menos synsets}
+ \todo[inline]{Alterei}
  
 A figura \ref{figura:happy_synsets} ilustra os \textit{synsets} do termo \textit{happy} no SWN. Esse termo, como adjetivo, está contido em 4 \textit{synsets} diferentes, cada um com um \textit{gloss} com uma definição (primeira frase abaixo termos) e curtas sentenças exemplificando o uso (frases entre aspas), dos termos. Além disso, em 3 dos quatro \textit{synsets}, são exibidos outros termos sinônimos a \textit{happy} nos respectivos \textit{synsets}.
  
@@ -120,6 +125,7 @@ A figura \ref{figura:happy_synsets} ilustra os \textit{synsets} do termo \textit
 Para que pudéssemos extrair as características, seleciona-las e, então, principalmente, gerar a base de regras fuzzy nas etapas seguintes, foi preciso transformar a tupla de três valores dos termos do SWN em um valor único. Nos trabalhos de \citeonline{ohana2009sentiment} e \citeonline{khan2011sentiment}, a tupla do SWN também foi simplificada para um único valor para determinar a polaridade de cada termo. No trabalho de \citeonline{guerini2013sentiment}, também são demonstradas outras fórmulas de se calcular a partir do SWN a polaridade dos termos isoladamente, chamados pelos autores de palavras fora de contexto (do inglês \textit{word’s prior polarity}). Palavras fora de contexto são típicas de abordagens \textit{bag-of-words} e devem ter um tratamento diferente para se adequar ao problema da perda do contexto causada na etapa de pré-processamento, com a tokenização do documento \cite{guerini2013sentiment}. Como uma mesma palavra pode pertencer a mais de um \textit{synset}, há um problema em escolher um \textit{synset} adequado para uma palavra. \citeonline{guerini2013sentiment} mostra que escolher o \textit{synset} mais freqüente pode não ser melhor que escolher um qualquer de maneira aleatória. Assim, nós utilizamos uma das fórmulas de \citeonline{guerini2013sentiment} para calcular a polaridade $Pol(n)$ de um termo do SentiWordNet fora de contexto. 
 
 \todo[inline]{ajeitei a redação aqui, coloque a formula que sumiu daqui}
+\todo[inline]{matheus: pior que não lembro dessa formula. Qual que era?}
 
 O uso da abordagem de polaridades fora de contexto tem a vantagem de ser mais rápida e simples do que uma profunda análise semântica ou desambiguação (uma linha de pesquisa completa, por si só) para assinalar um valor de polaridade para um termo, além de ser independente de domínio, como proposto nesse trabalho. 
 
@@ -221,9 +227,10 @@ Diferentemente da maioria dos trabalhos relacionados que consideram os n-grams c
 Uma abordagem comumente utilizada na mineração de opiniões, é utilizar diretamente o vetor de termos ou n-grams (bag-of-words) para gerar um classificador que determine a polaridade dos documentos. Esse tipo de técnica tende a produzir maior acurácia, pois o classificador é treinado para avaliar como a presença de certos termos influencia a classificação de opnião. Essa abordagem, no entanto, produz um classificador fortemente dependente do conjunto de dados de treinamento e assim demandando uma nova rodada de treinamento se for aplicada a novos conjuntos de dados. Essa abordagem ainda está sujeita a quantidade e qualidade da base de treinamento. Estas abordagens de mineração de opinião dependentes de domínio, normalmente baseadas em métodos de aprendizado de máquina, conseguem taxas de acurácia iguais ou maiores que 95\%, pois alimentam o classificador com os vetores de palavras dos documentos. Assim, o classificador aprende com os documentos da base de dados quais palavras fazem parte dos positivos e negativos. Contudo, para alcançar altas taxas de classificação, essas abordagens precisam de uma grande massa de dados anotadas para treinamento e considerável tempo de treino para poder classificar corretamente. Ainda, produzem resultados muito ruins entre domínios diferentes sem novas rodadas de treinamento, evidenciando uma superadaptação ao domínio de treinamento e pouca generalização.
 
 
-Por outro lado, uma abordagem que avalia as polaridades dos termos para definir o sentimento geral das opiniões pode tornar-se menos dependende de dominio, menos dependente de termos específicos, em alguns trabalhos não requer um prévio treinamento, sendo utilizadas regras de classificação pré-definidas (CITE TRABALHOS QUE NÃO TIVEREM TREINAMENTO, E USARAM REGRAS DEFINIDAS PELO AUTOR, COMO AQUELE DE SOMA DE POLARIDADE). Esta abordagem de uso de polaridades não depende de termos específicos, produzindo um classificador mais geral, porém em geral com menor acurácia. 
+Por outro lado, uma abordagem que avalia as polaridades dos termos para definir o sentimento geral das opiniões pode tornar-se menos dependende de dominio, menos dependente de termos específicos,  e em alguns trabalhos não requer um prévio treinamento, sendo utilizadas regras de classificação pré-definidas \cite{nadali2010sentiment, pimpalkar2013sentimental}. Esta abordagem de uso de polaridades não depende de termos específicos, produzindo um classificador mais geral, porém em geral com menor acurácia. 
 
 \todo[inline]{em ambos os casos pode ser aprendizado supervisionado (em nosso caso inclusive tem treinamento supervisionado usando polaridades), refiz a redação, coloca algumas citações}
+\todo[inline]{matheus: são esses dois. Mas o primeiro deles mostra as regras, mas n tem resultados e o segundo é o inverso}
 
 Buscando uma classificador mais geral e menos dependente de domínio, realizamos uma sub-etapa de extração de características dos documentos a partir dos vetores de polaridades da etapa de transformação. Essa abordagem analisa os documentos por suas características em vez de seu conteúdo específico para decidir a polaridade do sentimento geral dos documentos. As características que utilizamos não são específicas para nenhum domínio e podem ser facilmente aplicadas para quaisquer outros tipos de base de dados \cite{pang2002thumbs}. Além disso, a extração dessas características reduz a dimensionalidade dos dados, já que os vetores resultantes da etapa é significativamente menor que um vetor comum de \textit{bag-of-words}.
 
@@ -287,6 +294,7 @@ A hipótese central do CFS é que um bom conjunto de características contém ca
 
 \todo[inline]{essa explicação do CFS não está boa, pode partir da tese de Hall: 'The central hypothesis is that good feature sets contain features that are highly correlated with the class, yet uncorrelated with each other. [..] CFS
 (Correlation based Feature Selection) is an algorithm that couples this evaluation formula with an appropriate correlation measure and a heuristic search strategy'}
+\todo[inline]{Eu tinha usado exatamente ela, mas ainda assim alterei de acordo com o comentário}
 
 O algoritmo C4.5, por outro lado, gera uma árvore de decisão que é normalmente usada para a tarefa de classificação \cite{quinlan19934}. Todavia, para construir essa árvore de decisão, esse algoritmo precisa selecionar as melhores características entre as existentes a cada nó gerado. Como uma árvore de decisão é construída, o resultado do algoritmo é uma lista das características mais aptas ordenadas por relevância. Além disso, para no uso deste algoritmo para seleção de características, a quantidade das características selecionadas depende da altura da árvore, determinada por um parâmetro do algoritmo, alterado nesse trabalho e discutido na seção de resultados. Assim, nós usamos o C4.5 também como um algoritmo de seleção para nossa tarefa de minerar opinião. 
 
@@ -312,11 +320,12 @@ A classificação do sentimento geral das opiniões de cada documento de uma det
 
 \subsection{Modelagem Fuzzy das Variáveis do Sistema Fuzzy}
 
-No processo da modelagem fuzzy das variáveis \footnote{As variáveis do SBRF são as características das bases de dados} do SBRF, constatamos a necessidade de padronizar a escolha dos intervalos de valores nos vetores de características, pois não podíamos depender da escolha subjetiva de pessoas para identificar quais seriam os melhores intervalos para cada vetor de característica. 
+No processo da modelagem fuzzy das variáveis \footnote{As variáveis do SBRF são as características das bases de dados} do SBRF, constatamos a necessidade de padronizar a escolha dos intervalos de valores nos vetores de características. A modelagem dos conjuntos fuzzy deve levar em conta todo o intervalo de valores das variáveis, pois variações muito grandes implicam a necessidade de mais conjuntos ou que cada conjunto cubra sub-intervalos grandes. Além disso, identificamos a presença de \textit{outliers} nos valores das variáveis, valores extremos e distantes dos demais valores, e uma forma de lidar com estes \textit{outliers} é limitar o intervalo de variação
 
 \todo[inline]{Para mim, ainda não está claro o porque de delimitar o intervalo de valores das características. Se o usuário não pode fazer isso, ok. Mas porque fazer isso?}
 \todo[inline]{matheus cardoso: não é o usuario. Essas "pessoas" aí somos nós. Tivemos de fazer isso, pois sem isso ficava a meu cargo verificar no olhometro o inicio e fim dos intervalos de dados das características para pegar a maior parte possível de dados.}
 \todo[inline]{Angelo: tira isso de  escolha subjetiva de pessoas. A motivação para limitar os valores das variaveis está relacionada a dois fatores. Primeiro a modelagem dos conjuntos fuzzy deve levar em conta todo o intervalo de valores das variáveis, então variações muito grandes implicam que seriam necessários mais conjuntos ou que cada conjunto iria cobrir sub-intervalos grandes. Segundo, identificamos a presença de outliers nos valores das variáveis, valores extremos e distantes dos demais valores, e uma forma de lidar com estes outliers é limitar o intervalo de variação }
+\todo[inline]{matheus: eu não entendi o primeiro motivo, mas tentei integrar ao texto da melhor maneira possivel}
 
 Para isso, nós usamos a regra do três-sigma \cite{kazmier2004schaum} que seleciona todos os valores que estão no intervalo dos três desvios padrão $\sigma$ da média de um determinado conjunto de valores (veja figura \ref{figura:regra_3_sigmas}). Este intervalo consiste em 99,73\% dos valores que se encontram numa distribuição normal e os valores que ficaram além do intervalo foram reduzidos para os limites do mesmo. Assim, o mesmo critério foi usado para determinar o intervalo de dados de todas as características. 
 
@@ -356,6 +365,7 @@ Para as variáveis de entrada testamos também outras duas modelagens diferentes
 \end{figure}
 
 \todo[inline]{Matheus, na figura, retire o m(x1), pois isso representa o grau de pertinencia de x1 no conjunto m. Mas como o objetivo eh apenas ilustrar a particao fuzzy da variavel linguistica X1, ele nao serah necessario. Faca isso nas outras figuras tambem!}
+\todo[inline]{matheus: alteradas}
 
 Para a variável de saída, nós utilizamos dois conjuntos fuzzy, $Positivo (P)$ e $Negativo (N)$, distribuídos uniformemente. Isto porque, a nossa principal tarefa é classificar o sentimento geral dos documentos em positivo ou negativo. A figura \ref{figura:conjuntos_fuzzy_saida} ilustra a modelagem da variável de saída.
 
@@ -375,6 +385,7 @@ O uso de mais ou menos conjuntos fuzzy faz com que o mapeamento dos dados seja m
 O método de Wang-Mendel é uma forma rápida para construção de regras fuzzy orientado à dados numéricos, os quais representam as amostras de um determinado conjunto de dados. A primeira etapa deste método é definir os conjuntos fuzzy das variáveis de entrada e saída. A segunda etapa é a geração das regras fuzzy a partir da combinação das variáveis de entrada e saída. A terceira etapa associa um grau para cada regra gerada. E por último, o conjunto final de regras fuzzy é gerado, eliminando as regras repetidas e inconsistentes \cite{wang1992generating}.
 
 \todo[inline]{Matheus, vc tem duas opções: 1.Descrever de forma geral o algoritmo, ou 2.Descrever detalhadamente o algoritmo. Se vc escolher 1. Eu recomendaria tirar toda definição formal de vetor de característica, de conjunto, etc., e deixar somente texto para explicar o algoritmo. Eu recomendaria a inserção de um pseudocodigo, após o texto explicativo. Se vc escolher 2. Vc deve fazer como está no artigo, ou seja, definir formalmente como estão os seus dados (vetores de características), mostrar a partição fuzzy das varíaveis, etc... em outras palavras, seria transcrever o exemplo do artigo de Wang-Mendel. O seu texto está entre as opções 1 e 2. A opção 1 é mais simples, vc teria menos trabalho. A opção 2, vc teria que melhorar mais a sua explicação. E ai? qual vai ser?}
+\todo[inline]{matheus: optei pela opcao 1. Veja se consegui, professor.}
 
 Uma vez definidas as regiões fuzzy (ou conjuntos fuzzy) dos dados de entrada e saída, a próxima tarefa é a criação do conjunto de regras baseadas nas características. %Nosso conjunto de características pode ser representado da seguinte forma:
 %
@@ -463,6 +474,7 @@ Portanto, ao fim do processo, uma regra é gerada para cada vetor de caracterís
 Depois de eliminadas as regras duplicadas e conflitantes, as regras finais constituem o conjunto de regras fuzzy baseado nas características dos documentos. Com esse conjunto de regras é possível classificar os documentos da base de dados. 
 
 \todo[inline]{Matheus, eu acho que neste pseudocodigo, vc deveria separar a eliminação das regras duplicadas, das regras conflitantes. Isto porque, se a regra está duplicada, não é necessário calcular grau, apenas se exclui uma delas}
+\todo[inline]{matheus: dividi os algoritmos}
 
 \subsection{Raciocínio Fuzzy}
 
@@ -479,15 +491,17 @@ D(regra_i) = m_{CFI_n}(x_j^1) \cdot m_{CFI_m}(x_j^2) \cdot m_{CFI_o}(x_j^3) \cdo
 \label{eq:compat_regra}
 \end{equation}
 
-O MRFC escolhe a regra que ficou com o maior grau de compatibilidade após a avaliação das características e classifica o documento com a classe de saída dessa regra. \todo[inline]{Aqui tem um erro: o metodo calcula o grau de compatibilidade da regra i com todos os padrões j. Assim, a regra terá como saída, a saída do padrão com maior compatibilidade} Por outro lado, o MRFG considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MRFG calcula a média dos graus de compatibilidade entre as regras que tem o conseqüente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
+O MRFC escolhe a regra que ficou com o maior grau de compatibilidade após a avaliação das características e classifica o documento com a classe de saída dessa regra. \todo[inline]{Aqui tem um erro: o metodo calcula o grau de compatibilidade da regra i com todos os padrões j. Assim, a regra terá como saída, a saída do padrão com maior compatibilidade} \todo[inline]{matheus: alterado} Por outro lado, o MRFG considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MRFG calcula a média dos graus de compatibilidade entre as regras que tem o conseqüente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
 
 \section{Método e Medidas de Avaliação}
 
-A avaliação dos resultados deste trabalho foi feita usando a metodologia validação cruzada de 10-folds, buscando avaliar como um todo o sistema proposto de mineração de opinião. Assim cada base escolhida foi dividida em 10 partes do mesmo tamanho, sendo realizada em 9 partes o pré-processamento, transformação, extração e seleção de características, e construção do sistema de classificação baseado em regras fuzzy. A única parte restante foi então utilizada para teste de avaliação, realizando o pré-processamento, transformação,  extração somente das características selecionadas na etapa anterior (não há nova avaliação das características), e classificação aplicando as regras obtidas também na etapa anterior. Desta forma, tanto o processo de seleção de características quanto o de classificação estão sob avaliação, sendo repetido este processo 10 vezes, utilizando partes diferentes para teste.
+A avaliação dos resultados deste trabalho foi feita usando a metodologia validação cruzada de 10-folds, buscando avaliar como um todo o sistema proposto de mineração de opinião. Assim cada base escolhida foi dividida em 10 partes do mesmo tamanho, sendo realizada em 9 partes o a extração e seleção de características e construção do sistema de classificação baseado em regras fuzzy. A única parte restante foi então utilizada para teste de avaliação, realizando a extração somente das características selecionadas na etapa anterior (não há nova avaliação das características), e a classificação aplicando as regras obtidas também na etapa anterior. Desta forma, tanto o processo de seleção de características quanto o de classificação estão sob avaliação, sendo repetido este processo 10 vezes, utilizando partes diferentes para teste.
 
 \todo[inline]{angelo: veja se a metodologia de avaliação foi essa mesma acima que eu descrevi} 
+\todo[inline]{matheus: retirei as etapas de pre-processamento e transformacao, pois foi so a partir da extracao}
 
 \todo[inline]{porque foram selecionadas estas medidas?}
+\todo[inline]{matheus: tentei justificar embaixo}
 As medidas usadas para avaliar o desempenho da classificação do sistema foram a \textit{acurácia}, a taxa de verdadeiros positivos (TPR) e a taxa de verdadeiros negativos (TNR) \cite{garcia2012multi}. A \textit{acurácia} (equação \ref{eq:acccuracy}) é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos.
 
 \begin{equation}
@@ -511,8 +525,11 @@ TNR = TN / (TN + FP)
 
 \todo[inline]{Acho bom inserir uma referencia para estas medidas. Poderia ser esse: García-Pedrajas and Pérez-Rodríguez (2012) Multi-selection of instances: A straightforward way to improve evolutionary instance selection, Applied Soft Computing 12 (2012) 3590–3602. 
 Pois acho melhor que o Wikipedia :)}
+\todo[inline]{matheus: inserido}
 
 %\todo[inline]{Da wikipedia, mas la cita as denominacoes que voce falou, mas eu preferi usar taxas para ficar mais claro.}
+
+Essas medidas foram selecionadas, pois é preciso avaliar igualmente o desempenho da classificação para os documentos positivos e negativos. Outras, medidas, como \textit{Recall} e \textit{Precision} \cite{zhu2004recall}, largamente utilizadas na área de recuperação de informação e também nos trabalhos relacionados a esta pesquisa, avaliam a classificação dos documentos positivos em detrimento aos negativos e vice-versa. Mais uma vez, é tão importante acertar corretamente os documentos positivos, quanto negativos e, por isso, escolhemos a acurácia, para avaliar o desempenho geral do classificador, o TPR para avaliar o quanto de positivos foram corretamente classificados e o TNR para os negativos.
 
 Além disso, com o objetivo de verificar se as diferenças entre os resultados dos experimentos são significativas ou não, nós utilizamos o teste de \textit{Wilcoxon signed-rank} \cite{wilcoxon1945individual}, usado para comparar resultados entre conjuntos de testes relacionados, resultados sucessivos sobre um único conjunto de teste, dentre outros. Por fim, também usamos um terceiro método de classificação, o \textit{Support Vector Machine} (SVM), bastante utilizado em trabalhos de mineração de opinião dependentes de domínio e que, comumente, produz bons resultados \cite{ohana2009sentiment, moraes2012document}. Assim, podemos verificar como nossa proposta se comporta frente aos métodos tradicionais de classificação utilizados nessa área. 
 

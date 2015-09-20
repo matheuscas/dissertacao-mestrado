@@ -172,10 +172,17 @@ A equivalência dos resultados ocorre, pois o CFS tem uma cobertura maior do esp
 
 É importante frisar que os folds foram definidos por amostragem estratificada, mantendo a mesma proporção de documentos positivos e negativos do base de dados total. Dentre as características selecionadas por CFS e c4.5 duas se destacaram, sendo frequentemente selecionadas dentro dos cenários testados por ambos algoritmos. São elas:
 
-\begin{itemize}
-\item A diferença entre as somas positiva e negativa de adjetivos e bigrams compostos estritamente por advérbio e adjetivo;
-\item E a diferença entre as somas positiva e negativa de unigrams e bigrams combinados. 
-\end{itemize}
+\begin{table}
+\resizebox*{\textwidth}{!}{ \begin{tabular}{|l|}
+	\hline
+	A diferença entre as somas positiva e negativa de adjetivos e bigrams compostos estritamente por advérbio e adjetivo; \\
+	\hline
+	E a diferença entre as somas positiva e negativa de unigrams e bigrams combinados. \\
+	\hline
+\end{tabular}}
+\caption{Características mais selecionadas entre bases e entre algoritmos de seleção}
+\label{table:features_most_selected}
+\end{table}
 
 É importante ressaltar que, para o melhor resultado apresentado na base de filmes pelo c4.5, somente essas duas características foram selecionadas para gerar a base de regras e classificar os documentos. As figuras \ref{figura:movies_dist_1} e \ref{figura:movies_dist_2} mostram a distribuição dessas características na base de filmes e as figuras \ref{figura:amazon_dist_1} e \ref{figura:amazon_dist_2} na base da Amazon. 
 
@@ -208,7 +215,7 @@ A equivalência dos resultados ocorre, pois o CFS tem uma cobertura maior do esp
 \label{figura:amazon_dist_2}
 \end{figure}
 
-Na base de filmes, as características se aproximam de uma distribuição normal simétrica, enquanto na base da Amazon são mais assimétricas. Essa falta de equilibrio explica a mais significativa discrepância entre os valores de TPR  e TNR para o c4.5 na base da Amazon, enquanto que na base de filmes, o desequilíbrio entre essas duas medidas é menor. Lembrando mais uma vez que o CFS sofre menos com essa variação, pois há outras características para cobrir mais dados da base de testes.
+Na base de filmes, as características se aproximam de uma distribuição normal simétrica, enquanto na base da Amazon são mais assimétricas. Essa falta de equilibrio explica a mais significativa discrepância entre os valores de TPR  e TNR para o c4.5 na base da Amazon, enquanto que na base de filmes, o desequilíbrio entre essas duas medidas é menor. 
 
 \todo[inline]{a acurácia está péssima, quase jogar uma moeda, porque?}
 \todo[inline]{o desvio padrão aqui chamada muita atenção, está muito muito alto, , mas o cfs tem desvio menos de TNR e TPR, mas o c4.5 consegui menor desvio de acurácia, porque?}
@@ -571,10 +578,20 @@ Agora, diferentemente de antes, é possível perceber a maior estabilidade do si
 
 \section{Avaliação com o uso de 2 conjuntos fuzzy}
 \subsection{Avaliação dos algoritmos de seleção de características}
+
+O efeito que os pesos produziram nos sistemas de inferência, mostrou que o conjunto fuzzy "MEDIA" não estava sendo utilizado na classificação dos documentos, pois as regras geradas com esse conjunto fuzzy sempre recebiam pesos próximos de zero ou bem distantes dos pesos recebidos pelas regras que utilizavam os conjuntos "BAIXA" e "ALTA". De fato, a presença desse conjunto para a geração das regras estava influenciando negativamente nas taxas de classificação dos documentos. Assim, nós decidimos remover esse conjunto para ratificar ou não essa hipótese, além de verificar se menos regras e mais simples terão o mesmo desempenho que antes, já que um conjunto a menos na entrada significa menos regras geradas e com antecedentes menores e mais legíveis. Os resultados com dois conjuntos fuzzy na entrada podem ser vistos nas tabelas \ref{table:movies_2f} e \ref{table:amazon_2f}.
+
+É possível observar que os melhores resultados que vimos com três conjuntos fuzzy na entrada, melhoraram um pouco, embora não tenha sido significativo ($p <= 0.01$). Na verdade, podemos notar que, diferentemente de antes, os resultados para os cenários entre c4.5 e CFS não estão tão mais distantes como antes e, na base da Amazon, os resultados obtidos utilizando o CFS superaram muitos dos resultados produzidos com o c4.5. Isso acontece, pois além do CFS selecionar mais características que cobrem mais o espaço dos dados, a regras geradas utilizam agora somente os conjuntos fuzzy que realmente tem capacidade de classificar melhor os documentos, potencializando o conjunto selecionado pelo CFS. 
+
+Mas, a despeito da redução dos conjuntos fuzzy, a média de características selecionadas se manteve próxima a de 6 entre as duas bases. Além disso, as mesmas características mostradas na tabela \ref{table:features_most_selected} que despontaram antes, se mantiveram como as mais selecionadas entre as bases e entre os métodos de seleção. Por fim, pudemos testar nossas hipóteses de que o conjunto fuzzy "MEDIA" era, de fato, descartável e que menos regras e mais simples puderam produzir resultados tão bons quanto demonstrado anteriormente com mais conjuntos fuzzy.
+
 \subsection{Avaliação dos sistemas de inferência fuzzy}
 
+Os resultados mostram agora que não há diferenças significativas ($p <= 0.01$) em nenhum dos cenários entre os algoritmos  MRFC e MRFG. Em alguns casos, diferentemente do que ocorria antes com 3 conjuntos, o MRFC obteve, mesmo que somente numericamente, melhor acurácia que o MRFG quando utilizado o c4.5 com altura 2. Outra mudança foi a eliminação do efeito negativo do MRFC de analisar individualmente a classificação de um único documento em vez de analisar todo o conjunto de dados frente às regras, como é feito no MRFG. Isso pode indicar que, essa abordagem do MRFC pode ser afetada diretamente e de maneira mais expressiva pela modelagem das variáveis de entrada, enquanto que o MRFG não sofre igualmente desses efeitos. Além disso, os desvios padrão das medidas de TPR e TNR, mesmo sem utilizar os pesos nas regras, foram reduzidos significativamente, em média, para 8\% entre as bases, contra 21\% utilizando 3 conjuntos fuzzy. 
 
-\todo[inline]{AINDA A REFAZER.}
+Como os pesos mostraram quais regras seriam descartáveis e, por conseguinte, o conjunto associado, a remoção deste produziu efeitos similares nos resultados do MRFC e do MRFG sem utilizar peso algum. Os resultados melhoraram em todos os cenários, destaque para o uso com o CFS na base da Amazon, pois foram melhores significativamente ($p <= 0.01$), comparando par a par com os cenários da mesma base utilizando 3 conjuntos fuzzy na entrada. 
+
+A aplicação dos pesos utilizando 2 conjuntos, contudo, não pareceu surtir o mesmo efeito que produziu anteriormente. Os resultados foram inconclusivos quanto à aplicação de pesos nestes cenários com somente 2 conjuntos fuzzy na entrada. Os cenários que utilizaram o c4.5 com altura 1 não surtiram efeito algum. Com altura 2 os pesos reduziram, inclusive, o desempenho da classificação. E nos cenários com CFS, os pesos sempre aumentaram os valores de acurácia da classificação, mesmo que não tenham sido significativos. 
 
 %Através das últimas seções, foram mostrados resultados utilizando 3 conjuntos fuzzy para modelar nossas variáveis lingüísticas. Seguindo a nossa decisão de usar o c4.5 com altura máxima da árvore de decisão para 1 para reduzir a complexidade das regras geradas e torna-las mais legíveis para seres humanos, nós tentamos reduzir a quantidade de conjuntos fuzzy, usando somente os conjuntos "Baixo" e "Alto", para as variáveis de entrada. Esse experimento tem por fim verificar se há aumento da performance da classificação com regras mais simples e gerais. A tabela (\ref{table:movies2_pesos_2f}) e tabela (\ref{table:amazon2_pesos_2fs}) mostram, respectivamente, os resultados para o uso de somente dois conjuntos fuzzy nas variáveis de entrada nas bases de filmes e da Amazon.
 %
@@ -643,9 +660,12 @@ Agora, diferentemente de antes, é possível perceber a maior estabilidade do si
 \section{Avaliação do uso de regras entre domínios}
 \todo[inline]{faz aplicação cruzada tambem, amazon na de filmes e vice versa}
 \todo[inline]{valorize mais esta seção, o resultado é MUITO interessante, mas o texto não valoriza tanto, compare com os resultados de epinions com regras amazon e filmes. Quando aplicar amazon em filmes e vice versa compare com os resultados obtidos usando as regras da própria base. O uso do classificador de uma base em outra pode indicar a existencia de regras universais e realmente independentes de domínio, mas pode haver necessidade de ajuste na modelagem dos conjuntos ou em outro aspecto talvez}
+\todo[inline]{matheus: como haviamos combinado na sexta, deixaria essa avaliações cruzadas se houvesse tempo ou para o dia da defesa}
 
-Outra avaliação que fizemos foi a validação do uso de regras entre domínios, utilizando a base inteira da Epinions como teste. Foram usadas as regras geradas da base de filmes e da base da Amazon e aplicadas à base da Epinions. \todo[inline]{foram usadas as regras geradas para qual fold amazon ou filmes?} Para isso, a base da Epinions passou por pré-processamento, transformação e extração de características, para que as regras pudessem avaliar corretamente os documentos. É importante frisar que nenhuma adaptação foi feita às regras para que pudesse funcionar corretamente. Da maneira que foram geradas na bases de filmes e Amazon, foram utilizadas na classificação dos documentos da base da Epinions. A tabela \ref{table:epinions} mostra os resultados obtidos.
+Outra avaliação que fizemos foi a validação do uso de regras entre domínios, utilizando a base inteira da Epinions como teste. Foram usadas as regras geradas da base de filmes e da base da Amazon e aplicadas à base da Epinions. Todas as regras de cada fold, em ambas as bases, foram utilizadas para classificar os documentos da Epinions. O resultado final é a media entre esses resultados.\todo[inline]{foram usadas as regras geradas para qual fold amazon ou filmes?}
+\todo[inline]{matheus: todas. Para cada fold eu apliquei as regras na base da epinions. O resultado final é a media entre esses resultados. Coloquei no texto.} Para isso, a base da Epinions passou por pré-processamento, transformação e extração de características, para que as regras pudessem avaliar corretamente os documentos. É importante frisar que nenhuma adaptação foi feita às regras, ou qualquer alteração nas características selecionadas e tão pouco na modelagem dos conjuntos fuzzy para que pudesse essa avaliação entre bases pudesse funcionar corretamente. Da maneira que foram geradas na bases de filmes e Amazon, foram utilizadas na classificação dos documentos da base da Epinions. A tabela \ref{table:epinions} mostra os resultados obtidos.
 \todo[inline]{nenhuma mudança foi feita nas regras fuzzy, mas nenhuma foi feita também nas características selecionadas e na modelagem dos conjuntos, então reforça isso tambem}
+\todo[inline]{matheus: feito} 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
@@ -658,20 +678,13 @@ Outra avaliação que fizemos foi a validação do uso de regras entre domínios
     \label{table:epinions}
 \end{table}
 
-Os resultados mostram que as regras geradas podem ser usadas entre domínios diferentes, produzindo resultados próximos ou melhores que os produzidos nas próprias bases, como pode ser visto na tabela \ref{table:epinions}.
+Os resultados mostram que as regras geradas podem ser usadas entre domínios diferentes, produzindo resultados próximos ou melhores que os produzidos nas próprias bases, como pode ser visto na tabela \ref{table:epinions}. 
 
 \section{Outros resultados}
 
-Cinquenta e sete características foram extraídas dos documentos para realizar os experimentos dessa pesquisa. Destas, duas foram constantemente selecionadas pelos algoritmos de seleção de características. Foram elas:
-\todo[inline]{quantifica 'constantemente selecionadas', por exemplo em todas as configurações avaliadas elas sempre foram selecionadas? só com c4.5? }
-\begin{itemize}
-\item Diferença entre a soma positiva e negativa dos adjetivos e dos bigrams formados por advérbio e adjetivo
-\item Diferença entre a soma positiva e negativa dos unigrams e bigrams
-\end{itemize}
+Cinquenta e sete características foram extraídas dos documentos para realizar os experimentos dessa pesquisa e as características mostradas na tabela \ref{table:features_most_selected} sempre foram selecionadas pelos algoritmos de seleção de características (CFS e c4.5 com diferentes alturas). Essas características englobam unigrams e bigrams formados por advérbios e adjetivos. Esses resultados corroboram quase que completamente os n-grams propostos por \citeonline{turney2002thumbs}, formados em sua maioria por advérbios e adjetivos; reiteram também a importância central dos adjetivos na mineração e classificação de opiniões, como apontado por \citeonline{voll2007not}; além de reforçar o proposto por \citeonline{benamara2007sentiment} que advérbios tem significativa influência como modificadores de intensidade dos adjetivos.
 
-Essas características englobam unigrams e bigrams formados por advérbios e adjetivos. Esses resultados corroboram quase que completamente os n-grams propostos por \cite{turney2002thumbs}, formados em sua maioria por advérbios e adjetivos; reiteram também a importância central dos adjetivos na mineração e classificação de opiniões, como apontado por \cite{voll2007not}; além de reforçar o proposto por \cite{benamara2007sentiment} que advérbios tema significativa influência como modificadores de intensidade dos adjetivos.
-
-Também comparamos a configuração final do nosso classificador com um método clássico de aprendizado de máquina muito utilizado na tarefa de mineração de opinião, o \textit{Support Vector Machine} (SVM), e que geralmente produz bons resultados, como ser visto em \cite{moraes2012document}, \cite{pang2002thumbs}, \cite{pang2004sentimental} e \cite{wilson2004just}. 
+Também comparamos a configuração final do nosso classificador com um método clássico de aprendizado de máquina muito utilizado na tarefa de mineração de opinião, o \textit{Support Vector Machine} (SVM), e que geralmente produz bons resultados, como ser visto em \citeonline{moraes2012document}, \citeonline{pang2002thumbs}, \citeonline{pang2004sentimental} e \citeonline{wilson2004just}. 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
@@ -714,5 +727,6 @@ Também comparamos a configuração final do nosso classificador com um método 
 Nossos resultados mostram que o classificador construído nesse trabalho equivale aos resultados do SVM, pois em ambas as bases as diferenças dos resultados não são significativas para $p <= 0.01$. Contudo, nosso classificador possui regras legíveis para seres humanos, é independente de domínio e não precisa de nova rodada de treino para diferentes bases, diferentemente do SVM.
 
 \todo[inline]{falta uma seção final de discussão geral dos resultados para fechar esse capítulo, revisando os achados e fazendo uma avaliação geral de tudo}
+\todo[inline]{matheus: não ficaria melhor fazer esse apanhado no inicio da conclusao? Dai eu retomava a introducao, com proposta e objetivos, passava pelos resultados e iniciava a conclusão}
 
 \end{document}

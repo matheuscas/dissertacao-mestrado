@@ -60,27 +60,31 @@
 %
 %\end{itemize}
 
+\section{Fundamentação Teórica}
+
 Mineração de opinião é o campo de estudo que analisa as opiniões, sentimentos, avaliações, atitudes e emoções de pessoas direcionadas a entidades ou alvos, como produtos, serviços, organizações, indivíduos, problemas, eventos, tópicos e seus atributos \cite{bing:2012}. A pesquisa em mineração de opinião começou com detecção de subjetividade, com os trabalhos de \citeonline{carbonell1979subjective}, \citeonline{wilks1983beliefs} e \citeonline{wilson2004just}. \todo[inline]{quando o nomes dos autores é parte da frase, use citeonline, como fiz aqui} Essa tarefa envolvia a detecção e separação das sentenças objetivas das subjetivas, que carregam as opiniões e sentimentos atrelados. Com o passar dos anos, começando nos anos 2000, foi que a linha de pesquisa de mineração de opinião alavancou, focando em classificar as opiniões em três categorias: negativo, positivo e neutro. A partir daí muitos trabalhos foram publicados nessa área, mas com diferentes denominações, como análise de sentimentos, mineração de sentimentos, classificação de opiniões, dentre outros. 
 
 Somente em 2003, no trabalho de \citeonline{dave2003mining} é que o uso de mineração de opinião foi primeiro usado e, juntamente com análise de sentimento, cunhado por \citeonline{nasukawa2003sentiment}, é que o termo passou a ser largamente adotado. No entanto, atualmente, ambos os termos denotam o mesmo campo de pesquisa \cite{bing:2012, pang:2008}. Sendo assim, neste trabalho, ambos os termos serão utilizados alternadamente, mas, com o objetivo de simplificar a leitura e compreensão deste texto, o termo de mineração de opinião será majoritariamente utilizado.
 
-\section{Níveis de mineração de opinião}
+\newpage
+
+\subsection{Níveis de mineração de opinião}
 
 Mineração de opiniões é uma área de pesquisa que vem sendo investigada em três principais níveis de análise: i) nível de análise de documento, ii) sentenças e iii) entidades e seus aspectos. O primeiro nível foca em classificar uma opinião de um documento expressando-a como positiva ou negativa. O segundo nível, o de sentenças, em vez de considerar o sentimento geral de um documento como todo, classifica as opiniões de cada sentença separadamente. E o último nível foca em descobrir todos os alvos existentes em sentenças e documentos e classificar as opiniões direcionadas a eles \cite{bing:2012}.
 
 O nível de análise de documento é também denominado na literatura como uma tarefa de classificação de sentimentos em nível documento, pois considera todo o documento como uma unidade de informação \cite{bing:2012, pang:2008}. É importante salientar que, nesse nível de detalhamento, é assumido que o documento expressa opiniões direcionadas para somente um único assunto e somente possui um único autor das opiniões. Essa análise é feita normalmente sobre opiniões sobre produtos e serviços, pois cada avaliação, normalmente, foca somente em um único produto ou serviço e é escrito por somente uma pessoa \cite{bing:2012}.
 
-Um grande número de trabalhos foram publicados na literatura sobre mineração de opiniões em nível de documento. \citeonline{gamon2004sentiment} utilizou opiniões de clientes registradas em pesquisas de opinião como conjunto de dados para mineração de opiniões. Neste trabalho foi utilizado o algoritmo de classificação SVM (\textit{Support Vector Machine}), que produz bons resultados em classificação textual \cite{joachims1998text}. Foram realizados também estudos para identificar quais características textuais eram mais relevantes para o treinamento do SVM e, por conseguinte, para minerar opiniões. \cite{mullen2004sentiment} fizeram um trabalho similar ao de \citeonline{gamon2004sentiment}, utilizando o algoritmo SVM e investigando as características textuais mais relevantes para melhorar a mineração e classificação das opiniões. Estes trabalhos utilizaram opiniões de filmes do site Epinions.com \footnote{Disponível em: http://www.epinions.com/} e opiniões de publicações da Pitchfork Media \footnote{Disponível em: http://pitchfork.com/}.
+%Um grande número de trabalhos foram publicados na literatura sobre mineração de opiniões em nível de documento. \citeonline{gamon2004sentiment} utilizou opiniões de clientes registradas em pesquisas de opinião como conjunto de dados para mineração de opiniões. Neste trabalho foi utilizado o algoritmo de classificação SVM (\textit{Support Vector Machine}), que produz bons resultados em classificação textual \cite{joachims1998text}. Foram realizados também estudos para identificar quais características textuais eram mais relevantes para o treinamento do SVM e, por conseguinte, para minerar opiniões. \cite{mullen2004sentiment} fizeram um trabalho similar ao de \citeonline{gamon2004sentiment}, utilizando o algoritmo SVM e investigando as características textuais mais relevantes para melhorar a mineração e classificação das opiniões. Estes trabalhos utilizaram opiniões de filmes do site Epinions.com \footnote{Disponível em: http://www.epinions.com/} e opiniões de publicações da Pitchfork Media \footnote{Disponível em: http://pitchfork.com/}.
 
 A mineração de opinião em nível de sentenças é uma abordagem que aumenta a granularidade da análise e determina se cada sentença de um ou mais documentos expressam opiniões positivas, negativas ou neutras. As definições do problema e da suposição principal deste nível são definidas a seguir \cite{bing:2012}: dada uma sentença "x", deve ser ser determinado quando "x" expressa uma opinião positiva, negativa, neutra ou nenhuma opinião; e dada uma sentença "x", esta deve conter somente uma única opinião de um único autor. Esse nível de análise é bastante utilizado como passo intermediário para o terceiro nível, o nível de entidade e aspectos. Analisando cada sentença individualmente é possível identificar as entidades e quais as opiniões estão sendo direcionadas à elas. 
 
-O trabalho de \citeonline{Hu:2004} mostra uma sumarização das opiniões de produtos. Nele, sumarizar significa minerar as características dos produtos que possuem opiniões direcionadas a elas e classificar as opiniões como positivas ou negativas. Primeiramente, as sentenças que continham opiniões eram identificadas, utilizando um conjunto de palavras normalmente usado para expressar opiniões. Em seguida, foi definido o sentimento geral (positivo ou negativo) das opiniões, baseando-se no dicionário Wordnet \footnote{Disponível em: http://wordnet.princeton.edu/}. A sentimento geral de cada sentença foi determinado por um algoritmo específico proposto pelo trabalho. Os resultados obtidos foram comparados somente com trabalhos já realizados pelos próprios autores, os quais foram melhorados.Em \citeonline{kim2004determining} foi realizado um trabalho similar ao de \citeonline{Hu:2004}. Contudo, os autores das opiniões eram identificados.  A determinação do sentimento geral das opiniões encontradas nas sentenças foi feita da mesma forma como proposto por \citeonline{Hu:2004}. A diferença está nos algoritmos propostos que definem a orientação final de cada sentença, pois os autores propuseram três algoritmos de classificação e fizeram a análise de desempenho entre eles.
+%O trabalho de \citeonline{Hu:2004} mostra uma sumarização das opiniões de produtos. Nele, sumarizar significa minerar as características dos produtos que possuem opiniões direcionadas a elas e classificar as opiniões como positivas ou negativas. Primeiramente, as sentenças que continham opiniões eram identificadas, utilizando um conjunto de palavras normalmente usado para expressar opiniões. Em seguida, foi definido o sentimento geral (positivo ou negativo) das opiniões, baseando-se no dicionário Wordnet \footnote{Disponível em: http://wordnet.princeton.edu/}. A sentimento geral de cada sentença foi determinado por um algoritmo específico proposto pelo trabalho. Os resultados obtidos foram comparados somente com trabalhos já realizados pelos próprios autores, os quais foram melhorados.Em \citeonline{kim2004determining} foi realizado um trabalho similar ao de \citeonline{Hu:2004}. Contudo, os autores das opiniões eram identificados.  A determinação do sentimento geral das opiniões encontradas nas sentenças foi feita da mesma forma como proposto por \citeonline{Hu:2004}. A diferença está nos algoritmos propostos que definem a orientação final de cada sentença, pois os autores propuseram três algoritmos de classificação e fizeram a análise de desempenho entre eles.
 
 Também denominado nível de entidade e características, o nível de entidade e aspectos é o último nível de análise em mineração de opinião \cite{bing:2012}. Este nível possui duas tarefas principais \cite{bing:2012}: extração dos alvos das opiniões e a classificação das opiniões referentes a esses alvos. A primeira tarefa consiste em extrair os alvos das sentenças. Por exemplo, na sentença "A qualidade de voz desse telefone é muito boa", o alvo é a qualidade da voz e a entidade é o telefone (mais precisamente "este telefone"). A segunda tarefa consiste em classificar - como positivas, negativas ou neutras - as opiniões referentes aos aspectos e das entidades extraídas. No exemplo anterior, a opinião referente ao aspecto "qualidade de voz" da entidade "este telefone" é positiva \cite{bing:2012}.
 
-Assim como feito em \citeonline{Hu:2004} e \citeonline{kim2004determining}, o trabalho realizado por \citeonline{ding2008holistic} também focou em minerar opiniões de produtos e suas características. Todavia, este trabalho propôs uma nova abordagem para minerar opinião. Em vez de utilizar, por exemplo, as técnicas associadas ao uso do Wordnet, este trabalho focou em tratar problemas de sentimento geral das palavras levando em consideração o contexto (outras sentenças, outros documentos, distância da opinião referente alvos, dentre outros); tratar conflitos entre opiniões numa sentença (e.g. opiniões contrárias); e utilizar padrões lingüísticos (e.g. regras de negação, clausulas \textit{but}) para tratar palavras especiais, frases e construções verbais. O resultado do artigo é um sistema, chamado de \textit{Opinion Observer}, que produz resultados melhores que os trabalhos relacionados na literatura, como em \citeonline{Hu:2004} e  \citeonline{kim2004determining}.
+%Assim como feito em \citeonline{Hu:2004} e \citeonline{kim2004determining}, o trabalho realizado por \citeonline{ding2008holistic} também focou em minerar opiniões de produtos e suas características. Todavia, este trabalho propôs uma nova abordagem para minerar opinião. Em vez de utilizar, por exemplo, as técnicas associadas ao uso do Wordnet, este trabalho focou em tratar problemas de sentimento geral das palavras levando em consideração o contexto (outras sentenças, outros documentos, distância da opinião referente alvos, dentre outros); tratar conflitos entre opiniões numa sentença (e.g. opiniões contrárias); e utilizar padrões lingüísticos (e.g. regras de negação, clausulas \textit{but}) para tratar palavras especiais, frases e construções verbais. O resultado do artigo é um sistema, chamado de \textit{Opinion Observer}, que produz resultados melhores que os trabalhos relacionados na literatura, como em \citeonline{Hu:2004} e  \citeonline{kim2004determining}.
 
-\section{Pré-processamento dos dados}
+\subsection{Pré-processamento dos dados}
 
 Em mineração de opinião, a preparação dos dados é essencial. Antes de os dados serem transformados, analisados, selecionados e, então, classificados, eles precisam ser preparados para serem usados corretamente no processo de mineração de opinião. Textos são dados não estruturados e as opiniões se misturam às porções não opinativas do documento. As principais tarefas envolvidas no pré-processamento são: a marcação gramatical das palavras do texto (do inglês, \textit{Part of Speech Tagging}), definição dos n-grams a serem utilizados e a tokenização das palavras. N-gram é uma seqüência de $n$ itens dada uma seqüência de um texto \cite{dave2003mining}. 
 
@@ -94,7 +98,7 @@ Contudo, nosso trabalho procura classificar o sentimento geral das opiniões dos
 
 Portanto, como nossa proposta não utiliza contexto e adjetivos e advérbios, associados entre si, são reconhecidamente bons elementos para encontrar e mapear conteúdo opinativo, eles foram escolhidos como os n-grams a serem selecionados na etapa de pré-processamento e enviados para a etapa de transformação.
 
-\section{Transformação}
+%\subsection{Transformação}
 
 %- Abordagens de aprendizado supervisionado, em geral, não utilizam técnicas de transformação dos n-grams em valores numéricos, pois eles utilizam os proprios n-grams para o processo de seleção de características.
 %
@@ -114,40 +118,49 @@ Portanto, como nossa proposta não utiliza contexto e adjetivos e advérbios, as
 %
 %- Tecnicas de transformação para n-grams de negação: inversão, shift, bias compensation 
 
-A etapa de transformação é onde uma representação numérica é computada a partir dos n-grams da etapa de pré-processamento. Diferentes técnicas são utilizadas na literatura para calcular essa representação numérica dos n-grams. \citeonline{turney2002thumbs}, por exemplo, utilizou uma técnica proposta em \citeonline{turney2001mining} chamada PMI-IR, que utiliza \textit{Pointwise Mutual Information} (PMI) e \textit{Information Retrieval} (IR) para medir a similaridade de pares de palavras ou frases. A polaridade de uma ou par de palavras, assim como foi chamada a representação numérica pelo autor, era calculada comparando a similaridade dos pares de palavras com uma palavra de referência positiva  (\textit{excellent}) e com uma palavra de referência negativa (\textit{poor}). A polaridade do n-gram é negativa se o termo por mais similar à referência negativa e positiva se mais similar à referência positiva. \citeonline{wilson2005recognizing} e \citeonline{voll2007not} utilizaram a mesma técnica de \cite{turney2002thumbs}.
+A etapa de transformação é onde uma representação numérica é computada a partir dos n-grams da etapa de pré-processamento. Diferentes técnicas são utilizadas na literatura para calcular essa representação numérica dos n-grams. \citeonline{turney2002thumbs}, por exemplo, utilizou uma técnica proposta em \citeonline{turney2001mining} chamada PMI-IR, que utiliza \textit{Pointwise Mutual Information} (PMI) e \textit{Information Retrieval} (IR) para medir a similaridade de pares de palavras ou frases. 
 
-Em \citeonline{tsutsumi2007movie}, a representação numérica dos n-grams é chamado de escore das palavras. Nesse artigo, o escore de uma palavra $w_i$ foi calculada pela fórmula \ref{eq:w_score}.
+%A polaridade de uma ou par de palavras, assim como foi chamada a representação numérica pelo autor, era calculada comparando a similaridade dos pares de palavras com uma palavra de referência positiva  (\textit{excellent}) e com uma palavra de referência negativa (\textit{poor}). A polaridade do n-gram é negativa se o termo por mais similar à referência negativa e positiva se mais similar à referência positiva. \citeonline{wilson2005recognizing} e \citeonline{voll2007not} utilizaram a mesma técnica de \cite{turney2002thumbs}.
 
-\begin{equation}
-Score_w(w_i) = \log(\frac{pos(w_i) + 1}{\sum pos} \cdot \frac{\sum neg}{neg(w_i) + 1})
-\label{eq:w_score}
-\end{equation}
+%Em \citeonline{tsutsumi2007movie}, a representação numérica dos n-grams é chamado de escore das palavras. Nesse artigo, o escore de uma palavra $w_i$ foi calculada pela fórmula \ref{eq:w_score}.
+%
+%\begin{equation}
+%Score_w(w_i) = \log(\frac{pos(w_i) + 1}{\sum pos} \cdot \frac{\sum neg}{neg(w_i) + 1})
+%\label{eq:w_score}
+%\end{equation}
+%
+%onde $pos(w_i)$ e $neg(w_i)$ são a frequencia de uma palavra $w_i$ em opiniões positivas e negativas, respectivamente. $\sum pos$ e $\sum neg$ são o número de palavras em opiniões positivas e negativas, respectivamente. Se $Score_w$ for maior que zero, a polaridade é positiva, senão negativa.
 
-onde $pos(w_i)$ e $neg(w_i)$ são a frequencia de uma palavra $w_i$ em opiniões positivas e negativas, respectivamente. $\sum pos$ e $\sum neg$ são o número de palavras em opiniões positivas e negativas, respectivamente. Se $Score_w$ for maior que zero, a polaridade é positiva, senão negativa.
+Já \citeonline{taboada2008extracting}, utilizou de dicionários de opinião, que contém os termos e os respectivos graus opinativos. Contudo esses dicionários foram criados pelos autores do artigo. \citeonline{ohana2009sentiment}, por outro lado, utilizaram um dicionário criado automaticamente, o Sentiwordnet \cite{esuli2006sentiwordnet}. É um dicionário de opiniões criado pela anotação automática dos sentimentos de cada \textit{synset} (conjuntos de sinônimos) do Wordnet, outro dicionário na língua inglesa \cite{fellbaum2005wordnet}. Segundo \citeonline{ohana2009sentiment}, dicionários manuais estão sujeitos ao enviesamento do autor, possuem alto tempo gasto para construí-los e, em geral, tem menor cobertura que dicionários criados automaticamente. \citeonline{ohana2009sentiment} também citou outros dicionários de opiniões criados automaticamente, como \textit{General Inquirer} \cite{stone1966general} \footnote{Disponível em: \url{http://www.wjh.harvard.edu/~inquirer}}, \textit{Subjectivity Clues} \cite{wilson2005recognizing} e \textit{Grefenstette} \cite{grefenstette2004coupling}, mas mostrou que o Sentiwordnet tem cobertura maior frente a estes, com mais de 28000 termos cobertos, contra 4216, 7650 e 2258 dos dicionários citados, respectivamente. Esta pesquisa decidiu pelo uso do Sentiwordnet \cite{esuli2006sentiwordnet}.
 
-Já em \citeonline{taboada2008extracting}, foram utilizados 4 dicionários: adjetivos, verbos, substantivos e advérbios. Os três primeiros foram criados manualmente, e o último criado automaticamente a partir do dicionário de adjetivos, mas todos eles tiveram seus termos associados, manualmente, a um valor dentro de uma escala entre -5 a 5, onde -5 denota extrema negatividade, 0 sem polaridade (ou neutro) e 5, extrema positividade. Esses dicionários foram criados por um dos autores do artigo, aumentados por outro autor e tiveram a consistência checada por mais três pesquisadores. Diferentemente dos trabalhos de \citeonline{turney2002thumbs} e de \citeonline{tsutsumi2007movie}, \citeonline{taboada2008extracting} tratou o relacionamento entre os n-grams utilizados, como a influência de advérbios sobre os adjetivos, e como eles alteram a polaridade final destes. Nesse artigo, essa influência foi chamada de intensificação.
+Dicionários opinativos, contudo, somente conseguem definir a polaridade de unigrams, ngrams compostos somente por um termo. Para tratar a definição da polaridade de bigrams e trigrams, por exemplo, é preciso analisar a influência entre os termos que compõem o ngram. Se tratando de advérbios e adjetivos, os advérbios são termos que alteram o grau de polaridade de uma adjetivo, seja intensificando (e.g. \textit{very good}) ou amenizando (e.g. \textit{somewhat sleazy}) \cite{quirk1985comprehensive}. Há também inumeras maneiras de tratar a influência entre os termos num bigram, uma delas, e foi a escolhida para essa pesquisa, foi a de \citeonline{taboada2008extracting}. \citeonline{taboada2008extracting} dividiu os advérbios em amplificadores e amenizadores. Os amplificadores aumentam a polaridade do adjetivo e os amenizadores diminuem. De maneira similar ao que fizeram com os dicionários anteriores, os advérbios tiveram associados, manualmente, percentuais de modificação, onde os amplificadores tem percentuais positivos e os amenizadores, negativos. Por exemplo, \textit{sleazy} tem escore ou polaridade -3 e \textit{somewhat}, um amenizador, tem percentual igual a -30\%. O bigram \textit{somewhat sleazy} terá polaridade final de $-3 + (3 \cdot 30\%) = -2$.
 
-Seguindo a classificação feita por \citeonline{quirk1985comprehensive}, \citeonline{taboada2008extracting} dividiu os advérbios em amplificadores e amenizadores. Os amplificadores aumentam a polaridade do adjetivo e os amenizadores diminuem. De maneira similar ao que fizeram com os dicionários anteriores, os adverbios tiveram associados, manualmente, percentuais de modificação, onde os amplificadores tem percentuais positivos e os amenizadores, negativos. Por exemplo, \textit{sleazy} tem escore ou polaridade -3 e \textit{somewhat}, um amenizador, tem percentual igual a -30\%. O bigram \textit{somewhat sleazy} terá polaridade final de $-3 + (3 \cdot 30\%) = -2$.
+Outro fenômeno referente ao relacionamento entre termos num ngram é a negação. A negação ocorre quando n-grams de negação (e.g. advérbios) se associam a um ou mais n-grams, como \textit{nothing special} ou \textit{not very good}. Há, mais uma vez, diferentes maneiras de se tratar uma negação, como a inversão e o deslocamento de polaridade. A inversão inverte o sinal da polaridade do n-gram (e.g. \textit{not sleazy} resultará na polaridade +3). O deslocamento da polaridade desloca o valor da polaridade do n-gram em direção a polaridade oposta por um valor fixo (na implementação desse artigo, foi defino por 4). Assim, por exemplo, em vez de \textit{not sleazy} resultar em +3, a polaridade resultante será de $-3 + 4 = +1$ \cite{taboada2008extracting}.
 
-Além disso, o trabalho de \citeonline{taboada2008extracting} também tratou o fenômeno da negação. A negação ocorre quando n-grams de negação (e.g. advérbios) se associam a um ou mais n-grams, como \textit{nothing special} ou \textit{not very good}. Há diferentes maneiras de se tratar uma negação, como a inversão e o deslocamento de polaridade, proposto nesse mesmo artigo. A inversão inverte o sinal da polaridade do n-gram (e.g. \textit{not sleazy} resultará na polaridade +3). O deslocamento da polaridade 	desloca o valor da polaridade do n-gram em direção a polaridade oposta por um valor fixo (na implementação desse artigo, foi defino por 4). Assim, por exemplo, em vez de \textit{not sleazy} resultar em +3, a polaridade resultante será de $-3 + 4 = +1$.
+Há outras abordagens de transformação das polaridades dos termos relativas ao texto, como a freqüência e ao enviesamento das opiniões \cite{taboada2011lexicon}. O tratamento da frequência de termos é a diminuição da polaridade dos termos opinativos pela quantidade de vezes que eles aparecem no texto, resultando numa polaridade $pol = pol \cdot 1/n$. A repetição de termos opinativos sugere que o autor das opiniões carece de comentários adicionais e se utiliza de uma palavra opiniativa genérica. Além disso, existe uma tendencia natural de seres humanos em favor de uma linguagem positiva \cite{boucher1969pollyanna}, resultando conseqüentemente, no enviesamento na classificação de opiniões baseadas em dicionários \cite{kennedy2006sentiment}. Assim, nós aplicamos um aumento de 50\% sobre qualquer n-gram negado que ocorresse nos textos \cite{taboada2011lexicon}.
 
-\citeonline{ohana2009sentiment}, por outro lado, utilizou um dicionário criado automaticamente, o Sentiwordnet \cite{esuli2006sentiwordnet}. É um dicionário de opiniões criado pela anotação automática dos sentimentos de cada \textit{synset} (conjuntos de sinônimos) do Wordnet, outro dicionário na língua inglesa \cite{fellbaum2005wordnet}. Segundo \citeonline{ohana2009sentiment}, dicionários manuais estão sujeitos ao enviesamento do autor, possuem alto tempo gasto para construí-los e, em geral, tem menor cobertura que dicionários criados automaticamente. \citeonline{ohana2009sentiment} também citou outros dicionários de opiniões criados automaticamente, como \textit{General Inquirer} \cite{stone1966general} \footnote{Disponível em: \url{http://www.wjh.harvard.edu/~inquirer}}, \textit{Subjectivity Clues} \cite{wilson2005recognizing} e \textit{Grefenstette} \cite{grefenstette2004coupling}, mas mostrou que o Sentiwordnet tem cobertura maior frente a estes, com mais de 28000 termos cobertos, contra 4216, 7650 e 2258 dos dicionários citados, respectivamente. 
 
-\citeonline{ohana2009sentiment} também trata a negação, usando uma versão do algoritmo \textit{NegEx} \cite{chapman2001evaluation}, embora não trate dos intensificadores e amenizadores. Todavia, \citeonline{ohana2009sentiment} apresenta o conceito de que a polaridade de um termo pode ser maior ou menor a depender de sua posição no texto. A polaridade do termo é alterada conforme mostrado na equação \ref{eq:adj_score}.
+%No caso de \citeonline{taboada2008extracting} foram utilizados 4 dicionários: adjetivos, verbos, substantivos e advérbios. Os três primeiros foram criados manualmente, e o último criado automaticamente a partir do dicionário de adjetivos, mas todos eles tiveram seus termos associados, manualmente, a um valor dentro de uma escala entre -5 a 5, onde -5 denota extrema negatividade, 0 sem polaridade (ou neutro) e 5, extrema positividade. Esses dicionários foram criados por um dos autores do artigo, aumentados por outro autor e tiveram a consistência checada por mais três pesquisadores. Diferentemente dos trabalhos de \citeonline{turney2002thumbs} e de \citeonline{tsutsumi2007movie}, \citeonline{taboada2008extracting} tratou o relacionamento entre os n-grams utilizados, como a influência de advérbios sobre os adjetivos, e como eles alteram a polaridade final destes. Nesse artigo, essa influência foi chamada de intensificação.
 
-\begin{equation}
-Score_{adj} = Score_{adj} \cdot \frac{t_i}{T} \cdot C
-\label{eq:adj_score}
-\end{equation}
+%Seguindo a classificação feita por \citeonline{quirk1985comprehensive}, 
 
-Onde $C$ é uma constante, $t_i$ a posição do termo $t$ relativa ao total de termos $T$ no documento.
-Há outras abordagens de transformação das polaridades dos termos relativas ao texto, como a freqüência e ao enviesamento das opiniões. Esses dois conceitos foram introduzidos por \citeonline{taboada2011lexicon}. Segundo os autores desse artigo, eles conseguiram melhorar a perfomance de seu classificador diminuindo a polaridade dos termos opinativos pela quantidade de vezes que eles aparecem no texto, resultando numa polaridade $pol = pol \cdot 1/n$. A repetição de termos opinativos sugere que o autor das opiniões carece de comentários adicionais e se utiliza de uma palavra opiniativa genérica. Ainda no mesmo artigo, os autores ressaltam a tendencia natural de seres humanos em favor de uma linguagem positiva \cite{boucher1969pollyanna}, resultando conseqüentemente, no enviesamento na classificação de opiniões baseadas em dicionários \cite{kennedy2006sentiment}. Assim, \citeonline{taboada2011lexicon} aplicaram um aumento de 50\% sobre qualquer n-gram negado.
+%Além disso, o trabalho de \citeonline{taboada2008extracting} também tratou o fenômeno da negação. A negação ocorre quando n-grams de negação (e.g. advérbios) se associam a um ou mais n-grams, como \textit{nothing special} ou \textit{not very good}. Há diferentes maneiras de se tratar uma negação, como a inversão e o deslocamento de polaridade, proposto nesse mesmo artigo. A inversão inverte o sinal da polaridade do n-gram (e.g. \textit{not sleazy} resultará na polaridade +3). O deslocamento da polaridade 	desloca o valor da polaridade do n-gram em direção a polaridade oposta por um valor fixo (na implementação desse artigo, foi defino por 4). Assim, por exemplo, em vez de \textit{not sleazy} resultar em +3, a polaridade resultante será de $-3 + 4 = +1$.
 
-\todo[inline]{Algumas tecnicas de transformacao que falei aqui n foram mencionandas da metodologia. Teoricamente eu terei de inseri-las na parte devida na metodologia, certo?}
+ 
+%
+%\citeonline{ohana2009sentiment} também trata a negação, usando uma versão do algoritmo \textit{NegEx} \cite{chapman2001evaluation}, embora não trate dos intensificadores e amenizadores. Todavia, \citeonline{ohana2009sentiment} apresenta o conceito de que a polaridade de um termo pode ser maior ou menor a depender de sua posição no texto. A polaridade do termo é alterada conforme mostrado na equação \ref{eq:adj_score}.
+%
+%\begin{equation}
+%Score_{adj} = Score_{adj} \cdot \frac{t_i}{T} \cdot C
+%\label{eq:adj_score}
+%\end{equation}
+%
+%Onde $C$ é uma constante, $t_i$ a posição do termo $t$ relativa ao total de termos $T$ no documento.
 
-\section{Extração e seleção de características}
+\subsection{Extração e seleção de características}
 
 \todo[inline]{mgpires: Ter uma subseção sem nenhum texto acho que fica estranho. Eu prefiro retirar as subções 2.4.1 e 2.4.2}
+\todo[inline]{matheus: removidas}
 
 %- Poucos trabalhos foram encontrados que extraem características
 %
@@ -161,70 +174,71 @@ Há outras abordagens de transformação das polaridades dos termos relativas ao
 %
 %- Cita tambem o trabalho que usou o CFS e o C45
 
-\subsection{Extração de características}
+%\subsection{Extração de características}
 
-A extração de características é o processo determinação de quais características serão discriminadas e usadas para serem selecionadas. Essa não é uma etapa comumente encontrada nos trabalhos relacionados nessa linha de pesquisa. Usualmente, os dados da etapa de transformação já são consideradas características e são utilizados diretamente na seleção.
+A extração de características é o processo determinação de quais características serão discriminadas e usadas para serem selecionadas. Essa não é uma etapa comumente encontrada nos trabalhos relacionados nessa linha de pesquisa. Usualmente, os dados da etapa de transformação já são consideradas características e são utilizados diretamente na seleção. Os trabalhos de \citeonline{wilson2005recognizing} e de \citeonline{ohana2009sentiment} foram um dos poucos encontrados na literatura que definiram e extraíram características dos documentos e a utilizadas para a classificação dos mesmos. Nossa pesquisa utilizou grande parte das categorias de características de \citeonline{ohana2009sentiment} para definir e extrair as nossas próprias.
 
-Em \citeonline{wilson2005recognizing}, que foca em classificar o sentimento geral das opiniões em nível de sentenças, definiu 5 categorias de características: palavras, modificação, estrutura, sentença e documento. As características de palavras e de modificação são os próprios n-grams, nesse caso, trigrams, uma sequência de três palavras num outra sequencia textual. \citeonline{wilson2005recognizing} estrutura os documentos numa árvore de dependencia entre os elementos do texto de um documento e alguns tipos de relacionamento entre os elementos são elencados como características, como por exemplo, se um elemento é o sujeito de uma sentença ou não. As características de sentença se aproximam mais das características utilizadas em nossa pesquisa. \citeonline{wilson2005recognizing} utiliza o dicionário de opiniões \textit{Subjectivity Clues} criado pelos próprios autores e com ele, procuraram registrar como características a quantidade de "pistas de subjetividade" na sentenças. Foram elas:
+%Em \citeonline{wilson2005recognizing}, que foca em classificar o sentimento geral das opiniões em nível de sentenças, definiu 5 categorias de características: palavras, modificação, estrutura, sentença e documento. As características de palavras e de modificação são os próprios n-grams, nesse caso, trigrams, uma sequência de três palavras num outra sequencia textual. \citeonline{wilson2005recognizing} estrutura os documentos numa árvore de dependencia entre os elementos do texto de um documento e alguns tipos de relacionamento entre os elementos são elencados como características, como por exemplo, se um elemento é o sujeito de uma sentença ou não. As características de sentença se aproximam mais das características utilizadas em nossa pesquisa. \citeonline{wilson2005recognizing} utiliza o dicionário de opiniões \textit{Subjectivity Clues} criado pelos próprios autores e com ele, procuraram registrar como características a quantidade de "pistas de subjetividade" na sentenças. Foram elas:
+%
+%\begin{itemize}
+%\item Quantidade de:
+%\begin{enumerate}
+%\item "pistas fortes de subjetividade" (\textit{strongsubj}) na sentença corrente
+%\item "pistas fortes de subjetividade" (\textit{strongsubj}) na sentença anterior
+%\item "pistas fortes de subjetividade" (\textit{strongsubj}) na sentença seguinte
+%\item "pistas fracas de subjetividade" (\textit{weaksubj}) na sentença corrente
+%\item "pistas fracas de subjetividade" (\textit{weaksubj}) na sentença anterior
+%\item "pistas fracas de subjetividade" (\textit{weaksubj}) na sentença seguinte
+%\item adjetivos numa sentença
+%\item advérbios numa sentença (exceto \textit{not})
+%\item números cardinais numa sentença
+%\item pronomes numa sentença
+%\item modais numa sentença (exceto \textit{will})
+%\end{enumerate}
+%\end{itemize}
+%
+%Por fim, na categoria de características de documento, somente uma foi definida que foi o tópico do documento, que pode estar em 15 tipos diferentes de tópicos definidos pelos autores. 
 
-\begin{itemize}
-\item Quantidade de:
-\begin{enumerate}
-\item "pistas fortes de subjetividade" (\textit{strongsubj}) na sentença corrente
-\item "pistas fortes de subjetividade" (\textit{strongsubj}) na sentença anterior
-\item "pistas fortes de subjetividade" (\textit{strongsubj}) na sentença seguinte
-\item "pistas fracas de subjetividade" (\textit{weaksubj}) na sentença corrente
-\item "pistas fracas de subjetividade" (\textit{weaksubj}) na sentença anterior
-\item "pistas fracas de subjetividade" (\textit{weaksubj}) na sentença seguinte
-\item adjetivos numa sentença
-\item advérbios numa sentença (exceto \textit{not})
-\item números cardinais numa sentença
-\item pronomes numa sentença
-\item modais numa sentença (exceto \textit{will})
-\end{enumerate}
-\end{itemize}
+%O trabalho de \citeonline{ohana2009sentiment} foi outro que extraiu características dos documentos para classifica-los. Eles definiram 5 categorias: geral, normalização, diferença entre escores positivos e negativos, negação e escores por segmento dos documentos. Nossa pesquisa utilizou grande parte das categorias de características de \citeonline{ohana2009sentiment} para definir e extrair as nossas próprias. As características foram as seguintes:
+%\begin{enumerate}
+%\item Gerais:
+%\begin{enumerate}
+%\item Soma dos escores dos adjetivos positivos e negativos
+%\item Soma dos escores dos advérbios positivos e negativos
+%\item Soma dos escores dos verbos positivos e negativos
+%\end{enumerate}
+%\item Normalização:
+%\begin{enumerate}
+%\item Soma normalizada dos escores dos adjetivos positivos e negativos
+%\item Soma normalizada dos escores dos advérbios positivos e negativos
+%\item Soma normalizada dos escores dos verbos positivos e negativos
+%\end{enumerate}
+%\item Diferença entre os escores positivos e negativos de:
+%\begin{enumerate}
+%\item Adjetivos
+%\item Advérbios
+%\item Verbos
+%\end{enumerate}
+%\item Escores por segmento dos documentos (cada documento foi segmentado em 10 partições de tamanhos iguais em número de termos):
+%\begin{enumerate}
+%\item Todas as características acima para cada segmento dos documentos
+%\end{enumerate}
+%\item Negação
+%\begin{enumerate}
+%\item Percentual de termos negados nos documentos
+%\end{enumerate}
+%\end{enumerate}
 
-Por fim, na categoria de características de documento, somente uma foi definida que foi o tópico do documento, que pode estar em 15 tipos diferentes de tópicos definidos pelos autores. 
-
-O trabalho de \citeonline{ohana2009sentiment} foi outro que extraiu características dos documentos para classifica-los. Eles definiram 5 categorias: geral, normalização, diferença entre escores positivos e negativos, negação e escores por segmento dos documentos. Nossa pesquisa utilizou grande parte das categorias de características de \citeonline{ohana2009sentiment} para definir e extrair as nossas próprias. As características foram as seguintes:
-\begin{enumerate}
-\item Gerais:
-\begin{enumerate}
-\item Soma dos escores dos adjetivos positivos e negativos
-\item Soma dos escores dos advérbios positivos e negativos
-\item Soma dos escores dos verbos positivos e negativos
-\end{enumerate}
-\item Normalização:
-\begin{enumerate}
-\item Soma normalizada dos escores dos adjetivos positivos e negativos
-\item Soma normalizada dos escores dos advérbios positivos e negativos
-\item Soma normalizada dos escores dos verbos positivos e negativos
-\end{enumerate}
-\item Diferença entre os escores positivos e negativos de:
-\begin{enumerate}
-\item Adjetivos
-\item Advérbios
-\item Verbos
-\end{enumerate}
-\item Escores por segmento dos documentos (cada documento foi segmentado em 10 partições de tamanhos iguais em número de termos):
-\begin{enumerate}
-\item Todas as características acima para cada segmento dos documentos
-\end{enumerate}
-\item Negação
-\begin{enumerate}
-\item Percentual de termos negados nos documentos
-\end{enumerate}
-\end{enumerate}
-
-Até o presente momento da escrita dessa dissertação, não foram encontrados outros trabalhos que tenha extraído características dos documentos da maneira que os trabalhos de \citeonline{wilson2005recognizing} e \citeonline{ohana2009sentiment}.
-
-\subsection{Seleção de características}
+%\subsection{Seleção de características}
 
 A seleção de características é a etapa onde as características mais relevantes para serem consideradas na etapa de classificação são selecionadas, além de o montante de dados a ser analisado é reduzido, tornando o classificador mais eficiente e efetivo \cite{moraes2012document}. Métodos de seleção de características comuns nos trabalhos relacionados são \textit{document frequency} \cite{pang2002thumbs}, \textit{mutual information} \cite{turney2002thumbs} e \textit{information gain} \cite{wiebe2006word}. Contudo, nenhum deles tem sido largamente aceito como o melhor algoritmo de seleção de características para mineração de opiniões, embora o \textit{information gain} tenha mostrado resultados competitivos \cite{moraes2012document}.
+Os algoritmos utilizados em nossa pesquisa foram os sugeridos por \citeonline{cintra2008fuzzy}: CFS e c4.5.
+%\citeonline{cintra2008fuzzy} apresenta uma proposta de seleção de características utilizando lógica fuzzy, utilizando o método de Wang-Mendel \cite{wang1992generating} para gerar sistemas fuzzy baseados em regras. \citeonline{cintra2008fuzzy} compara sua a performance de sua proposta com algoritmos clássicos de seleção de características, como CFS \cite{hall1999correlation}, ReliefF \cite{kira1992practical} e \textit{Consistency} \cite{liu1996probabilistic}. Além disso, também utilizou a versão original do c4.5 \cite{salzberg1994c4}. 
 
-\citeonline{cintra2008fuzzy} apresenta uma proposta de seleção de características utilizando lógica fuzzy, utilizando o método de Wang-Mendel \cite{wang1992generating} para gerar sistemas fuzzy baseados em regras. \citeonline{cintra2008fuzzy} compara sua a performance de sua proposta com algoritmos clássicos de seleção de características, como CFS \cite{hall1999correlation}, ReliefF \cite{kira1992practical} e \textit{Consistency} \cite{liu1996probabilistic}. Além disso, também utilizou a versão original do c4.5 \cite{salzberg1994c4}. 
-
-O c4.5 é um algoritmo de árvore de decisão bem conhecido que utiliza \textit{information gain} e entropia para decidir a importância das características, tornando possível selecionar características com o ranking gerado dos galhos da árvore. ReliefF, por sua vez, cria um ranking das características por sua utilidade em distinguir entre exemplos bastante similares pertencentes a diferentes classes, além de terem uma média no ranking acima de um determinado limite \cite{cintra2008fuzzy}. A hipótese central do CFS é que um bom conjunto de características contém características que são altamente correlacionadas com a classe, mas sem qualquer correlação umas com as outras. O CFS é um algoritmo que junta essa hipótese com uma medida de correlação apropriada e uma heurística de estratégia de busca \cite{hall1999correlation}. E o algoritmo \textit{Consistency} utiliza medidas de consistência para avaliar a relevância de subconjuntos de características. Uma medida de consistência  mede a distância entre um subconjunto de características e um estado consistente, ou a capacidade de o subconjunto classificar bem os documentos \cite{liu1996probabilistic}.
+O c4.5 é um algoritmo de árvore de decisão bem conhecido que utiliza \textit{information gain} e entropia para decidir a importância das características, tornando possível selecionar características com o ranking gerado dos galhos da árvore \cite{salzberg1994c4}. 
+%ReliefF, por sua vez, cria um ranking das características por sua utilidade em distinguir entre exemplos bastante similares pertencentes a diferentes classes, além de terem uma média no ranking acima de um determinado limite \cite{cintra2008fuzzy}.
+O CFS, por sua vez, trabalha sobre a hipótese central de que um bom conjunto de características contém características que são altamente correlacionadas com a classe, mas sem qualquer correlação umas com as outras. O CFS é um algoritmo que junta essa hipótese com uma medida de correlação apropriada e uma heurística de estratégia de busca \cite{hall1999correlation}. 
+%E o algoritmo \textit{Consistency} utiliza medidas de consistência para avaliar a relevância de subconjuntos de características. Uma medida de consistência  mede a distância entre um subconjunto de características e um estado consistente, ou a capacidade de o subconjunto classificar bem os documentos \cite{liu1996probabilistic}.
 
 O trabalho de \citeonline{cintra2008fuzzy} foi o único encontrado, até o presente momento de nossa pesquisa, que utiliza algoritmos clássicos de seleção de características no contexto de lógica fuzzy, método de Wang-Mendel e sistemas fuzzy baseados em regras. Tais assuntos são centrais deste trabalho e, assim, \citeonline{cintra2008fuzzy} foi a principal referência para a escolha dos algoritmos de seleção de características para esta pesquisa.
 
@@ -251,23 +265,36 @@ O trabalho de \citeonline{cintra2008fuzzy} foi o único encontrado, até o prese
 
 O SVM é uma popular técnica de aprendizado supervisionado, largamente utilizada na área de mineração de opinião e, possivelmente, é o método que produz os resultados com maior acurácia dentre os métodos existentes na literatura \cite{moraes2012document}. O SVM é um método de aprendizado linear que procura um hiperplano ótimo para separar duas classes, além de buscar maximizar a distância para o ponto de treino mais próximo de cada classe, com o fim de alcançar melhor performance de generalização/classificação nos dados de teste \cite{friedman2001elements}.
 
-No trabalho de \citeonline{pang2002thumbs}, por exemplo, o SVM é comparado com Naive Bayes e \textit{Maximum Entropy} na classificação de opiniões sobre filmes, usando uma base de dados criada pelos próprios autores. Os resultados mostraram que Naive Bayes tende a produzir os piores resultados e o SVM os melhores resultados. Em \citeonline{pang2004sentimental}, uma nova proposta de aprendizado de máquina para mineração de opiniões é apresentada para extrair dos textos somente porções subjetivas. Os autores utilizam Naive Bayes e SVM para testar a eficácia da proposta e o SVM produziu os melhores resultados, produzindo entre 87\% e 90\% de acurácia na classificação dos documentos.
+%No trabalho de \citeonline{pang2002thumbs}, por exemplo, o SVM é comparado com Naive Bayes e \textit{Maximum Entropy} na classificação de opiniões sobre filmes, usando uma base de dados criada pelos próprios autores. Os resultados mostraram que Naive Bayes tende a produzir os piores resultados e o SVM os melhores resultados. Em \citeonline{pang2004sentimental}, uma nova proposta de aprendizado de máquina para mineração de opiniões é apresentada para extrair dos textos somente porções subjetivas. Os autores utilizam Naive Bayes e SVM para testar a eficácia da proposta e o SVM produziu os melhores resultados, produzindo entre 87\% e 90\% de acurácia na classificação dos documentos.
 
-A técnica de soma é a simples comparação entre a soma das polaridade positivas e negativa dos n-grams. Se a soma positiva for maior que a negativa, o documento é classificado com positivo, de outra forma, negativo. O trabalho realizado em \citeonline{ohana2011domain} é proposta uma abordagem de mineração de opinião que utiliza diferentes dicionários de opiniões, como o Sentiwordnet (SWN), \textit{Subjectivity Clues} e \textit{General Inquirer}, para classificar as opiniões e, por conseguinte, os documentos das diferentes bases de dados utilizadas (e.g. filmes, hotéis, livros, dentre outros). Usando o SWN, a comparação das somas das polaridades produziu uma acurácia de quase 72\% de acurácia. Em \citeonline{avancco2014lexicon} também é avaliada uma estratégia de uso de vários dicionários de opiniões, utilizando a comparação das somas das polaridades. Diferentemente de todos os outros trabalhos relacionados, este abordou a mineração de opinião em bases de dados da língua portuguesa. 
-Os resultados mostraram que a estratégia de uso de vários dicionários também é promissora para a língua portuguesa, produzindo 74\% de acurácia.
+A técnica de soma é a simples comparação entre a soma das polaridade positivas e negativa dos n-grams. Se a soma positiva for maior que a negativa, o documento é classificado com positivo, de outra forma, negativo. O trabalho realizado em \citeonline{ohana2011domain} utiliza a técnica da soma, comparando com o SVM. A técnica da média consiste em calcular a média resultante das polaridades. Se essa média for menor que zero, o documento é classificado como negativo e, de outra maneira, positivo \citeonline{turney2002thumbs, taboada2008extracting, pang2004sentimental}. Essas técnicas foram incorporadas 
 
-A técnica da média consiste em calcular a média resultante das polaridades. Se essa média for menor que zero, o documento é classificado como negativo e, de outra maneira, positivo. No trabalho de \citeonline{turney2002thumbs}, já descrito nessa seção, o uso da média como técnica de classificação, produziu uma acurácia média de 74\% sobre uma base de opiniões com 410 documentos com diferentes domínios (automóveis, bancos, filmes, dentre outros). A acurácia vai desde 66\% para filmes até 84\% para automóveis. 
-Em \citeonline{taboada2008extracting}, técnica da média também é utilizada. O artigo apresenta uma abordagem que explora a influência de partes dos textos sobre os principais elementos indicativos de opiniões, os adjetivos: amplificadores e amenizadores, incluindo o tratamento da negação dos termos. Os resultados foram promissores, alcançando 76\% de acurácia numa base de filmes \cite{pang2004sentimental} até 90\% numa base de músicas.
+%a comparação das somas das polaridades produziu uma acurácia de quase 72\% de acurácia. Em \citeonline{avancco2014lexicon} também é avaliada uma estratégia de uso de vários dicionários de opiniões, utilizando a comparação das somas das polaridades. Diferentemente de todos os outros trabalhos relacionados, este abordou a mineração de opinião em bases de dados da língua portuguesa. 
+%Os resultados mostraram que a estratégia de uso de vários dicionários também é promissora para a língua portuguesa, produzindo 74\% de acurácia.
 
-Não obstante, em relação a aplicação de lógica fuzzy a mineração de opinião, poucos trabalhos relacionados foram encontrados na literatura. Isso pode indicar que ainda é limitada a pesquisa sobre o uso dessa metodologia, embora a lógica fuzzy seja reconhecida como uma abordagem apropriada para lidar com dados imprecisos e vagos, como opiniões e sentimentos. Essa pouca quantidade de trabalhos pode indicar uma área de pesquisa em aberto em mineração de opinião. O resto dessa seção aborda os principais conceitos relacionados a lógica fuzzy, aplicada a este trabalho, relacionando, quando possível, trabalhos relacionados a nossa pesquisa e/ou aos assuntos contidos nelas.
+%No trabalho de \citeonline{turney2002thumbs}, já descrito nessa seção, o uso da média como técnica de classificação, produziu uma acurácia média de 74\% sobre uma base de opiniões com 410 documentos com diferentes domínios (automóveis, bancos, filmes, dentre outros). A acurácia vai desde 66\% para filmes até 84\% para automóveis. 
+%Em \citeonline{taboada2008extracting}, técnica da média também é utilizada. O artigo apresenta uma abordagem que explora a influência de partes dos textos sobre os principais elementos indicativos de opiniões, os adjetivos: amplificadores e amenizadores, incluindo o tratamento da negação dos termos. Os resultados foram promissores, alcançando 76\% de acurácia numa base de filmes \cite{pang2004sentimental} até 90\% numa base de músicas.
 
-\subsubsection{Lógica Fuzzy}
+Não obstante, em relação a aplicação de lógica fuzzy na classificação no processo de mineração de opinião, poucos trabalhos relacionados foram encontrados na literatura. Isso pode indicar que ainda é limitada a pesquisa sobre o uso dessa metodologia, embora a lógica fuzzy seja reconhecida como uma abordagem apropriada para lidar com dados imprecisos e vagos, como opiniões e sentimentos. 
 
-A lógica clássica ou Aristotélica é vista como o mecanismo empregado para descrever o raciocínio humano clássico em que uma conclusão precisa é deduzida de uma coleção de premissas igualmente acuradas e corretas. Todavia, o mundo real não funciona, necessariamente assim. Muitas das informações com as quais os seres humanos lidam são imperfeitas, podendo ser caracterizadas como imprecisas, incertas, vagas ou que correspondam a verdades parciais e subjetivas \cite{araujo2009palestra}.  Situações como "o carro está muito rápido, pise no freio" ou "a palestra não será ministrada devido aos poucos alunos", possuem informações que não são nitidamente definidas e não podem ser precisamente descritas, principalmente pela lógica clássica. No entanto, pessoas tomam decisões todos os dias, como pisar no freio ou cancelar palestras, baseadas nessas informações imprecisas e vagas \cite{araujo2009palestra}. 
+%Essa pouca quantidade de trabalhos pode indicar uma área de pesquisa em aberto em mineração de opinião. O resto dessa seção aborda os principais conceitos relacionados a lógica fuzzy, aplicada a este trabalho, relacionando, quando possível, trabalhos relacionados a nossa pesquisa e/ou aos assuntos contidos nelas.
 
-A Lógica Fuzzy, proposta por \citeonline{zadeh1965fuzzy}, é uma metodologia da Inteligência Computacional criada para lidar com informações imprecisas. Estas informações imprecisas são modeladas por meio de conjuntos chamados Conjuntos Nebulosos \cite{zadeh1965fuzzy}. As subseções a seguir descrevem alguns conceitos relacionados aos Conjuntos Fuzzy e aos Sistemas Fuzzy.
+Sistemas Fuzzy (SF) é uma das mais importantes áreas de aplicação da Teoria de Conjuntos Fuzzy. Geralmente, estes sistemas são estruturados por meio de regras fuzzy, os quais são conhecidos por Sistemas Baseados em Regras Fuzzy (SBRF). Os SBRF constituem uma extensão dos sistemas clássicos baseados em regras, pois os antecedentes e os conseqüentes das regras são compostos por sentenças lógicas fuzzy, ao invés das sentenças clássicas \cite{herrera2008genetic}. Este tipo de sistema tem sido amplamente usado para a resolução de diversos tipos de problema, tais como, problemas de controle \cite{mamdani1974application, mamdani1975experiment}, modelagem \cite{pedrycz1996fuzzy}, classificação \cite{ishibuchi1994construction, ishibuchi1995selecting}, diagnóstico médico \cite{sivasankar2010knowledge} e mineração de dados \cite{ishibuchi2005classification}.
 
-\todo[inline]{use sempre fuzzy ao invés de nebuloso, para manter um padrão no texto}
+Numa descrição mais extensa, segundo \cite{gomide1995conceitos}, um sistema fuzzy é composto pelos seguintes componentes básicos: a interface de fuzificação, a base de conhecimento, o procedimento de inferência e a interface de desfuzificação. A interface de fuzificação toma os valores das variáveis de entrada, transformando números em conjuntos fuzzy, de modo que possam se tornar instâncias de variáveis lingüísticas. A base de conhecimento consiste de uma base de regras, caracterizando a estratégia de controle e suas metas. A base de dados armazena as definições necessárias sobre discretizações e normalizações dos universos de discurso, as partições fuzzy dos espaços de entrada e saída e as definições das funções de pertinência. O procedimento de inferência processa os dados fuzzy de entrada, junto com as regras, de modo a inferir as ações de controle fuzzy. A interface de desfuzificação transforma as ações de controle fuzzy inferidas em ações de controle não fuzzy \cite{gomide1995conceitos}. A figura \ref{fig:sistema_nebuloso} ilustra um sistema fuzzy.
+
+\begin{figure}[!ht]  
+  \caption{Modelo de sistema fuzzy \cite{herrera2008genetic}.}
+  \label{fig:sistema_nebuloso}
+  \centering
+    \includegraphics[width=0.9\textwidth]{sistema_nebuloso}
+\end{figure}
+
+WANG-MENDEL
+
+RACIOCINIO FUZZY
+
+\section{Trabalhos relacionados}
 
 \ifcsdef{mainfile}{}{\bibliography{pesquisa}}
 

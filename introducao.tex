@@ -3,57 +3,82 @@
 
 \xchapter{Introdução}{}
 
-\begin{itemize}
+%\begin{itemize}
+%
+%\item Motivações
+%\begin{itemize}
+%\item As opiniões são as principais influenciadoras do comportamento humano (Liu, 2012);
+%\item Pessoas pedem opiniões a outras pessoas para consumo (mídia, produtos, etc.), posições políticas, religiosas, etc.;
+%\item Empresas precisam saber as opiniões de seus consumidores;
+%\item A internet e a web mudaram a forma de comunicação entre pessoas e organizações;
+%\item Há mais facilidade de acesso a fontes de informações e de disponibilização de opiniões (USAR DADOS PARA EMBASAR ESSA INFORMACAÇÃO);
+%\end{itemize}
+%
+%\item Problemas
+%\begin{itemize}
+%\item Grande quantidade e diversidade de fontes de opiniões;
+%\item Diferentes formatos, problemas de sintaxe, gírias, dentro outros;
+%\item É difícil para uma pessoa comum extrair e resumir opiniões de centenas ou milhares de fontes (USAR EMBASAMENTO);
+%\item Opiniões são carregadas de sentimentos subjetivos e imprecisos;
+%\end{itemize}
+%
+%\item Proposta / Definição
+%\begin{itemize}
+%\item É preciso utilizar uma metodologia para lidar com imprecisões e vagueza;
+%\item Lógica fuzzy (Zadeh, 1965): É uma metodologia da Inteligência Computacional que trata computacionalmente dados imprecisos e vagos;
+%\item ANGELO: poucos trabalhos sobre a aplicação de lógica fuzzy e/ou sistemas fuzzy foram encontrados, e os encontrados são limitados (tipo de limitação?), demonstrando uma lacuna de pesquisa sobre a aplicação de sistemas fuzzy para mineração de opiniões 
+%\item Por todos os problemas citadas, associadas as motivações, torna-se evidente a necessidade de sistemas automáticos de mineração de opiniões;
+%\item Definição de "Opinion Mining";
+%\item Pela vagueza das opiniões, a Lógica nebulosa pode ser útil para esses sistemas automatizados;
+%\item PROPOSTA: Propor e avaliar o desempenho de um sistema automatizado de mineração de opiniões baseado na lógica nebulosa;
+%\item DIFERENCIAL: 
+%\begin{itemize}
+%\item Geração de regras fuzzy;
+%\item Extração e definição de características dos documentos para geração das regras;
+%\item Apresentação do uso do método de Wang-Mendel no processo de mineração de opinião;
+%\end{itemize}
+%
+%\item Perguntas de pesquisa:
+%\begin{itemize}
+%\item Como Lógica Nebulosa pode ser utilizada no processo de mineração de opiniões?
+%\item Quais são os ganhos, caso existam, do uso de lógica nebulosa em mineração de opiniões?
+%\item ANGELO: mais umas duas questões de pesquisa
+%\item ANGELO: depois de escrever os resultados e discussão, revisar esta seção 
+%\end{itemize}
+%
+%\item Objetivos secundários:
+%\begin{itemize}
+%\item Investigar o estado da arte do uso de Lógica Nebulosa em mineração de opiniões;
+%\item Formalizar o processo de mineração de opiniões e propor uma aplicação da lógica nebulosa;
+%\item dentificar e compor uma base de dados para avaliação da proposta;
+%\item Analisar os resultados e compara-los com outros métodos da literatura;
+%\end{itemize}
+%\end{itemize}
+%\end{itemize}
 
-\item Motivações
+As opiniões são as principais influenciadoras do comportamento humano e permeiam quase todas as atividades executadas no dia-a-dia pelas pessoas \cite{bing:2012}. É comum as pessoas pedirem opiniões a familiares ou amigos, por exemplo, sobre qual marca de carro escolher numa compra, se determinado filme é bom para ser assistido, explicar suas intenções de voto nas próximas eleições, ou sobre hotéis em que querem se hospedar. E saber a opinião dos outros não é válido somente para indivíduos, mas também para empresas \cite{bing:2012, pang:2008}. Quando uma organização precisa saber da opinião pública ou de seus consumidores, ela conduz, por exemplo, pesquisas de opinião sobre o seu público alvo \cite{bing:2012}. 
+
+O surgimento da internet e o advento da web criaram um novo espaço para que pessoas e organizações pudessem descobrir mais sobre as opiniões e experiências de outras pessoas, sejam elas do próprio círculo social, críticos de renome ou indivíduos completamente desconhecidos. Além disso, surgiram diferentes fontes de informações pela internet, como avaliações de produtos e serviços, fóruns, \textit{blogs}, micro-blogs, Twitter \footnote{\url{www.twitter.com}}, comentários e postagens em sites sociais. Segundo \cite{kim2006forrester}, na época de seu trabalho, 75.000 novos blogs são criados diariamente, enquanto 1,2 milhões de postagens são colocadas na rede por dia.  A web criou mecanismos para que as pessoas pudessem disponibilizar suas opiniões para outras através da internet, e essas fontes de opiniões estão sendo cada vez mais utilizadas por pessoas e empresas para tomar decisões \cite{bing:2012, pang:2008}. Agora, indivíduos não estão mais limitados a perguntarem opiniões para familiares ou amigos, e empresas apenas conduzirem pesquisas de opinião, pois há bastante informação disponível na web \cite{bing:2012}. De acordo com as pesquisas realizadas nos Estados Unidos pela comScore and The Kelsey Group \footnote{Online consumer-generated reviews have significant impact on offline purchase behavior, Press Release, http://www. comscore.com/press/release.asp?press=1928, November 2007.} e por \cite{horrigan2008online}:
+
 \begin{itemize}
-\item As opiniões são as principais influenciadoras do comportamento humano (Liu, 2012);
-\item Pessoas pedem opiniões a outras pessoas para consumo (mídia, produtos, etc.), posições políticas, religiosas, etc.;
-\item Empresas precisam saber as opiniões de seus consumidores;
-\item A internet e a web mudaram a forma de comunicação entre pessoas e organizações;
-\item Há mais facilidade de acesso a fontes de informações e de disponibilização de opiniões (USAR DADOS PARA EMBASAR ESSA INFORMACAÇÃO);
+\item 81\% dos usuários de internet (ou 60\% dos estadunidenses) fizeram pesquisas sobre algum produto, ao menos, uma vez;
+\item Entre 73\% e 87\% dos entrevistados disseram que opiniões encontradas da internet influenciaram significativamente em suas compras;
+\item 32\% disponibilizaram suas opiniões sobre algum produto ou serviço que adquiriram através da internet e 30\% também disponibilizaram suas opiniões, todavia, a despeito de quaisquer aquisições.
+
 \end{itemize}
 
-\item Problemas
-\begin{itemize}
-\item Grande quantidade e diversidade de fontes de opiniões;
-\item Diferentes formatos, problemas de sintaxe, gírias, dentro outros;
-\item É difícil para uma pessoa comum extrair e resumir opiniões de centenas ou milhares de fontes (USAR EMBASAMENTO);
-\item Opiniões são carregadas de sentimentos subjetivos e imprecisos;
-\end{itemize}
+Estes dados demonstram a grande procura por opiniões na internet e o quanto elas influenciam as decisões das pessoas, neste caso, para a compra de produtos e serviços. Contudo, a importância de opiniões na internet não se resume somente a comercialização de produtos e serviços. O estudo realizado por \cite{rainie2007election}, por exemplo, revela grande procura por opiniões na rede sobre candidatos em eleições. Este estudo foi realizado com uma amostra de 60 milhões de estadunidenses nas eleições presidenciais de 2006 e mostrou, dentre outros resultados, que 28\% deles acessaram a web para buscar opiniões de dentro da sua comunidade sobre os candidatos, outros 34\% para buscar opiniões de fora de suas comunidades e 8\% disponibilizaram suas opiniões políticas sobre os candidatos. 
 
-\item Proposta / Definição
-\begin{itemize}
-\item É preciso utilizar uma metodologia para lidar com imprecisões e vagueza;
-\item Lógica fuzzy (Zadeh, 1965): É uma metodologia da Inteligência Computacional que trata computacionalmente dados imprecisos e vagos;
-\item ANGELO: poucos trabalhos sobre a aplicação de lógica fuzzy e/ou sistemas fuzzy foram encontrados, e os encontrados são limitados (tipo de limitação?), demonstrando uma lacuna de pesquisa sobre a aplicação de sistemas fuzzy para mineração de opiniões 
-\item Por todos os problemas citadas, associadas as motivações, torna-se evidente a necessidade de sistemas automáticos de mineração de opiniões;
-\item Definição de "Opinion Mining";
-\item Pela vagueza das opiniões, a Lógica nebulosa pode ser útil para esses sistemas automatizados;
-\item PROPOSTA: Propor e avaliar o desempenho de um sistema automatizado de mineração de opiniões baseado na lógica nebulosa;
-\item DIFERENCIAL: 
-\begin{itemize}
-\item Geração de regras fuzzy;
-\item Extração e definição de características dos documentos para geração das regras;
-\item Apresentação do uso do método de Wang-Mendel no processo de mineração de opinião;
-\end{itemize}
+Minerar opiniões na web, contudo, não é uma tarefa simples. A quantidade e a diversidade de fontes é muito grande \cite{kim2006forrester} e cada uma delas possui muitas informações opinativas, com formatos diferentes e problemas de sintaxe (e.g. erros de grafia, concordância verbal, nominal). Com isso, o leitor comum da internet tem dificuldades de extrair e resumir as opiniões existentes nessas fontes. O trabalho realizado por \cite{horrigan2008online} corrobora essas dificuldades, relatando que 58\% das pessoas que acessaram a web para procurar opiniões acharam que as informações estavam perdidas, algumas impossíveis de serem encontradas, confusas e/ou numerosas. Além desses problemas, o interesse dos usuários por opiniões existentes na internet por produtos e serviços e a potencial influência dessas informações sobre esses usuários, vem despertando mais atenção e recursos financeiros das empresas que comercializam produtos e serviços na web \cite{horrigan2008online}. 
 
-\item Perguntas de pesquisa:
-\begin{itemize}
-\item Como Lógica Nebulosa pode ser utilizada no processo de mineração de opiniões?
-\item Quais são os ganhos, caso existam, do uso de lógica nebulosa em mineração de opiniões?
-\item ANGELO: mais umas duas questões de pesquisa
-\item ANGELO: depois de escrever os resultados e discussão, revisar esta seção 
-\end{itemize}
+Além desses problemas, a tarefa de minerar opiniões se torna mais difícil quando as opiniões são acompanhadas de sentimentos que são, por sua vez, subjetivos e imprecisos. No mundo real, as pessoas utilizam palavras como "ótimo", "bom", "ruim", "péssimo", "muito bom", "pouco ruim", para exprimir opiniões e sentimentos sobre algum assunto ou objeto. Tais sentimentos podem ser classificados em positivos e negativos \cite{bing:2012, pang:2008, pang2002thumbs, turney2002thumbs, Hu:2004}, mas entre si (e.g. "bom" e "ótimo") não são nitidamente definidos, ou seja, quanto um é mais positivo que o outro. O mesmo pode ser dito para opiniões com sentimentos negativos, como "péssimo" e "ruim". Outro aspecto importante na mineração de opiniões é a dificuldade em definir o sentimento geral de uma sentença ou de um documento, quando opiniões de graus diferentes se combinam. Por exemplo: "É um ótimo celular e tem um acabamento muito bom, mas a bateria é péssima "; "O livro é excelente, mas o filme é um pouco ruim". Nestes exemplos, há opiniões positivas e negativas na mesma sentença, além modificadores (e.g. advérbios) associados aos adjetivos.
 
-\item Objetivos secundários:
-\begin{itemize}
-\item Investigar o estado da arte do uso de Lógica Nebulosa em mineração de opiniões;
-\item Formalizar o processo de mineração de opiniões e propor uma aplicação da lógica nebulosa;
-\item dentificar e compor uma base de dados para avaliação da proposta;
-\item Analisar os resultados e compara-los com outros métodos da literatura;
-\end{itemize}
-\end{itemize}
-\end{itemize}
+Para identificar sentimentos em frases e documentos frequentemente é necessário lidar com termos imprecisos e vagos, como mostrado acima. Uma metodologia da Inteligência Computacional proposta para tratar computacionalmente dados imprecisos e vagos é a Lógica Fuzzy \cite{zadeh:1988}. Enquanto a lógica clássica não consegue prover uma forma de representar o significado de proposições expressas em linguagem natural, quando o significado é impreciso, como os termos "usualmente", "pouco tempo", "mais alto", a lógica fuzzy pode tratar tais expressões. Enquanto na lógica clássica, um elemento pode ser classificado somente como relacionado ou não relacionado a uma categoria, na lógica fuzzy, um elemento pode ser classificado como parte de um ou mais conjuntos ao mesmo tempo, com diferentes graus de pertinência  \cite{zadeh:1988}. Contextualizando com a área de mineração de opiniões, um sentimento de uma opinião de um dado documento, por exemplo, em vez de ser classificado somente na classe dos sentimentos positivos ou negativos, poderá ser classificado pela lógica fuzzy em ambos, com diferentes graus de pertinência.
+
+Considerando as dificuldades apresentadas que são enfrentadas pelos usuários e empresas e dada a importância das opiniões nas vidas das pessoas, essa pesquisa propõe a criação e a avaliação de um sistema fuzzy automatizado de mineração de opinião para classificar o sentimento geral das opiniões dos documentos. 
+
+A próxima seção apresenta a fundamentação teórica dessa pesquisa e os trabalhos relacionados envolvidos na mineração de opinião e logica fuzzy. A seção seguinte descreve a metodologia utilizada nessa pesquisa. Os resultados são discutidos a seguir e a última seção conclui esse trabalho, apontando nossas contribuições e trabalhos futuros para essa pesquisa.
+
+\ifcsdef{mainfile}{}{\bibliography{pesquisa}}
 
 \end{document}

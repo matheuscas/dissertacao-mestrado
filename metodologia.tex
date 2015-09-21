@@ -484,18 +484,10 @@ Depois de eliminadas as regras duplicadas e conflitantes, as regras finais const
 
 \subsection{Raciocínio Fuzzy}
 
-Após a modelagem fuzzy das variáveis de entrada e saída do sistema e da construção das regras fuzzy, é necessário definir um mecanismo de inferência fuzzy, que será responsável em determinar a polaridade (positiva ou negativa) dos documentos da base de dados. Nós utilizamos dois mecanismos para fins de comparação, o Método de Raciocínio Fuzzy Geral (MRFG) e o Método de Raciocínio Fuzzy Clássico (MRFC) \cite{cordon1999proposal}.
-
-Ambos mecanismos tem processos bastante similares e somente diferem na etapa de decisão na classificação. O mecanismo comum a ambos é: cada vetor de característica é avaliado por todas as regras fuzzy e um grau de compatibilidade é calculado para cada regra. A equação \ref{eq:compat_regra} mostra como esse grau de compatibilidade é calculado.
-
-\begin{equation}
-D(regra_i) = m_{CFI_n}(x_j^1) \cdot m_{CFI_m}(x_j^2) \cdot m_{CFI_o}(x_j^3) \cdot ...\cdot m_{CFI_p}(x_j^n)
-\label{eq:compat_regra}
-\end{equation}
-
-O MRFC escolhe a regra que ficou com o maior grau de compatibilidade após a avaliação das características e classifica o documento com a classe de saída dessa regra. Por outro lado, o MRFG considera o máximo grau médio de compatibilidade entre as duas classes possíveis, positivo e negativo. Em outras palavras, o MRFG calcula a média dos graus de compatibilidade entre as regras que tem o conseqüente com a classe positiva e negativa e classifica o documento com a classe de maior média resultante. 
+Após a modelagem fuzzy das variáveis de entrada e saída do sistema e da construção das regras fuzzy, é necessário definir um mecanismo de inferência fuzzy, que será responsável em determinar a polaridade (positiva ou negativa) dos documentos da base de dados. Nós utilizamos dois mecanismos para fins de comparação, o Método de Raciocínio Fuzzy Geral (MRFG) e o Método de Raciocínio Fuzzy Clássico (MRFC) \cite{cordon1999proposal}, já explicados anteriormente.
 
 \todo[inline]{Matheus, acho que esta seção sobre raciocínio fuzzy está muito superficial. Acho que é necessário explicar melhor os dois métodos de raciocínio. A equação 3.3 não está ajudando muito no entendimento. Eu sugiro que vc siga a explicação de Cintra (eu lhe passei a tese de doutorado dele). Ele conseguiu resumir bem os dois métodos. Insira a tese dele como referência também nesta seção. Insira as figuras, pois ajudarão muito no entendimento dos métodos.}
+\todo[inline]{matheus: subi a explicação para a fundamentação e alterei conforme as sugestões.}
 
 \section{Método e Medidas de Avaliação}
 

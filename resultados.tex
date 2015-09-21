@@ -5,222 +5,154 @@
 
 Nessa seção são descritos e discutidos os experimentos realizados e os resultados obtidos desses experimentos. O objetivo é não só comparar qual cenário obtém melhor \textit{acuracia} ou TPR e TNR, mas também discutir em quais contextos os classificadores produzem melhores ou piores resultados.
 
-%\section{Datasets}
-\todo[inline]{Pelo que vi nos comentários da seção de metodologia essa seção deve sumir daqui e subir para para metodologia, certo?}
-\todo[inline]{Isso mesmo, vai para metodologia, mas cuidado com duplicações de conteúdo lá}
-\todo[inline]{matheus: Já tinha escrito bem na metodologia então somente removi. Essa subseção se foi}
-
 %\section{Resultados experimentais}
 
 Nós focamos em comparar os métodos de seleção de características e de inferência, variando as configurações em diferentes etapas do processo de mineração de opinião, comparando acurácia, TPR e TNR. Nós avaliamos a influência dos algoritmos de seleção de características, os sistemas de inferência fuzzy em si, o uso de pesos na regras, a quantidade usada de conjuntos fuzzy, a eficiência das regras entre domínios e usadas em outro,características mais selecionadas entre as bases utilizadas. 
 
-\todo[inline]{usa folds ao inves de dobras, já troquei no parágrafo abaixo e refiz redação também}
-\todo[inline]{matheus: ok}
+%\todo[inline]{usa folds ao inves de dobras, já troquei no parágrafo abaixo e refiz redação também}
+%\todo[inline]{matheus: ok}
 
-\todo[inline]{matheus: esse paragrafo ja tem na metodologia. Daí eu eliminei e juntei com o paragrafo do inicio do capitulo e eliminei essa seção também. O texto eliminado está comentádo no latex.}
+%\todo[inline]{matheus: esse paragrafo ja tem na metodologia. Daí eu eliminei e juntei com o paragrafo do inicio do capitulo e eliminei essa seção também. O texto eliminado está comentádo no latex.}
 %Para cada base de dados, o processo de mineração de opinião é idêntico para as etapas de pré-processamento, transformação e extração de características. Aplicando validação cruzada de 10 folds, as 9 partes da base são utilizadas para treinamento são utilizadas para seleção de características, na modelagem dos conjuntos fuzzy e na construção da base de regras fuzzy. A parte restante é utilizada somente para teste, realizando a seleção da mesmas características escolhidas durante o treino e fornecendo os valores destas para o sistema fuzzy realizar a classificação. O mesmo processo é repetido para cada fold e os resultados, para todas as medidas usadas, são a média dos valores obtidos em cada fold de teste. 
 
-\todo[inline]{falta mais discussão nas seções seguintes, apresente mais informações sobre o que ocorreu, e discuta os resultados a luz do comportamento do sistema}
+%\todo[inline]{falta mais discussão nas seções seguintes, apresente mais informações sobre o que ocorreu, e discuta os resultados a luz do comportamento do sistema}
 
-Nossos resultados são fruto de uma uma extensa quantidade de combinações nas duas bases de dados, filmes e Amazon, entre os algoritmos de seleção de características, os tipos sistemas de inferência fuzzy (utilizando pesos na regras ou não) e a quantidade usada de conjuntos fuzzy para modelar as variáveis de entrada. É importante observar que o algoritmo c4.5 é mostrado com duas variações: altura 1 e 2. Deixando o algoritmo construir livremente a árvore do decisão para a seleção de características, em dois cenários diferentes, nós escolhemos utilizar as características que estavam nos nós das árvores até altura 1 e 2. Isso resultou na mudança da quantidade de características selecionadas nos dois cenários. Fizemos isso para analisar também em quanto a altura da árvore de decisão do c4.5 influenciaria nos resultados. Vale notar que fizemos até altura 3, mas as características selecionadas eram as mesmas para altura 2. 
-As tabelas \ref{table:movies_3f} e \ref{table:movies_2f} mostram os resultados na base de filmes e as tabelas \ref{table:amazon_3f} e \ref{table:amazon_2f} na base mista da Amazon. Primeiramente vamos discutir os cenários para o uso de 3 conjuntos fuzzy e depois para o uso de somente 2.
+Nossos resultados são fruto de diversos experimentos nas duas bases de dados, filmes e Amazon, com variadas combinações de configurações experimentais entre os algoritmos de seleção de características, os tipos sistemas de inferência fuzzy (utilizando pesos na regras ou não) e a quantidade usada de conjuntos fuzzy para modelar as variáveis de entrada. 
 
-\begin{table}[H]
+O método de seleção de características pelo algoritmo c4.5 foi realizado com duas variações: característricas até altura 1 e até altura 2 da árvore. Deixando o algoritmo construir livremente a árvore do decisão para a seleção de características, em dois cenários diferentes, nós escolhemos utilizar as características que estavam nos nós das árvores até altura 1 e 2. Isso resultou na mudança da quantidade de características selecionadas nos dois cenários. Fizemos isso para analisar também em quanto a altura da árvore de decisão do c4.5 influenciaria nos resultados. Vale notar que fizemos até altura 3, mas as características selecionadas repetiam as mesmas para altura 2. 
+
+As tabelas \ref{table:movies_3f} e \ref{table:movies_2f} mostram os resultados na base de filmes e as tabelas \ref{table:amazon_3f} e \ref{table:amazon_2f} na base mista da Amazon. Primeiramente vamos discutir os cenários para o uso de 3 conjuntos fuzzy para modelagem das características e depois para o uso de somente 2 conjuntos.
+
+\todo[inline]{ está faltando o sinal de mais ou menos em TPR nessa primeira tabela e tem um 0.59 perdido no meio da tabela}
+\todo[inline]{matheus: alterei. nao sabia desse $\pm$}
+\begin{table}[htbp]
 \begin{tabular}{ @{} c*{11}c @{} }
-	\rot{CFS} & \rot{C4.5 - Altura 1} & \rot{C4.5 - Altura 2} & \rot{MRFG} & \rot{MRFG C/ PESOS} & \rot{MRFC} & \rot{MRFC C/ PESOS} & \rot{ACURÁCIA} & \rot{TNR} & \rot{TPR}  \\ \hline
-	X &  &  & X &  &  &  & 62.9\% +- 4.25\% & 63.1\% +- 22.46\% & 62.7\% & 22.69\% \\ \hline
-	X &  &  &  & X &  &  & 67.1\% +- 3.39\% & 72.6\% +- 8.77\% & 61.6\% & 9.77\% \\ \hline
-	X &  &  &  &  & X &  & 52.25\% +- 4.92\% & 40.3\% +- 32.94\% & 64.2\% & 30.55\% \\ \hline
-	X &  &  &  &  &  & X & 56.2\% +- 5.16\% & 55.1\% +- 19.21\% & 57.3\% & 14.26\% \\ \hline
-	 & X &  & X &  &  &  & 59.2\% +- 1.83\% & 53.8\% +- 34.96\% & 64.6\% & 37.08\% \\ \hline
-	 & X &  &  & X &  &  & 70.05\% +- 0.04 & 70.4\% +- 7.11\% & 69.7\% & 9.81\% \\ \hline
-	 & X &  &  &  & X &  & 54.4\% +- 1.72\% & 47.1\% +- 42.67\% & 61.7\% & 43.93\% \\ \hline
-	 & X &  &  &  &  & X & 69.8\% +- 4.03\% & 69.3\% +- 10.15\% & 70.3\% & 11.73\% \\ \hline
-	 &  & X & X &  &  &  & 59.65\% +- 2.42\% & 60.3\% +- 35.78\% & 0.59 & 36.9\% \\ \hline
-	 &  & X &  & X &  &  & 70\% +- 3.96\% & 70.3\% +- 7.02\% & 69.7\% & 9.81\% \\ \hline
-	 &  & X &  &  & X &  & 54.5\% +- 1.76\% & 55.6\% +- 43.49\% & 53.4\% & 44.5\% \\ \hline
-	 &  & X &  &  &  & X & 69.8\% +- 4.03\% & 69.3\% +- 10.15\% & 70.3\% & 11.73\% \\ \hline
+	\rot{CFS} & \rot{C4.5 - Altura 1} & \rot{C4.5 - Altura 2} & \rot{MRFG} & \rot{MRFG c/ Pesos} & \rot{MRFC} & \rot{MRFC c/ Pesos} & Acurácia & TNR & TPR 
+\\ \hline
+	X &  &  & X &  &  &  & 62.9\% $\pm$ 4.25\% & 63.1\% $\pm$ 22.46\% & 62.7\% $\pm$ 22.69\% \\ \hline
+	X &  &  &  & X &  &  & 67.1\% $\pm$ 3.39\% & 72.6\% $\pm$ 8.77\% & 61.6\% $\pm$ 9.77\% \\ \hline
+	X &  &  &  &  & X &  & 52.25\% $\pm$ 4.92\% & 40.3\% $\pm$ 32.94\% & 64.2\% $\pm$ 30.55\% \\ \hline
+	X &  &  &  &  &  & X & 56.2\% $\pm$ 5.16\% & 55.1\% $\pm$ 19.21\% & 57.3\% $\pm$ 14.26\% \\ \hline
+	 & X &  & X &  &  &  & 59.2\% $\pm$ 1.83\% & 53.8\% $\pm$ 34.96\% & 64.6\% $\pm$ 37.08\% \\ \hline
+	 & X &  &  & X &  &  & 70.05\% $\pm$ 0.04 & 70.4\% $\pm$ 7.11\% & 69.7\% $\pm$ 9.81\% \\ \hline
+	 & X &  &  &  & X &  & 54.4\% $\pm$ 1.72\% & 47.1\% $\pm$ 42.67\% & 61.7\% $\pm$ 43.93\% \\ \hline
+	 & X &  &  &  &  & X & 69.8\% $\pm$ 4.03\% & 69.3\% $\pm$ 10.15\% & 70.3\% $\pm$ 11.73\% \\ \hline
+	 &  & X & X &  &  &  & 59.65\% $\pm$ 2.42\% & 60.3\% $\pm$ 35.78\% & 0.59 $\pm$ 36.9\% \\ \hline
+	 &  & X &  & X &  &  & 70\% $\pm$ 3.96\% & 70.3\% $\pm$ 7.02\% & 69.7\% $\pm$ 9.81\% \\ \hline
+	 &  & X &  &  & X &  & 54.5\% $\pm$ 1.76\% & 55.6\% $\pm$ 43.49\% & 53.4\% $\pm$ 44.5\% \\ \hline
+	 &  & X &  &  &  & X & 69.8\% $\pm$ 4.03\% & 69.3\% $\pm$ 10.15\% & 70.3\% $\pm$ 11.73\% \\ \hline
 \end{tabular}
 \caption{Resultados da base de filmes, utilizando 3 conjuntos fuzzy nas variáveis de entrada}
 \label{table:movies_3f}
 \end{table}
 	
-\begin{table}[H]
+\begin{table}[htbp]
 \begin{tabular}{ @{} c*{11}c @{} }
-	\rot{CFS} & \rot{C4.5 - Altura 1} & \rot{C4.5 - Altura 2} & \rot{MRFG} & \rot{MRFG C/ PESOS} & \rot{MRFC} & \rot{MRFC C/ PESOS} & \rot{ACURÁCIA} & \rot{TNR} & \rot{TPR} \\ \hline
-	X &  &  & X &  &  &  & 67.35\% +- 6.36\% & 57.8\% +- 11.83\% & 76.9\% +- 11.39\% \\ \hline
-	X &  &  &  & X &  &  & 68.85\% +- 6.66\% & 62.4\% +- 9.72\% & 75.3\% +- 11.61\% \\ \hline
-	X &  &  &  &  & X &  & 64.4\% +- 8.12\% & 51.3\% +- 13.56\% & 77.5\% +- 13.90\% \\ \hline
-	X &  &  &  &  &  & X & 67.55\% +- 6.14\% & 58.2\% +- 10.04\% & 76.9\% +- 11.51\% \\ \hline
-	 & X &  & X &  &  &  & 60.05\% +- 2.37\% & 44.6\% +- 35.73\% & 75.5\% +- 34.8\% \\ \hline
-	 & X &  &  & X &  &  & 70.85\% +- 3.09\% & 76.8\% +- 4.57\% & 64.9\% +- 5.5\% \\ \hline
-	 & X &  &  &  & X &  & 54.25\% +- 2.82\% & 34\% +- 43.26\% & 74.5\% +- 38.82\% \\ \hline
-	 & X &  &  &  &  & X & 70.55\% +- 3.12\% & 75.2\% +- 5.68\% & 65.9\% +- 6.25\% \\ \hline
-	 &  & X & X &  &  &  & 61.75\% +- 4.2\% & 79.4\% +- 29.30\% & 44.1\% +- 31.92\% \\ \hline
-	 &  & X &  & X &  &  & 68.85\% +- 3.27\% & 85.4\% +- 8.27\% & 52.3\% +- 12.82\% \\ \hline
-	 &  & X &  &  & X &  & 60.4\% +- 5.75\% & 73.7\% +- 35.86\% & 47.1\% +- 34.22\% \\ \hline
-	 &  & X &  &  &  & X & 68.15\% +- 2.84\% & 80.4\% +- 8.91\% & 55.9\% +- 12.87\% \\ \hline
+\rot{CFS} & \rot{C4.5 - Altura 1} & \rot{C4.5 - Altura 2} & \rot{MRFG} & \rot{MRFG c/ Pesos} & \rot{MRFC} & \rot{MRFC c/ Pesos} & Acurácia & TNR & TPR  
+\\ \hline
+	X &  &  & X &  &  &  & 67.35\% $\pm$ 6.36\% & 57.8\% $\pm$ 11.83\% & 76.9\% $\pm$ 11.39\% \\ \hline
+	X &  &  &  & X &  &  & 68.85\% $\pm$ 6.66\% & 62.4\% $\pm$ 9.72\% & 75.3\% $\pm$ 11.61\% \\ \hline
+	X &  &  &  &  & X &  & 64.4\% $\pm$ 8.12\% & 51.3\% $\pm$ 13.56\% & 77.5\% $\pm$ 13.90\% \\ \hline
+	X &  &  &  &  &  & X & 67.55\% $\pm$ 6.14\% & 58.2\% $\pm$ 10.04\% & 76.9\% $\pm$ 11.51\% \\ \hline
+	 & X &  & X &  &  &  & 60.05\% $\pm$ 2.37\% & 44.6\% $\pm$ 35.73\% & 75.5\% $\pm$ 34.8\% \\ \hline
+	 & X &  &  & X &  &  & 70.85\% $\pm$ 3.09\% & 76.8\% $\pm$ 4.57\% & 64.9\% $\pm$ 5.5\% \\ \hline
+	 & X &  &  &  & X &  & 54.25\% $\pm$ 2.82\% & 34\% $\pm$ 43.26\% & 74.5\% $\pm$ 38.82\% \\ \hline
+	 & X &  &  &  &  & X & 70.55\% $\pm$ 3.12\% & 75.2\% $\pm$ 5.68\% & 65.9\% $\pm$ 6.25\% \\ \hline
+	 &  & X & X &  &  &  & 61.75\% $\pm$ 4.2\% & 79.4\% $\pm$ 29.30\% & 44.1\% $\pm$ 31.92\% \\ \hline
+	 &  & X &  & X &  &  & 68.85\% $\pm$ 3.27\% & 85.4\% $\pm$ 8.27\% & 52.3\% $\pm$ 12.82\% \\ \hline
+	 &  & X &  &  & X &  & 60.4\% $\pm$ 5.75\% & 73.7\% $\pm$ 35.86\% & 47.1\% $\pm$ 34.22\% \\ \hline
+	 &  & X &  &  &  & X & 68.15\% $\pm$ 2.84\% & 80.4\% $\pm$ 8.91\% & 55.9\% $\pm$ 12.87\% \\ \hline
 \end{tabular}
 \caption{Resultados da base da Amazon, utilizando 3 conjuntos fuzzy nas variáveis de entrada}
 \label{table:amazon_3f}
-\end{table}
-
-\begin{table}[H]
-\begin{tabular}{ @{} c*{11}c @{} }
-	\rot{CFS} & \rot{C4.5 - Altura 1} & \rot{C4.5 - Altura 2} & \rot{MRFG} & \rot{MRFG C/ PESOS} & \rot{MRFC} & \rot{MRFC C/ PESOS} & \rot{ACURÁCIA} & \rot{TNR} & \rot{TPR}  \\ \hline
-	X &  &  & X &  &  &  & 68.60\% +- 7.6\% & 74.9\% +- 9.52\% & 62.3\% +- 13.84\% \\ \hline
-	X &  &  &  & X &  &  & 69.05\% +- 7.59\% & 68.4\% +- 24.26\% & 69.7\% +- 13.15\% \\ \hline
-	X &  &  &  &  & X &  & 66.75\% +- 7.97\% & 59.7\% +- 17.60\% & 73.8\% +- 7.79\% \\ \hline
-	X &  &  &  &  &  & X & 67.5\% +- 6.73\% & 63.8\% +- 22.45\% & 71.2\% +- 12.63\% \\ \hline
-	 & X &  & X &  &  &  & 70.55\% +- 3.40\% & 71.4\% +- 5.71\% & 69.7\% +- 6.03\% \\ \hline
-	 & X &  &  & X &  &  & 70.9\% +- 3.07\% & 71.2\% +- 4.33\% & 70.6\% +- 3.35\% \\ \hline
-	 & X &  &  &  & X &  & 70.55\% +- 3.40\% & 71.4\% +- 5.71\% & 69.7\% +- 6.03\% \\ \hline
-	 & X &  &  &  &  & X & 70.9\% +- 3.07\% & 71.2\% +- 4.33\% & 70.6\% +- 3.35\% \\ \hline
-	 &  & X & X &  &  &  & 70.55\% +- 3.4\% & 71.2\% +- 5.54\% & 69.9\% +- 6.04\% \\ \hline
-	 &  & X &  & X &  &  & 69.65\% +- 4.12\% & 0.67 +- 12.74\% & 72.3\% +- 6.98\% \\ \hline
-	 &  & X &  &  & X &  & 70.55\% +- 3.4\% & 71.4\% +- 5.71\% & 69.7\% +- 6.03\% \\ \hline
-	 &  & X &  &  &  & X & 70.9\% +- 3.07\% & 71.2\% +- 4.33\% & 70.6\% +- 3.35\% \\ \hline
-\end{tabular}
-\caption{Resultados da base de filmes, utilizando 2 conjuntos fuzzy nas variáveis de entrada}
-\label{table:movies_2f}
-\end{table}
-
-\begin{table}[H]
-\begin{tabular}{ @{} c*{11}c @{} }
-	\rot{CFS} & \rot{C4.5 - Altura 1} & \rot{C4.5 - Altura 2} & \rot{MRFG} & \rot{MRFG C/ PESOS} & \rot{MRFC} & \rot{MRFC C/ PESOS} & \rot{ACURÁCIA} & \rot{TNR} & \rot{TPR} \\ \hline
-	X &  &  & X &  &  &  & 71.9\% +- 3.63\% & 69.2\% +- 9.80\% & 74.6\% +- 10.49\% \\ \hline
-	X &  &  &  & X &  &  & 72.4\% +- 2.36\% & 68.5\% +- 6.62\% & 76.3\% +- 7.08\% \\ \hline
-	X &  &  &  &  & X &  & 70.75\% +- 2.45\% & 73.2\% +- 8.71\% & 68.3\% +- 7.62\% \\ \hline
-	X &  &  &  &  &  & X & 71.5\% +- 3.04\% & 71.4\% +- 6.45\% & 71.6\% +- 7.43\% \\ \hline
-	 & X &  & X &  &  &  & 70.7\% +- 3.19\% & 77.6\% +- 2.49\% & 63.8\% +- 4.99\% \\ \hline
-	 & X &  &  & X &  &  & 70.8\% +- 3.27\% & 77.2\% +- 3.54\% & 64.4\% +- 3.46\% \\ \hline
-	 & X &  &  &  & X &  & 70.7\% +- 3.19\% & 77.6\% +- 2.49\% & 63.8\% +- 4.99\% \\ \hline
-	 & X &  &  &  &  & X & 70.8\% +- 3.27\% & 77.2\% +- 3.54\% & 64.4\% +- 3.46\% \\ \hline
-	 &  & X & X &  &  &  & 68.7\% +- 3.10\% & 86.9\% +- 6.56\% & 50.5\% +- 10.40\% \\ \hline
-	 &  & X &  & X &  &  & 66.9\% +- 4.12\% & 88.9\% +- 8.50\% & 44.9\% +- 15.18\% \\ \hline
-	 &  & X &  &  & X &  & 71.3\% +- 2.98\% & 76.4\% +- 3.41\% & 66.2\% +- 5.6\% \\ \hline
-	 &  & X &  &  &  & X & 70.85\% +- 2.68\% & 83.5\% +- 4.96\% & 58.2\% +- 5.81\% \\ \hline
-\end{tabular}
-\caption{Resultados da base da Amazon, utilizando 2 conjuntos fuzzy nas variáveis de entrada}
-\label{table:amazon_2f}
 \end{table}
 
 \section{Avaliação com o uso de 3 conjuntos fuzzy}
 
 \subsection{Avaliação dos algoritmos de seleção de características}
 
-Analisando as tabelas \ref{table:movies_3f} e \ref{table:amazon_3f}, é possível perceber que, em ambos os casos, o melhor resultado de acurácia do c4.5 (70.05\% em filmes e 70.85\% na Amazon), com altura 1, é maior que o melhor resultado produzido de acurácia pelo CFS (67.1\% me filmes e 68.85\% na Amazon). Todavia, a diferença entre eles não é significativa (Wilcoxon, $p<=0.01$). É importante observar, contudo, que o CFS utiliza, em média, quase 6 características para produzir as regras e classificar os documentos, criando mais regras e menos legíveis. O c4.5, com altura 1, por outro lado, utiliza somente duas características para que o classificador realize a mesma tarefa com desempenho equivalente. 
+Analisando as tabelas \ref{table:movies_3f} e \ref{table:amazon_3f}, é possível perceber que, em ambos os casos, o melhor resultado do c4.5 com altura 1 e com MRFG com pesos (70.05\% de acurácia, 70.4\% de TNR e 69.7\% de TPR em filmes; e 70.85\% de acurácia, 76,8\% de TNR e 64.9\% de TPR na Amazon) é maior que o melhor resultado produzido pelo CFS com MRFG usando pesos (67.1\% de acurácia, 72,6\% de TNR, 61,6\% de TPR me filmes; e 68.85\% de acurácia, 62.4\% de TNR e 75.3\% de TPR na Amazon). \todo[inline]{qual configuração destes melhores resultados? e o TNR e TPR?} \todo[inline]{matheus:alterei} Todavia, a diferença entre eles não é significativa (Wilcoxon, $p\leq0.01$). É importante observar, contudo, que o CFS utiliza, em média, quase 6 características para produzir as regras e classificar os documentos, criando mais regras e menos legíveis. O c4.5, com altura 1, por outro lado, utiliza somente uma dentre duas características para que o classificador realize a mesma tarefa com desempenho equivalente. 
 
-A equivalência dos resultados ocorre, pois o CFS tem uma cobertura maior do espaço de dados, já que tem mais características no sistema, diferentemente do c4.5. A importância dessa cobertura é melhor vista nos demais resultados do CFS que mostram desvios padrão menores,  na média, que os desvios apresentados pelo c4.5, principalmente quando não são utilizados os pesos (discutidos mais adiante). A tabela \ref{table:movie_folds} mostra um exemplo da oscilação na classificação entre os folds que resultam nos altos valores de desvio padrão.
+Há, no entanto, uma tendência a um comportamento mais estável do CFS em relação ao c4.5, que pode ser notado nos demais resultados do CFS que mostram desvios padrão menores em TNR e TPR,  na média, que os desvios apresentados pelo c4.5, principalmente quando não são utilizados os pesos (discutidos mais adiante). A tabela \ref{table:movie_folds} mostra um exemplo da grande variação na classificação entre os folds que resultam nos altos valores de desvio padrão. É importante frisar que os folds foram definidos por amostragem estratificada, mantendo a mesma proporção de documentos positivos e negativos do base de dados total. Assim, não há um desbalanceamento nos folds que justifique tal variação de comportamento. Por outro lado, isto pode ocorrer devido ao CFS ter uma cobertura maior do espaço de dados, já que tem mais características no sistema, diferentemente do c4.5, que depende de poucas características, não explorando outras que poderiam gerar maior estabilidade.
 
-\begin{table}[H]
+Em relação aos piores resultados, que apresentam acurácias entre 50\% e 55\%, somente na base de filmes eles se apresentaram com mais freqüência, excetuando um único caso na base da Amazon, no cenário com c4.5 com altura 1 e usando o MRFC sem pesos. Em todos os demais cenários, CFS com MRFC e c4.5 com altura 2 e MRFC, os resultados na base da Amazon foram acima de 60\% de acurácia. Esses resultados não são conclusivos em relação a qual abordagem do algoritmo de seleção é melhor ou pior nessas configurações, contudo pela frequencia ser maior na base de filmes, esse pode ser um indicativo de bases de filmes realmente são mais difíceis de se minerar opinião \cite{pang2002thumbs, chaovalit2005movie, whitelaw2005using}.
+
+\todo[inline]{comenta também sobre os demais resultados inclusive os piores resultados, que forma obtidos resultados com acurácia próxima de 50 por cento. E comparando as bases foi o mesmo comportamento dos resultados ou teve padrão diferente? }
+\todo[inline]{matheus: feito. logo acima.}
+
+\begin{table}[htbp]
 	\centering
-    \begin{tabular}{ll}
-    Fold 0 \\ \hline
-    Accuracy &  55.0\% \\
-	TPR &  100.0\% \\
-	TNR &  10.0\% \\ \\
-	
-	Fold 1 \\ \hline
-    Accuracy &  52.5\% \\
-	TPR &  5.0\% \\
-	TNR &  100.0\% \\ \\
-	
-	Fold 2 \\ \hline
-    Accuracy &  54.5\% \\
-	TPR &  96.0\% \\
-	TNR &  13.0\% \\ \\
-	
-	Fold 3 \\ \hline
-    Accuracy &  52.0\% \\
-	TPR &  98.0\% \\
-	TNR &  6.0\% \\ \\
-	
-	Fold 4 \\ \hline
-    Accuracy &  55.5\% \\
-	TPR &  99.0\% \\
-	TNR &  12.0\% \\ \\
-	
-	Fold 5 \\ \hline
-    Accuracy &  51.5\% \\
-	TPR &  4.0\% \\
-	TNR &  99.0\% \\ \\
-	
-	Fold 6 \\ \hline
-    Accuracy &  54.5\% \\
-	TPR &  9.0\% \\
-	TNR &  100.0\% \\ \\
-	
-	Fold 7 \\ \hline
-    Accuracy &  57.0\% \\
-	TPR &  97.0\% \\
-	TNR &  17.0\% \\ \\
-	
-	Fold 8 \\ \hline
-    Accuracy &  56.0\% \\
-	TPR &  14.0\% \\
-	TNR &  98.0\% \\ \\
-	
-	Fold 9 \\ \hline
-    Accuracy &  55\% \\
-	TPR &  95.0\% \\
-	TNR &  16.0\% \\
+    \begin{tabular}{llll}
+    Fold & Acurácia & TPR & TNR \\
+    0 & 55.5\% & 100\% & 10.0\% \\
+    1 & 52.5\% & 5\% & 100.0\% \\
+    2 & 54.5\% & 96\% & 13.0\% \\
+    3 & 52\% & 98\% & 6.0\% \\
+    4 & 55.5\% & 99\% & 12.0\% \\
+    5 & 51.5\% & 4\% & 99.0\% \\
+    6 & 54.5\% & 9\% & 100.0\% \\
+    7 & 57\% & 97\% & 17.0\% \\
+    8 & 56\% & 14\% & 98.0\% \\
+    9 & 55\% & 95\% & 16.0\% \\
     \end{tabular}
-    \caption{Problema do desbalanceamento entre TPR e TNR - base de filmes}
+    \caption{Problema do desbalanceamento entre TPR e TNR - base de filmes, com c4.5 e MRFC sem pesos}
     \label{table:movie_folds}
 \end{table}
 
-É importante frisar que os folds foram definidos por amostragem estratificada, mantendo a mesma proporção de documentos positivos e negativos do base de dados total. Dentre as características selecionadas por CFS e c4.5 duas se destacaram, sendo frequentemente selecionadas dentro dos cenários testados por ambos algoritmos. São elas:
+\todo[inline]{essa tabela dos folds individuais pode ficar muito menor em uma tabela com 10 linhas, uma por fold, e 4 colunas: fold, acurácia (e não Acurácia), TPR e TNR. Indique no título dessa tabela qual a configuração do experimento executado (método de seleção,inferencia e conjuntos)}
+\todo[inline]{matheus:ok}
 
-\begin{table}
-\resizebox*{\textwidth}{!}{ \begin{tabular}{|l|}
-	\hline
-	A diferença entre as somas positiva e negativa de adjetivos e bigrams compostos estritamente por advérbio e adjetivo; \\
-	\hline
-	E a diferença entre as somas positiva e negativa de unigrams e bigrams combinados. \\
-	\hline
-\end{tabular}}
-\caption{Características mais selecionadas entre bases e entre algoritmos de seleção}
-\label{table:features_most_selected}
-\end{table}
+Dentre as características selecionadas por CFS e c4.5 duas se destacaram, sendo frequentemente selecionadas dentro dos cenários testados por ambos algoritmos. São elas:
+\todo[inline]{porque colocou as caracteristicas em uma tabela? faz uma lista de itens}
+\todo[inline]{matheus: ok}
 
-É importante ressaltar que, para o melhor resultado apresentado na base de filmes pelo c4.5, somente essas duas características foram selecionadas para gerar a base de regras e classificar os documentos. As figuras \ref{figura:movies_dist_1} e \ref{figura:movies_dist_2} mostram a distribuição dessas características na base de filmes e as figuras \ref{figura:amazon_dist_1} e \ref{figura:amazon_dist_2} na base da Amazon. 
+\begin{itemize}
+\item A diferença entre as somas positiva e negativa de adjetivos e bigrams compostos estritamente por advérbio e adjetivo;
+\item E a diferença entre as somas positiva e negativa de unigrams e bigrams combinados.
+\end{itemize}
 
-\begin{figure}[H]
+Para o melhor resultado apresentado na base de filmes pelo c4.5 (com altura 1 e MRFG com pesos),
+\todo[inline]{qual configuração do melhor resultado?} \todo[inline]{matheus: ok} somente essas duas características foram selecionadas para gerar a base de regras e classificar os documentos. As figuras \ref{figura:movies_dist_1} e \ref{figura:movies_dist_2} mostram a distribuição dessas características na base de filmes e as figuras \ref{figura:amazon_dist_1} e \ref{figura:amazon_dist_2} na base da Amazon. 
+
+\todo[inline]{na figura do histograma, tenta usar tons de cinza (cinza claro e cinza médio, a intersecção deve ficar em cinza escuro) para ficar mais fácil para imprimir, e aumenta o tamanho da fonte dos valores nos eixos, titulos e legenda}
+
+\begin{figure}[phtb]
 \caption{Distribuição dos valores da característica "A diferença entre as somas positiva e negativa de adjetivos e bigrams compostos estritamente por advérbio e adjetivo" na base de filmes}
 \centering
-\includegraphics[scale=0.45]{movies_positive_to_negative_ratio_of_adjectives_sum_and_bigrams_with_adjectives}
+\includegraphics[scale=0.70]{movies_positive_to_negative_ratio_of_adjectives_sum_and_bigrams_with_adjectives}
 \label{figura:movies_dist_1}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[phtb]
 \caption{Distribuição dos valores da característica "A diferença entre as somas positiva e negativa de adjetivos e bigrams compostos estritamente por advérbio e adjetivo" na base de filmes}
 \centering
-\includegraphics[scale=0.45]{movies_positive_to_negative_ratio_of_unigrams_and_bigrams_sum}
+\includegraphics[scale=0.7]{movies_positive_to_negative_ratio_of_unigrams_and_bigrams_sum}
 \label{figura:movies_dist_2}
 \end{figure}
 
 
-\begin{figure}[H]
+\begin{figure}[phtb]
 \caption{Distribuição dos valores da característica "A diferença entre as somas positiva e negativa de adjetivos e bigrams compostos estritamente por advérbio e adjetivo" na base da Amazon}
 \centering
-\includegraphics[scale=0.45]{amazon_positive_to_negative_ratio_of_adjectives_sum_and_bigrams_with_adjectives}
+\includegraphics[scale=0.7]{amazon_positive_to_negative_ratio_of_adjectives_sum_and_bigrams_with_adjectives}
 \label{figura:amazon_dist_1}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[phtb]
 \caption{Distribuição dos valores da característica "A diferença entre as somas positiva e negativa de adjetivos e bigrams compostos estritamente por advérbio e adjetivo" na base da Amazon}
 \centering
-\includegraphics[scale=0.45]{amazon_positive_to_negative_ratio_of_unigrams_and_bigrams_sum}
+\includegraphics[scale=0.7]{amazon_positive_to_negative_ratio_of_unigrams_and_bigrams_sum}
 \label{figura:amazon_dist_2}
 \end{figure}
 
-Na base de filmes, as características se aproximam de uma distribuição normal simétrica, enquanto na base da Amazon são mais assimétricas. Essa falta de equilibrio explica a mais significativa discrepância entre os valores de TPR  e TNR para o c4.5 na base da Amazon, enquanto que na base de filmes, o desequilíbrio entre essas duas medidas é menor. 
+Na base de filmes, para estas características as distribuições dos documentos com polaridade positiva e dos documentos com polaridade negativa se aproximam de uma distribuição normal simétrica, enquanto na base da Amazon apresentam forte assimetria. Essa falta de equilibrio explica a mais significativa discrepância entre os valores de TPR  e TNR para o c4.5 na base da Amazon, enquanto que na base de filmes, o desequilíbrio entre essas duas medidas é menor. 
+\todo[inline]{parece que a base amazon não está balanceada, a frequencia do posito está muito alta comparado com o negativo}
+\todo[inline]{matheus: a base está balanceada, mas a distribuição da característica em questão é que não. Ela se apresenta mais nos positivos}
 
-\todo[inline]{a acurácia está péssima, quase jogar uma moeda, porque?}
-\todo[inline]{o desvio padrão aqui chamada muita atenção, está muito muito alto, , mas o cfs tem desvio menos de TNR e TPR, mas o c4.5 consegui menor desvio de acurácia, porque?}
-\todo[inline]{as caracteristicas selecionadas são sempre as mesmas? quantas diferentes? quais as mais populares? o CFS e c4.5 escolhem alguma caracteristica em comum? coloca no texto}
-\todo[inline]{pega cada tabela para discutir o que ela apresenta, TNR, TPR, acurácia, caracteristicas selecionadas, não somente descreva mas tente discutir o que ocorreu, e complemente com informações que ajudam o leitor a saber o que está ocorrendo, como informando algo sobre as caracteristicas selecionadas, as regras geradas, etc}
+%\todo[inline]{a acurácia está péssima, quase jogar uma moeda, porque?}
+%\todo[inline]{o desvio padrão aqui chamada muita atenção, está muito muito alto, , mas o cfs tem desvio menos de TNR e TPR, mas o c4.5 consegui menor desvio de acurácia, porque?}
+%\todo[inline]{as caracteristicas selecionadas são sempre as mesmas? quantas diferentes? quais as mais populares? o CFS e c4.5 escolhem alguma caracteristica em comum? coloca no texto}
+%\todo[inline]{pega cada tabela para discutir o que ela apresenta, TNR, TPR, acurácia, caracteristicas selecionadas, não somente descreva mas tente discutir o que ocorreu, e complemente com informações que ajudam o leitor a saber o que está ocorrendo, como informando algo sobre as caracteristicas selecionadas, as regras geradas, etc}
 
 %SVM Filmes
 
@@ -258,19 +190,19 @@ Na base de filmes, as características se aproximam de uma distribuição normal
 %Result 2 - W-value
 %The W-value is 4. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
 
-%Em ambas as bases as diferenças entre os resultados não são significativas usando o teste \textit{Wilcoxon signed-rank} para $p <= 0.01$. \todo[inline]{o teste foi para acurácia? tem que dizer qual medida foi utilizada} Isso mostra que mesmo que o CFS utiliza quase 5 vezes mais características em ambas as bases e não consegue produzir resultados significativamente melhores, criando ainda regras mais complexas e de difícil compreensão para seres humanos. Assim, já que o algoritmo c4.5 somente precisou de 2 características, produzindo regras menos complexas e mais claras, para produzir resultados próximos ou iguais ao do CFS, decidiu-se em manter o c4.5 para os próximos cenários de avaliação. 
-\todo[inline]{c4.5 precisou de 2 caract? sua tabela indica 1 caracteristica, então seriam caracteristicas diferentes para cada base? ou na mesma base, folds diferentes? apresenta o histograma destas 2 caracteristicas para ilustar}
+%Em ambas as bases as diferenças entre os resultados não são significativas usando o teste \textit{Wilcoxon signed-rank} para $p\leq0.01$. \todo[inline]{o teste foi para acurácia? tem que dizer qual medida foi utilizada} Isso mostra que mesmo que o CFS utiliza quase 5 vezes mais características em ambas as bases e não consegue produzir resultados significativamente melhores, criando ainda regras mais complexas e de difícil compreensão para seres humanos. Assim, já que o algoritmo c4.5 somente precisou de 2 características, produzindo regras menos complexas e mais claras, para produzir resultados próximos ou iguais ao do CFS, decidiu-se em manter o c4.5 para os próximos cenários de avaliação. 
+%\todo[inline]{c4.5 precisou de 2 caract? sua tabela indica 1 caracteristica, então seriam caracteristicas diferentes para cada base? ou na mesma base, folds diferentes? apresenta o histograma destas 2 caracteristicas para ilustar}
 
-\todo[inline]{vocÊ consegue justificar porque o classificador estava jogando quase tudo para uma classe? o problema é na features selecionada, na modelagem do conjunto fuzzy, no metodo de inferencia? explica um pouco}
+%\todo[inline]{consegue justificar porque o classificador estava jogando quase tudo para uma classe? o problema é na features selecionada, na modelagem do conjunto fuzzy, no metodo de inferencia? explica um pouco}
 
-\todo[inline]{ressalte que os folds foram definidos por amostragem estratificada, mantendo a mesma proporção de documentos positivos e negativos do dataset total, e assim cada fold também está balanceado, isso ajuda a mostrar que um eventual enviesamento dos folds não foi a causa deste comportamento}
+%\todo[inline]{ressalte que os folds foram definidos por amostragem estratificada, mantendo a mesma proporção de documentos positivos e negativos do dataset total, e assim cada fold também está balanceado, isso ajuda a mostrar que um eventual enviesamento dos folds não foi a causa deste comportamento}
 
 %\subsubsection{Avaliação do impacto da altura da árvore de decisão do algoritmo de seleção de características do c4.5}
-\todo[inline]{acho melhor não fazer uma seção separada para arvore de altura  3, sugiro incorporar a seção anterior e incluir mais uma coluna nas tabelas, ficando c4.5 altura 1 e c4.5 altura 3}
+%\todo[inline]{acho melhor não fazer uma seção separada para arvore de altura  3, sugiro incorporar a seção anterior e incluir mais uma coluna nas tabelas, ficando c4.5 altura 1 e c4.5 altura 3}
 
 %É importante ressaltar que os resultados anteriores, para o c4.5, foram obtidos com o algoritmo otimizado, utilizando a ferramenta Weka [CITE], para que a árvore do algoritmo de seleção de características do algoritmo tivesse altura 1, para fins de simplificação das regras geradas. Dessa forma, decidimos avaliar o quanto o aumento da altura da árvore de decisão do algoritmo de seleção de características do c4.5 influenciaria na classificação dos documentos. Definimos que o limite da altura da árvore de decisão fosse 3 para não aumentar demais a complexidade das regras que seriam geradas. A tabela (\ref{table:movies_h3}) e tabela (\ref{table:amazon_h3}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon.
 
-\todo[inline]{o que seria 'algoritmo otimizado'? não devemos 'forçar' a arvore a ficar com altura 3, devemos dizer que utilizamos as características  selecionadas foram aquelas existentes até altura 3, porque se a árvore crescer além disso, é só ignorar os demais nós}
+%\todo[inline]{o que seria 'algoritmo otimizado'? não devemos 'forçar' a arvore a ficar com altura 3, devemos dizer que utilizamos as características  selecionadas foram aquelas existentes até altura 3, porque se a árvore crescer além disso, é só ignorar os demais nós}
 
 % \begin{table}[!h]
 %    \begin{tabular}{lll}
@@ -305,6 +237,9 @@ Na base de filmes, as características se aproximam de uma distribuição normal
 %\end{table}
 
 \todo[inline]{nas tabelas que mostram resultado do c4.5 altura 3, indicam um valor baixo da quant media de caract selecionadas, a mesma caracteristica está sendo selecionada por vários nós? diga quais são e discuta no texto esse comportamento, isso pode indicar que uma característica é repeditamente relevante em vários splits dos dados (cada nó da árvore de decisão, divide a base para os nós seguintes)}
+\todo[inline]{matheus: ok. As características que se repetem nos nós são exatamente as duas que se destacam entre as bases}
+
+Por fim, é válido discutir as características selecionadas usando o c4.5 com altura 2. A duas características já listadas são predominantes em quase todos os nós das árvores geradas entre os folds. Todavia, além disso, elas se repetem entre os nós das árvores, em alguns casos. É comum notar que em alguns folds a mesma característica é selecionada no nó raiz e no nó seguinte da árvore. Isso pode indicar que essas características são repetidamente relevantes em várias divisões dos dados. 
 
 %Result 1 - Z-value
 %
@@ -314,13 +249,13 @@ Na base de filmes, as características se aproximam de uma distribuição normal
 %
 %The W-value is 6. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
 
-%Mais uma vez, os resultados apresentados em ambas as bases para o aumento da altura da árvore de decisão do algoritmo de seleção de características não produziram resultados significativamente melhores para $p <= 0.01$ no teste \textit{Wilcoxon signed-rank}. \todo[inline]{sempre precisa dizer qual medida está sendo avalida pelo testes estatístico, reveja aqui e no restante do texto} Assim, o crescimento da árvore, que resulta no aumento da complexidade das regras em relação a altura 1, não contribui para o aumento de performance do nosso classificador e na simplificação das regras geradas para a classificação. 
+%Mais uma vez, os resultados apresentados em ambas as bases para o aumento da altura da árvore de decisão do algoritmo de seleção de características não produziram resultados significativamente melhores para $p\leq0.01$ no teste \textit{Wilcoxon signed-rank}. \todo[inline]{sempre precisa dizer qual medida está sendo avalida pelo testes estatístico, reveja aqui e no restante do texto} Assim, o crescimento da árvore, que resulta no aumento da complexidade das regras em relação a altura 1, não contribui para o aumento de performance do nosso classificador e na simplificação das regras geradas para a classificação. 
 
 \subsection{Avaliação dos sistemas de inferência fuzzy}
 
-Nessa subseção são avaliados os desempenhos dos sistemas de inferência escolhidos, o Método do Raciocínio Fuzzy Geral (MRFG) e o Método do Raciocínio Fuzzy Clássico (MRFC). Os resultados mostram que em todos os cenários, independente do algoritmo de seleção usado, o MRFG produz melhores melhores percentuais de acurácia que o MRFC, mesmo que em alguns casos a diferença não seja significativa (para $p <= 0.01$). Isso indica que a abordagem do MRFC de analisar individualmente a classificação de um único documento em vez de analisar todo o conjunto de dados frente às regras, como faz o MRFG, é uma abordagem que tente a ter menos eficácia. É importante observar, contudo, que ambos os métodos apresentam altos desvios padrão nas medidas de TPR e TNR em todos os métodos de seleção, mostrando ainda instabilidade no sistema, como exemplificado na tabela \ref{table:movie_folds}, mesmo que menor. 
+Após análise dos métodos de seleção de características, avaliamos agora o desempenho dos sistemas de inferência escolhidos, o Método do Raciocínio Fuzzy Geral (MRFG) e o Método do Raciocínio Fuzzy Clássico (MRFC). Os resultados mostram que em todos os cenários, independente do algoritmo de seleção usado, o MRFG produz melhores melhores percentuais de acurácia que o MRFC, mesmo que em alguns casos a diferença não seja significativa (Wilcoxon, $p\leq0.01$). Isso indica que a abordagem do MRFC de utilizar uma única regra para classificação ao invés de ponderar todas as regras , como faz o MRFG, é uma abordagem que tente a ter menos eficácia. É importante observar, contudo, que ambos os métodos apresentam altos desvios padrão nas medidas de TPR e TNR em todos os métodos de seleção, mostrando ainda instabilidade no sistema, como exemplificado na tabela \ref{table:movie_folds}, mesmo que menor. 
 
-O uso de pesos nas regras, por outro lado, diminuiu bastante os desvios padrão de TPR e TNR, além de aumentar o desempenho geral (acurácia) do classificador em todos os cenários. Destaque principalmente para os cenários que usam o c.4.5, com menos características e, por conseguinte, menos regras, para a aumento significativo (para $p <= 0.01$) na base de filmes, usando c4.5 com altura 1 e o MRFG usando pesos, que saltou de 59,2\% (sem pesos) para 70,05\% de acurácia; e na base da Amazon, no mesmo cenário, saltando de 60,05\% para 70,85\% de acurácia. Ainda nesses cenários, os desvios padrão de TPR e TNR estavam acima de 30\% e, utilizando os pesos, caíram para menos de 10\% em filmes e 6\% na base mista da Amazon.
+O uso de pesos nas regras, por outro lado, diminuiu bastante os desvios padrão de TPR e TNR, além de aumentar o desempenho geral (acurácia) do classificador em todos os cenários. Destaque principalmente para os cenários que usam o c.4.5, com menos características e, por conseguinte, menos regras, para a melhora significativa de acurácia (Wilcoxon, $p\leq0.01$) na base de filmes, usando c4.5 com altura 1 e o MRFG usando pesos, que saltou de 59,2\% (sem pesos) para 70,05\% de acurácia; e na base da Amazon, no mesmo cenário, saltando de 60,05\% para 70,85\% de acurácia. Ainda nesses cenários, os desvios padrão de TPR e TNR estavam acima de 30\% e, utilizando os pesos, caíram para menos de 10\% em filmes e 6\% na base mista da Amazon.
 
 Isso acontece pois a aplicação dos pesos aumenta o espaço de cobertura das regras mais relevantes (ou com capacidade maior de classificar mais e melhor documentos) e diminui o espaço de regras que não tem a mesma importância e que são capazes de classificar somente uma menor região do espaço de dados. Por exemplo, as regras a seguir foram geradas um alguns dos folds para classificação usando c4.5 na base de filmes:
 
@@ -339,66 +274,31 @@ Isso acontece pois a aplicação dos pesos aumenta o espaço de cobertura das re
 \end{itemize}
 \end{itemize}
 
-Lembrando que "BAIXA", "MÉDIA" e "ALTA" são as modelagens dos conjuntos fuzzy para nossas variáveis de entrada e em quase todos os folds, as regras foram iguais. Contudo, em cada fold, as regras tem igual importância, quando não se utiliza os pesos. O resultado da classificação usando essas (e as demais geradas) com MRFG como sistema de inferência e sem pesos é apresentado na tabela \ref{table:movie_folds_2}.
+Em quase todos os folds, as regras foram as mesmas. Contudo, em cada fold, as regras tem igual importância, quando não se utiliza os pesos. O resultado da classificação usando essas (e as demais geradas) com MRFG como sistema de inferência e sem pesos é apresentado na tabela \ref{table:movie_folds_2}.
 
-\begin{table}[H]
+\begin{table}[htbp]
 	\centering
-    \begin{tabular}{ll}
-    Fold 0 \\ \hline
-    Accuracy &  59.0\% \\
-	TPR &  97.0\% \\
-	TNR &  21.0\% \\ \\
-	
-	Fold 1 \\ \hline
-    Accuracy &  57.5\% \\
-	TPR &  17.0\% \\
-	TNR &  98.0\% \\ \\
-	
-	Fold 2 \\ \hline
-    Accuracy &  60.0\% \\
-	TPR &  91.0\% \\
-	TNR &  29.0\% \\ \\
-	
-	Fold 3 \\ \hline
-    Accuracy &  60.0\% \\
-	TPR &  98.0\% \\
-	TNR &  22.0\% \\ \\
-	
-	Fold 4 \\ \hline
-    Accuracy &  61\% \\
-	TPR &  98.0\% \\
-	TNR &  24.0\% \\ \\
-	
-	Fold 5 \\ \hline
-    Accuracy &  55\% \\
-	TPR & 14.0\% \\
-	TNR &  99.0\% \\ \\
-	
-	Fold 6 \\ \hline
-    Accuracy &  58\% \\
-	TPR &  18.0\% \\
-	TNR &  98.0\% \\ \\
-	
-	Fold 7 \\ \hline
-    Accuracy &  60.5\% \\
-	TPR &  94.0\% \\
-	TNR &  27.0\% \\ \\
-	
-	Fold 8 \\ \hline
-    Accuracy &  61.5\% \\
-	TPR &  29.0\% \\
-	TNR &  94.0\% \\ \\
-	
-	Fold 9 \\ \hline
-    Accuracy &  59.5\% \\
-	TPR &  90.0\% \\
-	TNR &  29.0\% \\
+    \begin{tabular}{llll}
+    Fold & Acurácia & TPR & TNR \\
+    0 & 59.0\% & 97\% & 21.0\% \\
+    1 & 57.5\% & 17\% & 98.0\% \\
+    2 & 60.0\% & 91\% & 29.0\% \\
+    3 & 60.0\% & 98\% & 22.0\% \\
+    4 & 61.0\% & 98\% & 24.0\% \\
+    5 & 55.0\% & 14\% & 99.0\% \\
+    6 & 58.0\% & 18\% & 98.0\% \\
+    7 & 60.5\% & 94\% & 27.0\% \\
+    8 & 61.5\% & 29\% & 94.0\% \\
+    9 & 59.5\% & 90\% & 29.0\% \\
     \end{tabular}
-    \caption{Resultados com c4.5 e MRFG sem pesos - base de filmes}
+        \caption{Resultados com c4.5 com algura 1 e MRFG sem pesos na base de filmes}
     \label{table:movie_folds_2}
 \end{table}
 
-É possível perceber a instabilidade do sistema e recordar a tabela \ref{table:movies_3f} que nos mostra o resultado final de 59.2\% de acurácia, 53.8\% +- 34.96\% de TNR e 64.6\% +- 37.08\% com altos percentuais nos desvios padrão. O uso dos pesos, porém, vai alterar a importância entre as regras, enaltecendo àquelas mais aptas à classificação. As mesmas regras acima recebem os seguintes pesos:
+\todo[inline]{essa tabela dos folds individuais pode ficar muito menor em uma tabela com 10 linhas, uma por fold, e 4 colunas: fold, acurácia (e não accuracy), TPR e TNR. Indique no título dessa tabela qual a configuração do experimento executado (método de seleção,inferencia e conjuntos)}
+\todo[inline]{matheus: ok, mas que conjuntos são esses?}
+
+É possível perceber a instabilidade do sistema e recordar a tabela \ref{table:movies_3f} que nos mostra o resultado final de 59.2\% de acurácia, 53.8\% $\pm$ 34.96\% de TNR e 64.6\% $\pm$ 37.08\%, portanto com altos valores de desvios padrão. O uso dos pesos, porém, vai alterar a importância entre as regras, dando maior relevância àquelas mais aptas à classificação. As mesmas regras acima recebem os seguintes pesos:
 
 \begin{itemize}
 \item Fold 0
@@ -415,66 +315,31 @@ Lembrando que "BAIXA", "MÉDIA" e "ALTA" são as modelagens dos conjuntos fuzzy 
 \end{itemize}
 \end{itemize}
 
-É possível perceber que as regras do conjunto "MEDIA" recebem os menores graus, enquanto que as regras dos conjuntos "BAIXA" e "ALTA" recebem os maiores - esse comportamento se repete para todos os demais folds. Isso mostra que o conjunto "BAIXA" e as regras relacionadas não são boas ou tão importantes para classificar os documentos usando essas características. Assim, a disputa entre as regras no momento da classificação ficará somente entre as demais. A tabela TAL mostra os resultados para a mesma configuração da tabela \ref{table:movie_folds_2}, excetuando o uso dos pesos. 
+É possível perceber que as regras do conjunto "MEDIA" recebem os menores graus, enquanto que as regras dos conjuntos "BAIXA" e "ALTA" recebem os maiores - esse comportamento se repete para todos os demais folds. Isso mostra que o conjunto "MÉDIA" e as regras relacionadas não são boas ou tão importantes para classificar os documentos usando essas características. Assim, a disputa entre as regras no momento da classificação ficará somente entre as demais. A tabela \ref{table:movie_folds_3} mostra os resultados para a mesma configuração da tabela \ref{table:movie_folds_2}, excetuando o uso dos pesos. 
 
-\begin{table}[H]
+\todo[inline]{o que a tabela TAL? seria table.moviefolds3? a legenda de table.moviefolds3 indica que seria sem pesos, mas acho que seria com pesos, correto?}
+\todo[inline]{matheus: correto}
+
+\begin{table}[htbp]
 	\centering
-    \begin{tabular}{ll}
-    Fold 0 \\ \hline
-    Accuracy &  71.0\% \\
-	TPR &  65.0\% \\
-	TNR &  77.0\% \\ \\
-	
-	Fold 1 \\ \hline
-    Accuracy &  71.0\% \\
-	TPR &  65.0\% \\
-	TNR &  77.0\% \\ \
-	
-	Fold 2 \\ \hline
-    Accuracy &  73.5\% \\
-	TPR &  70.0\% \\
-	TNR &  77.0\% \\ \
-	
-	Fold 3 \\ \hline
-    Accuracy &  67.0\% \\
-	TPR &  80.0\% \\
-	TNR &  54.0\% \\ \\
-	
-	Fold 4 \\ \hline
-    Accuracy &  75.5\% \\
-	TPR &  80.0\% \\
-	TNR &  71.0\% \\ \\
-	
-	Fold 5 \\ \hline
-    Accuracy &  61.5\% \\
-	TPR & 50.0\% \\
-	TNR &  73.0\% \\ \\
-	
-	Fold 6 \\ \hline
-    Accuracy &  67\% \\
-	TPR &  58.0\% \\
-	TNR &  76.0\% \\ \\
-	
-	Fold 7 \\ \hline
-    Accuracy &  75\% \\
-	TPR &  81.0\% \\
-	TNR &  69.0\% \\ \\
-	
-	Fold 8 \\ \hline
-    Accuracy &  69\% \\
-	TPR &  71.0\% \\
-	TNR &  67.0\% \\ \\
-	
-	Fold 9 \\ \hline
-    Accuracy &  70\% \\
-	TPR &  77.0\% \\
-	TNR &  63.0\% \\
+    \begin{tabular}{llll}
+    Fold & Acurácia & TPR & TNR \\
+    0 & 71.0\% & 65\% & 77.0\% \\
+    1 & 71.0\% & 65\% & 77.0\% \\
+    2 & 73.5\% & 70\% & 77.0\% \\
+    3 & 67.0\% & 80\% & 54.0\% \\
+    4 & 75.5\% & 80\% & 71.0\% \\
+    5 & 61.5\% & 50\% & 73.0\% \\
+    6 & 67.0\% & 58\% & 76.0\% \\
+    7 & 75.0\% & 81\% & 69.0\% \\
+    8 & 69.0\% & 71\% & 67.0\% \\
+    9 & 70.0\% & 77\% & 63.0\% \\
     \end{tabular}
-    \caption{Resultados com c4.5 e MRFG sem pesos - base de filmes}
+    \caption{Resultados com c4.5 com altura 1 e MRFG com pesos na base de filmes}
     \label{table:movie_folds_3}
 \end{table}
 
-Agora, diferentemente de antes, é possível perceber a maior estabilidade do sistema e recordar a tabela \ref{table:movies_3f} que nos mostra o resultado final de 70.05\% de acurácia, 70.4\% +- 7.11\% de TNR e 69.7\% +- 9.81\% com baixos percentuais nos desvios padrão.
+Agora, diferentemente de antes, é possível perceber a maior estabilidade do sistema e recordar a tabela \ref{table:movies_3f} que nos mostra o resultado final de 70.05\% de acurácia, 70.4\% $\pm$ 7.11\% de TNR e 69.7\% $\pm$ 9.81\%  de TPR com baixos valores nos desvios padrão.
 
 %Da mesma maneira que foi feita na seção anterior, nós fixamos os demais parâmetros do experimento para melhor avaliar os sistemas de inferência, mantendo o algoritmo de seleção de característica c4.5 (com altura 1, para continuar buscando a geração de regras claras e de fácil leitura para humanos) e 3 conjuntos fuzzy nas variáveis de entrada. A tabela (\ref{table:movies2}) e tabela (\ref{table:amazon2}) mostram, respectivamente, os resultados para este cenário nas bases de filmes e da Amazon.
 %
@@ -516,7 +381,7 @@ Agora, diferentemente de antes, é possível perceber a maior estabilidade do si
 %
 %The W-value is 0. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is significant at p≤ 0.01.
 
-%Os resultados mostram que Método Geral do Raciocínio Fuzzy (MRFG) aumenta o \textit{acuracia} sobre o MRFC, em ambas bases,  mantendo a seleção de características e a quantidade de conjuntos fuzzy inalterados. O resultado do teste \textit{Wilcoxon signed-rank} confirma a melhora significativa do MRFG sobre o MRFC, para $p <= 0.01$. Assim, nessa tarefa de classificação de somente duas classes, positivo e negativo, os resultados mostraram que uma melhor abordagem é considerar todas as regras de uma classe, em vez de uma única com maior grau. Daí, o MRFG foi a nossa escolha para prosseguir nos próximos experimentos com o fim de alcançar melhores resultados nesse trabalho.
+%Os resultados mostram que Método Geral do Raciocínio Fuzzy (MRFG) aumenta o \textit{acuracia} sobre o MRFC, em ambas bases,  mantendo a seleção de características e a quantidade de conjuntos fuzzy inalterados. O resultado do teste \textit{Wilcoxon signed-rank} confirma a melhora significativa do MRFG sobre o MRFC, para $p\leq0.01$. Assim, nessa tarefa de classificação de somente duas classes, positivo e negativo, os resultados mostraram que uma melhor abordagem é considerar todas as regras de uma classe, em vez de uma única com maior grau. Daí, o MRFG foi a nossa escolha para prosseguir nos próximos experimentos com o fim de alcançar melhores resultados nesse trabalho.
 
 %\subsection{Avaliação de uso de pesos nas regras dos sistemas de inferência}
 %
@@ -529,11 +394,11 @@ Agora, diferentemente de antes, é possível perceber a maior estabilidade do si
 %
 %onde $P_j$ é o peso da regra, para $0 <= P_j <= 1$. 
 
-\todo[inline]{discuta qual é idéia por trás do uso de pesos, valorizar regras que de fato auxiliar a distinguir as duas classes e desvalorizar aquelas que não conseguem separar as classes}
+%\todo[inline]{discuta qual é idéia por trás do uso de pesos, valorizar regras que de fato auxiliar a distinguir as duas classes e desvalorizar aquelas que não conseguem separar as classes}
 
 %Uma vez que todas as regras tiveram seus pesos calculados, estes são adicionados ao processo de classificação de ambos os métodos utilizados até aqui, o MRFG e o MRFC. O peso torna-se um fator multiplicador do grau de cada regra. Assim, o MRFC em vez de somente levar em consideração a regra com maior grau de compatibilidade com o documento de teste, vai, agora, levar em consideração a regra com maior grau multiplicado pelo peso da regra. O mesmo acontece para o MRFG ao considerar o grau médio entre as classes positivo e negativo. A tabela (\ref{table:movies2_pesos}) e tabela (\ref{table:amazon2_pesos}) mostram, respectivamente, os resultados para o uso dos pesos nas bases de filmes e da Amazon usando os parâmetros até agora estabelecidos. 
 
-\todo[inline]{discuta mais esses resultados, há uma grande mudança qualitativa dos resultados com uso de pesos, principalmente porque o desvio padrão cai muito, quais foram as regras que ganharam pesos e quais perderam peso? quais os valores de pesos encontrados, são próximos dos valores extremos, 0 e 1? como isso ajuda a explicar os resultados ruins sem peso? discuta o desvio padrão também }
+%\todo[inline]{discuta mais esses resultados, há uma grande mudança qualitativa dos resultados com uso de pesos, principalmente porque o desvio padrão cai muito, quais foram as regras que ganharam pesos e quais perderam peso? quais os valores de pesos encontrados, são próximos dos valores extremos, 0 e 1? como isso ajuda a explicar os resultados ruins sem peso? discuta o desvio padrão também }
 
 %\todo[inline]{as tabelas são para classico ou geral?}
 %\begin{table}[!h]
@@ -574,24 +439,69 @@ Agora, diferentemente de antes, é possível perceber a maior estabilidade do si
 %
 %The W-value is 0. The critical value of W for N = 10 at p≤ 0.05 is 8. Therefore, the result is significant at p≤ 0.05.
 
-%Os resultados corroboraram as conclusões de \cite{ishibuchi2001effect} que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada apenas aplicando pesos às regras geradas. O resultado do teste \textit{Wilcoxon signed-rank} também confirma a melhora significativa do MRFG usando pesos nas regras em vez de somente o grau de compatibilidade, para $p <= 0.01$.
+%Os resultados corroboraram as conclusões de \cite{ishibuchi2001effect} que é possível melhorar o desempenho da classificação sem alterar os conjuntos fuzzy das variáveis de saída e de entrada apenas aplicando pesos às regras geradas. O resultado do teste \textit{Wilcoxon signed-rank} também confirma a melhora significativa do MRFG usando pesos nas regras em vez de somente o grau de compatibilidade, para $p\leq0.01$.
 
 \section{Avaliação com o uso de 2 conjuntos fuzzy}
-\subsection{Avaliação dos algoritmos de seleção de características}
-
 O efeito que os pesos produziram nos sistemas de inferência, mostrou que o conjunto fuzzy "MEDIA" não estava sendo utilizado na classificação dos documentos, pois as regras geradas com esse conjunto fuzzy sempre recebiam pesos próximos de zero ou bem distantes dos pesos recebidos pelas regras que utilizavam os conjuntos "BAIXA" e "ALTA". De fato, a presença desse conjunto para a geração das regras estava influenciando negativamente nas taxas de classificação dos documentos. Assim, nós decidimos remover esse conjunto para ratificar ou não essa hipótese, além de verificar se menos regras e mais simples terão o mesmo desempenho que antes, já que um conjunto a menos na entrada significa menos regras geradas e com antecedentes menores e mais legíveis. Os resultados com dois conjuntos fuzzy na entrada podem ser vistos nas tabelas \ref{table:movies_2f} e \ref{table:amazon_2f}.
 
-É possível observar que os melhores resultados que vimos com três conjuntos fuzzy na entrada, melhoraram um pouco, embora não tenha sido significativo ($p <= 0.01$). Na verdade, podemos notar que, diferentemente de antes, os resultados para os cenários entre c4.5 e CFS não estão tão mais distantes como antes e, na base da Amazon, os resultados obtidos utilizando o CFS superaram muitos dos resultados produzidos com o c4.5. Isso acontece, pois além do CFS selecionar mais características que cobrem mais o espaço dos dados, a regras geradas utilizam agora somente os conjuntos fuzzy que realmente tem capacidade de classificar melhor os documentos, potencializando o conjunto selecionado pelo CFS. 
+\begin{table}[htbp]
+\begin{tabular}{ @{} c*{11}c @{} }
+\rot{CFS} & \rot{C4.5 - Altura 1} & \rot{C4.5 - Altura 2} & \rot{MRFG} & \rot{MRFG c/ Pesos} & \rot{MRFC} & \rot{MRFC c/ Pesos} & Acurácia & TNR & TPR  
+\\ \hline
+	X &  &  & X &  &  &  & 68.60\% $\pm$ 7.6\% & 74.9\% $\pm$ 9.52\% & 62.3\% $\pm$ 13.84\% \\ \hline
+	X &  &  &  & X &  &  & 69.05\% $\pm$ 7.59\% & 68.4\% $\pm$ 24.26\% & 69.7\% $\pm$ 13.15\% \\ \hline
+	X &  &  &  &  & X &  & 66.75\% $\pm$ 7.97\% & 59.7\% $\pm$ 17.60\% & 73.8\% $\pm$ 7.79\% \\ \hline
+	X &  &  &  &  &  & X & 67.5\% $\pm$ 6.73\% & 63.8\% $\pm$ 22.45\% & 71.2\% $\pm$ 12.63\% \\ \hline
+	 & X &  & X &  &  &  & 70.55\% $\pm$ 3.40\% & 71.4\% $\pm$ 5.71\% & 69.7\% $\pm$ 6.03\% \\ \hline
+	 & X &  &  & X &  &  & 70.9\% $\pm$ 3.07\% & 71.2\% $\pm$ 4.33\% & 70.6\% $\pm$ 3.35\% \\ \hline
+	 & X &  &  &  & X &  & 70.55\% $\pm$ 3.40\% & 71.4\% $\pm$ 5.71\% & 69.7\% $\pm$ 6.03\% \\ \hline
+	 & X &  &  &  &  & X & 70.9\% $\pm$ 3.07\% & 71.2\% $\pm$ 4.33\% & 70.6\% $\pm$ 3.35\% \\ \hline
+	 &  & X & X &  &  &  & 70.55\% $\pm$ 3.4\% & 71.2\% $\pm$ 5.54\% & 69.9\% $\pm$ 6.04\% \\ \hline
+	 &  & X &  & X &  &  & 69.65\% $\pm$ 4.12\% & 0.67 $\pm$ 12.74\% & 72.3\% $\pm$ 6.98\% \\ \hline
+	 &  & X &  &  & X &  & 70.55\% $\pm$ 3.4\% & 71.4\% $\pm$ 5.71\% & 69.7\% $\pm$ 6.03\% \\ \hline
+	 &  & X &  &  &  & X & 70.9\% $\pm$ 3.07\% & 71.2\% $\pm$ 4.33\% & 70.6\% $\pm$ 3.35\% \\ \hline
+\end{tabular}
+\caption{Resultados da base de filmes, utilizando 2 conjuntos fuzzy nas variáveis de entrada}
+\label{table:movies_2f}
+\end{table}
 
-Mas, a despeito da redução dos conjuntos fuzzy, a média de características selecionadas se manteve próxima a de 6 entre as duas bases. Além disso, as mesmas características mostradas na tabela \ref{table:features_most_selected} que despontaram antes, se mantiveram como as mais selecionadas entre as bases e entre os métodos de seleção. Por fim, pudemos testar nossas hipóteses de que o conjunto fuzzy "MEDIA" era, de fato, descartável e que menos regras e mais simples puderam produzir resultados tão bons quanto demonstrado anteriormente com mais conjuntos fuzzy.
+\begin{table}[htbp]
+\begin{tabular}{ @{} c*{11}c @{} }
+\rot{CFS} & \rot{C4.5 - Altura 1} & \rot{C4.5 - Altura 2} & \rot{MRFG} & \rot{MRFG c/ Pesos} & \rot{MRFC} & \rot{MRFC c/ Pesos} & Acurácia & TNR & TPR  
+\\ \hline
+	X &  &  & X &  &  &  & 71.9\% $\pm$ 3.63\% & 69.2\% $\pm$ 9.80\% & 74.6\% $\pm$ 10.49\% \\ \hline
+	X &  &  &  & X &  &  & 72.4\% $\pm$ 2.36\% & 68.5\% $\pm$ 6.62\% & 76.3\% $\pm$ 7.08\% \\ \hline
+	X &  &  &  &  & X &  & 70.75\% $\pm$ 2.45\% & 73.2\% $\pm$ 8.71\% & 68.3\% $\pm$ 7.62\% \\ \hline
+	X &  &  &  &  &  & X & 71.5\% $\pm$ 3.04\% & 71.4\% $\pm$ 6.45\% & 71.6\% $\pm$ 7.43\% \\ \hline
+	 & X &  & X &  &  &  & 70.7\% $\pm$ 3.19\% & 77.6\% $\pm$ 2.49\% & 63.8\% $\pm$ 4.99\% \\ \hline
+	 & X &  &  & X &  &  & 70.8\% $\pm$ 3.27\% & 77.2\% $\pm$ 3.54\% & 64.4\% $\pm$ 3.46\% \\ \hline
+	 & X &  &  &  & X &  & 70.7\% $\pm$ 3.19\% & 77.6\% $\pm$ 2.49\% & 63.8\% $\pm$ 4.99\% \\ \hline
+	 & X &  &  &  &  & X & 70.8\% $\pm$ 3.27\% & 77.2\% $\pm$ 3.54\% & 64.4\% $\pm$ 3.46\% \\ \hline
+	 &  & X & X &  &  &  & 68.7\% $\pm$ 3.10\% & 86.9\% $\pm$ 6.56\% & 50.5\% $\pm$ 10.40\% \\ \hline
+	 &  & X &  & X &  &  & 66.9\% $\pm$ 4.12\% & 88.9\% $\pm$ 8.50\% & 44.9\% $\pm$ 15.18\% \\ \hline
+	 &  & X &  &  & X &  & 71.3\% $\pm$ 2.98\% & 76.4\% $\pm$ 3.41\% & 66.2\% $\pm$ 5.6\% \\ \hline
+	 &  & X &  &  &  & X & 70.85\% $\pm$ 2.68\% & 83.5\% $\pm$ 4.96\% & 58.2\% $\pm$ 5.81\% \\ \hline
+\end{tabular}
+\caption{Resultados da base da Amazon, utilizando 2 conjuntos fuzzy nas variáveis de entrada}
+\label{table:amazon_2f}
+\end{table}
+
+\subsection{Avaliação dos algoritmos de seleção de características}
+
+É possível observar que os melhores resultados que vimos com três conjuntos fuzzy na entrada, melhoraram um pouco, embora não tenha sido significativo (Wilcoxon, $p\leq0.01$). Na verdade, podemos notar que, diferentemente de antes, os resultados para os cenários entre c4.5 e CFS não estão tão mais distantes como antes e, na base da Amazon, os resultados obtidos utilizando o CFS superaram muitos dos resultados produzidos com o c4.5. Isso acontece, pois além do CFS selecionar mais características que cobrem mais o espaço dos dados, a regras geradas utilizam agora somente os conjuntos fuzzy que realmente tem capacidade de classificar melhor os documentos, potencializando o conjunto selecionado pelo CFS. 
+
+Mas, a despeito da redução dos conjuntos fuzzy, a média de características selecionadas se manteve próxima a 6 nas duas bases. Além disso, as mesmas características, listadas anteriormente, que despontaram antes, se mantiveram como as mais selecionadas entre as bases e entre os métodos de seleção. Por fim, pudemos testar nossas hipóteses de que o conjunto fuzzy "MEDIA" era, de fato, descartável e que menos regras e mais simples puderam produzir resultados tão bons quanto demonstrado anteriormente com mais conjuntos fuzzy.
 
 \subsection{Avaliação dos sistemas de inferência fuzzy}
 
-Os resultados mostram agora que não há diferenças significativas ($p <= 0.01$) em nenhum dos cenários entre os algoritmos  MRFC e MRFG. Em alguns casos, diferentemente do que ocorria antes com 3 conjuntos, o MRFC obteve, mesmo que somente numericamente, melhor acurácia que o MRFG quando utilizado o c4.5 com altura 2. Outra mudança foi a eliminação do efeito negativo do MRFC de analisar individualmente a classificação de um único documento em vez de analisar todo o conjunto de dados frente às regras, como é feito no MRFG. Isso pode indicar que, essa abordagem do MRFC pode ser afetada diretamente e de maneira mais expressiva pela modelagem das variáveis de entrada, enquanto que o MRFG não sofre igualmente desses efeitos. Além disso, os desvios padrão das medidas de TPR e TNR, mesmo sem utilizar os pesos nas regras, foram reduzidos significativamente, em média, para 8\% entre as bases, contra 21\% utilizando 3 conjuntos fuzzy. 
+Os resultados mostram agora que não há diferenças significativas (Wilcoxon $p\leq0.01$) em nenhum dos cenários entre os algoritmos  MRFC e MRFG. Em alguns casos, diferentemente do que ocorria antes com 3 conjuntos, o MRFC obteve, mesmo que somente numericamente, maior acurácia média que o MRFG quando utilizado o c4.5 com altura 2. Outra mudança foi a eliminação do efeito negativo do MRFC de utilizar para classificação uma única regra ao invés de analisar todo o conjunto de dados frente às regras, como é feito no MRFG. Isso pode indicar que, essa abordagem do MRFC pode ser afetada diretamente e de maneira mais expressiva pela modelagem das variáveis de entrada, enquanto que o MRFG não sofre igualmente desses efeitos. Além disso, os desvios padrão das medidas de TPR e TNR, mesmo sem utilizar os pesos nas regras, foram reduzidos significativamente, em média, para 8\% entre as bases, contra 21\% utilizando 3 conjuntos fuzzy. 
 
-Como os pesos mostraram quais regras seriam descartáveis e, por conseguinte, o conjunto associado, a remoção deste produziu efeitos similares nos resultados do MRFC e do MRFG sem utilizar peso algum. Os resultados melhoraram em todos os cenários, destaque para o uso com o CFS na base da Amazon, pois foram melhores significativamente ($p <= 0.01$), comparando par a par com os cenários da mesma base utilizando 3 conjuntos fuzzy na entrada. 
+Como os pesos mostraram quais regras seriam menos relevantes e, por conseguinte, o conjunto associado, a remoção deste produziu efeitos similares nos resultados do MRFC e do MRFG sem utilizar peso algum. Os resultados melhoraram em todos os cenários, destaque para o uso com o CFS na base da Amazon, pois foram melhores significativamente (Wilcoxon $p\leq0.01$), comparando par a par com os cenários da mesma base utilizando 3 conjuntos fuzzy na entrada. 
 
-A aplicação dos pesos utilizando 2 conjuntos, contudo, não pareceu surtir o mesmo efeito que produziu anteriormente. Os resultados foram inconclusivos quanto à aplicação de pesos nestes cenários com somente 2 conjuntos fuzzy na entrada. Os cenários que utilizaram o c4.5 com altura 1 não surtiram efeito algum. Com altura 2 os pesos reduziram, inclusive, o desempenho da classificação. E nos cenários com CFS, os pesos sempre aumentaram os valores de acurácia da classificação, mesmo que não tenham sido significativos. 
+\todo[inline]{não entendi esse parágrafo seguinte, mesmos efeito em relação a o que? surtir qual efeito? esta seção está discutindo metodo de inferencia}
+\todo[inline]{matheus: era o efeito de melhorar o desempenho. FIcou ruim mesmo. Veja se melhorou}
+
+A aplicação dos pesos utilizando 2 conjuntos, contudo, não pareceu surtir o mesmo efeito que produziu anteriormente de melhorar a acurácia final do classificador. Os resultados foram inconclusivos quanto à aplicação de pesos nestes cenários com somente 2 conjuntos fuzzy na entrada. Os cenários que utilizaram o c4.5 com altura 1 não obtiveram nenhum ganho de desempenho. Com altura 2 os pesos reduziram, inclusive, o desempenho da classificação. E nos cenários com CFS, os pesos sempre aumentaram os valores de acurácia da classificação, mesmo que não tenham sido significativos. 
 
 %Através das últimas seções, foram mostrados resultados utilizando 3 conjuntos fuzzy para modelar nossas variáveis lingüísticas. Seguindo a nossa decisão de usar o c4.5 com altura máxima da árvore de decisão para 1 para reduzir a complexidade das regras geradas e torna-las mais legíveis para seres humanos, nós tentamos reduzir a quantidade de conjuntos fuzzy, usando somente os conjuntos "Baixo" e "Alto", para as variáveis de entrada. Esse experimento tem por fim verificar se há aumento da performance da classificação com regras mais simples e gerais. A tabela (\ref{table:movies2_pesos_2f}) e tabela (\ref{table:amazon2_pesos_2fs}) mostram, respectivamente, os resultados para o uso de somente dois conjuntos fuzzy nas variáveis de entrada nas bases de filmes e da Amazon.
 %
@@ -606,7 +516,7 @@ A aplicação dos pesos utilizando 2 conjuntos, contudo, não pareceu surtir o m
 %    \label{table:movies2_pesos_2fs}
 %\end{table}
 %
-\todo[inline]{parece haver um redução no desvio padrão com uso de 2 conjuntos, porque será que reduziu?}
+%\todo[inline]{parece haver um redução no desvio padrão com uso de 2 conjuntos, porque será que reduziu?}
 %
 %%Result 1 - Z-value
 %%
@@ -662,10 +572,13 @@ A aplicação dos pesos utilizando 2 conjuntos, contudo, não pareceu surtir o m
 \todo[inline]{valorize mais esta seção, o resultado é MUITO interessante, mas o texto não valoriza tanto, compare com os resultados de epinions com regras amazon e filmes. Quando aplicar amazon em filmes e vice versa compare com os resultados obtidos usando as regras da própria base. O uso do classificador de uma base em outra pode indicar a existencia de regras universais e realmente independentes de domínio, mas pode haver necessidade de ajuste na modelagem dos conjuntos ou em outro aspecto talvez}
 \todo[inline]{matheus: como haviamos combinado na sexta, deixaria essa avaliações cruzadas se houvesse tempo ou para o dia da defesa}
 
-Outra avaliação que fizemos foi a validação do uso de regras entre domínios, utilizando a base inteira da Epinions como teste. Foram usadas as regras geradas da base de filmes e da base da Amazon e aplicadas à base da Epinions. Todas as regras de cada fold, em ambas as bases, foram utilizadas para classificar os documentos da Epinions. O resultado final é a media entre esses resultados.\todo[inline]{foram usadas as regras geradas para qual fold amazon ou filmes?}
-\todo[inline]{matheus: todas. Para cada fold eu apliquei as regras na base da epinions. O resultado final é a media entre esses resultados. Coloquei no texto.} Para isso, a base da Epinions passou por pré-processamento, transformação e extração de características, para que as regras pudessem avaliar corretamente os documentos. É importante frisar que nenhuma adaptação foi feita às regras, ou qualquer alteração nas características selecionadas e tão pouco na modelagem dos conjuntos fuzzy para que pudesse essa avaliação entre bases pudesse funcionar corretamente. Da maneira que foram geradas na bases de filmes e Amazon, foram utilizadas na classificação dos documentos da base da Epinions. A tabela \ref{table:epinions} mostra os resultados obtidos.
-\todo[inline]{nenhuma mudança foi feita nas regras fuzzy, mas nenhuma foi feita também nas características selecionadas e na modelagem dos conjuntos, então reforça isso tambem}
-\todo[inline]{matheus: feito} 
+Outra avaliação que fizemos foi a validação do uso de regras entre domínios, utilizando a base inteira da Epinions como teste. Foram usadas as regras geradas da base de filmes e da base da Amazon e aplicadas à base da Epinions.
+%\todo[inline]{foram usadas as regras geradas para qual fold amazon ou filmes?}
+%\todo[inline]{matheus: todas. Para cada fold eu apliquei as regras na base da epinions. O resultado final é a media entre esses resultados. Coloquei no texto.}
+
+Todas as regras de cada fold, em ambas as bases, foram utilizadas para classificar os documentos da Epinions. O resultado final é a media entre esses resultados. Para isso, a base da Epinions passou por pré-processamento, transformação e extração de características, para que as regras pudessem avaliar corretamente os documentos. É importante frisar que nenhuma adaptação foi feita às regras, ou qualquer alteração nas características selecionadas e tão pouco na modelagem dos conjuntos fuzzy para que pudesse essa avaliação entre bases pudesse funcionar corretamente. Da maneira que foram geradas na bases de filmes e Amazon, foram utilizadas na classificação dos documentos da base da Epinions. A tabela \ref{table:epinions} mostra os resultados obtidos.
+%\todo[inline]{nenhuma mudança foi feita nas regras fuzzy, mas nenhuma foi feita também nas características selecionadas e na modelagem dos conjuntos, então reforça isso tambem}
+%\todo[inline]{matheus: feito} 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
@@ -678,13 +591,17 @@ Outra avaliação que fizemos foi a validação do uso de regras entre domínios
     \label{table:epinions}
 \end{table}
 
-Os resultados mostram que as regras geradas podem ser usadas entre domínios diferentes, produzindo resultados próximos ou melhores que os produzidos nas próprias bases, como pode ser visto na tabela \ref{table:epinions}. 
+\todo[inline]{os valores de TPR são muito mais altos que os de TNR, indicando que a classificação funcionou muito melhor para os documentos positivos, mas teve comportamento pior para os negativos, particularmente com regras da base da Amazon, isso ocorria com os dados das bases anteriores? comenta essa observação e a comparação no texto}
+\todo[inline]{matheus: não consegui encontrar esse padrão entre TPR e TNR nas bases. Então eu fiz fiz a observacao sobre esse resultado e adicionei um possivel indicio de que isso pode ocorrer devido ao enviesamento natural pra o lado positivo}
 
-\section{Outros resultados}
+Os resultados mostram que as regras geradas podem ser usadas entre domínios diferentes, produzindo resultados próximos ou melhores que os produzidos nas próprias bases, como pode ser visto na tabela \ref{table:epinions}. Além disso, os resultados também trazem a tona que foi muito mais fácil classificar documentos positivos que os negativos em ambas as bases. Embora não conclusivo, esse enviesamento para os documentos positivos pode ser um indicativo do enviesamento do uso de dicionários de opiniões que mostram uma tendência para classificar o sentimento geral de um documento para a positividade, devido a tendência natural do ser humano de utilizar linguagem positiva e evitar termos negativos \cite{boucher1969pollyanna, kennedy2006sentiment}.
 
-Cinquenta e sete características foram extraídas dos documentos para realizar os experimentos dessa pesquisa e as características mostradas na tabela \ref{table:features_most_selected} sempre foram selecionadas pelos algoritmos de seleção de características (CFS e c4.5 com diferentes alturas). Essas características englobam unigrams e bigrams formados por advérbios e adjetivos. Esses resultados corroboram quase que completamente os n-grams propostos por \citeonline{turney2002thumbs}, formados em sua maioria por advérbios e adjetivos; reiteram também a importância central dos adjetivos na mineração e classificação de opiniões, como apontado por \citeonline{voll2007not}; além de reforçar o proposto por \citeonline{benamara2007sentiment} que advérbios tem significativa influência como modificadores de intensidade dos adjetivos.
+\section{Comparação com classificador SVM}
 
-Também comparamos a configuração final do nosso classificador com um método clássico de aprendizado de máquina muito utilizado na tarefa de mineração de opinião, o \textit{Support Vector Machine} (SVM), e que geralmente produz bons resultados, como ser visto em \citeonline{moraes2012document}, \citeonline{pang2002thumbs}, \citeonline{pang2004sentimental} e \citeonline{wilson2004just}. 
+\todo[inline]{esse primeiro parágrafo poderia ir para a discussão final do capítulo}
+\todo[inline]{matheus: ja foi}
+
+Realizamos uma comparação da configuração final do nosso classificador com um método clássico de aprendizado de máquina muito utilizado na tarefa de mineração de opinião, o \textit{Support Vector Machine} (SVM), e que geralmente produz bons resultados, como ser visto em \citeonline{moraes2012document}, \citeonline{pang2002thumbs}, \citeonline{pang2004sentimental} e \citeonline{wilson2004just}. 
 
 \begin{table}[!h]
     \begin{tabular}{lll}
@@ -724,9 +641,31 @@ Também comparamos a configuração final do nosso classificador com um método 
 %
 %The W-value is 15.5. The critical value of W for N = 10 at p≤ 0.01 is 3. Therefore, the result is not significant at p≤ 0.01.
 
-Nossos resultados mostram que o classificador construído nesse trabalho equivale aos resultados do SVM, pois em ambas as bases as diferenças dos resultados não são significativas para $p <= 0.01$. Contudo, nosso classificador possui regras legíveis para seres humanos, é independente de domínio e não precisa de nova rodada de treino para diferentes bases, diferentemente do SVM.
+Nossos resultados mostram que o classificador construído nesse trabalho equivale aos resultados do SVM, pois em ambas as bases as diferenças dos resultados não são significativas (Wilcoxon, $p\leq0.01$). O SVM, inclusive, se utilizado com as características definidas e extraídas nessa pesquisa, torna-se tão independente de domínio quanto nossa abordagem podendo, inclusive, a ser utilizado entre bases e produzir bons resultados. No entanto, nossa proposta, utilizando sistemas fuzzy, produz um classificador que se utiliza de regras legíveis para seres humanos, sendo mais fácil de ser interpretado e compreendido. 
+
+\todo[inline]{note que o SVM quando aplicado em características extraídas da base (e não em bag-of-words, é tão independente de domínio quanto a nossa abordagem, poderíamos até usar o classificador svm treinado em uma base para classificar outra base, pode comentar isso no texto, e depois dizer que: no entanto, nossa proposta utilizando sistema fuzzy, produz um classificador mais fácil de ser interpretado e compreendido}
+\todo[inline]{matheus: feito}
 
 \todo[inline]{falta uma seção final de discussão geral dos resultados para fechar esse capítulo, revisando os achados e fazendo uma avaliação geral de tudo}
 \todo[inline]{matheus: não ficaria melhor fazer esse apanhado no inicio da conclusao? Dai eu retomava a introducao, com proposta e objetivos, passava pelos resultados e iniciava a conclusão}
+\todo[inline]{a conclusão não deve fazer novas discussões, estou propondo fazer uma seção final aqui nos resultados para revisar os principais achados sobre resultados, como dizer que c4.5 e CFS tem comportamentamento semelhante em termos de desempenho, que ambos conseguiram reduzir enormemente o número de características, de 57 para 1 ou 6, reduzindo custo computacional, que a introdução de pesos auxilia muito na inferencia, pois algumas regras criadas pelo wang-mendel atrapalharam a inferencia, que a modelagem dos conjuntos fuzzy influenciaram a qualidade do processo de classificação, que os resultados obtidos demonstraram que é possível obter melhores resultados fazendo alterações no sistema fuzzy, que você conseguiu identificar poucas características extrapidas dos dados que tem grande relevância para a classificação, uma delas veio de um trabalho anterior e a outra foi proposta por este trabalho, etc.}
+\todo[inline]{matheus: feito}
+
+\section{Considerações finais}
+
+Cinqüenta e sete características foram extraídas dos documentos para realizar os experimentos dessa pesquisa e as características destacadas anteriormente: 
+
+\begin{itemize}
+\item A diferença entre as somas positiva e negativa de adjetivos e bigrams compostos estritamente por advérbio e adjetivo;
+\item E a diferença entre as somas positiva e negativa de unigrams e bigrams combinados.
+\end{itemize}
+
+sempre foram selecionadas pelos algoritmos de seleção de características (CFS e c4.5 com diferentes alturas). Essas características englobaram unigrams e bigrams formados por advérbios e adjetivos. Esses resultados corroboram quase que completamente os n-grams propostos por \citeonline{turney2002thumbs}, formados em sua maioria por advérbios e adjetivos; reiteram também a importância central dos adjetivos na mineração e classificação de opiniões, como apontado por \citeonline{voll2007not}; além de reforçar o proposto por \citeonline{benamara2007sentiment} que advérbios tem significativa influência como modificadores de intensidade dos adjetivos. 
+
+É importante notar que essas duas características foram derivadas de outros trabalhos, mas que não são encontradas, até o presente momento da escrita, em nenhum outro trabalho da área. Elas foram identificadas e definidas nessa pesquisa. Além disso, os algoritmos de seleção c4.5 e CFS apresentaram comportamento semelhante em termos de desempenho e ambos conseguiram reduzir drasticamente o número de características iniciais, de 57 para 1 ou 6, a depender do algoritmo. Isso, antes de tudo, reduziu o custo computacional e ainda aumentou o desempenho do classificador. 
+
+Em relação aos algoritmos de classificação, pudemos perceber que a introdução dos pesos auxilia muito no processo de inferência, pois algumas regras criadas pelo método de Wang-Mendel atrapalharam a na inferência e, por conseguinte, na classificação dos documentos. Ainda como resultados da introdução dos pesos, nos fez perceber que a nossa modelagem das variáveis de entrada poderiam melhora, já que as regras que utilizavam o conjunto "MÉDIA" não estavam sendo utilizadas. Isso nos mostrou que modelagem dos conjuntos fuzzy influencia bastante na qualidade do processo de classificação.
+
+A próxima seção conclui essa pesquisa e apresenta novos direcionamentos para trabalhos futuros na área.
 
 \end{document}

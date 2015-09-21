@@ -99,13 +99,14 @@ O SentiWordNet 3.0 (SWN) é a terceira versão do SentiWordNet, apresentado por 
  
  \todo[inline]{by mgpires: A figura 3.2 aparece no texto antes de ser referenciada. É melhor coloca-la depois. Segundo, esta figura está legível para o leitor?}
  \todo[inline]{para melhorar a legibilidade da figura 3.2, clica ctrl e + para aumentar a fonte antes de capturar a tela}
+ \todo[inline]{matheus: se eu der zoom, passa da tela. Deve ser o tamanho da figura. Aumentei, mas passou da margem}
 
 O método de criação do SWN se baseia num conjunto de classificadores ternários \footnote{Um classificador \textit{n-ário} é um dispositivo que atribui a cada objeto exatamente um rótulo a partir de um conjunto pré-definido de $n$ rótulos.} que são capazes de decidir quando um \textit{synset} é positivo, negativo ou objetivo \cite{esuli2006sentiwordnet}. Cada classificador difere um do outro pelos conjuntos de treinos, produzindo diferentes resultados para os \textit{synsets} do Wordnet. O escore final do \textit{synset} é determinado pela proporção normalizada dos classificadores ternários que conseguiram associar um rótulo ao \textit{synset}. Se todos os classificadores concordarem em associar o mesmo rótulo para um \textit{synset}, aquele rótulo (e.g. positivo) terá escore máximo para aquele \textit{synset}. De outra forma, cada rótulo terá um escore proporcional ao número de classificadores que associaram um rótulo a ele. Por exemplo, 3 classificadores assinalaram positivo para um dado \textit{synset}, um outro classificou o \textit{synset} como negativo, e nenhum conseguiu classifica-lo como objetivo. Assim o \textit{synset} terá $Pos(s) = 0.75$, $Neg(s) = 0.25$ e $Obj(s) = 0$. Como a proporção é normalizada, os valores estão num intervalo $[0,1]$ e a soma dos três escores também sempre será igual a 1. Assim, é possível que existam (e existem) \textit{synsets} que tenham todos os três graus diferentes de zero, indicando que há termos positivos, negativos e objetivos ao mesmo tempo \cite{esuli2006sentiwordnet}. 
 
 \begin{figure}[h]
 \caption{Exemplo dos \textit{synsets} do unigram \textit{happy} no SWN}
 \centering
-\includegraphics[scale=0.35]{happy_synsets}
+\includegraphics[scale=0.40]{happy_synsets}
 \label{figura:happy_synsets}
 \end{figure}
  
@@ -129,8 +130,9 @@ O uso de dicionários construídos automaticamente, como o SWN, superam problema
 \subsection{Definição da polaridade}
 
 \todo[inline]{mgpires: Sugestão: retirar as sub-seções de 3.2.2}
+\todo[inline]{matheus: JAZ}
 
-\subsubsection{Unigrams}
+%\subsubsection{Unigrams}
 
 %todo[inline]{retirar as subseções "unigrams" e "bigrams e trigrams".}
 
@@ -146,7 +148,7 @@ A repetição da palavra \textit{great} sugere que a pessoa que escreveu a crít
 
 Outra análise relacionada à definição da polaridade de um unigram foi o enviesamento positivo. Classificadores que utilizam dicionários de opiniões geralmente mostram uma tendência para classificar o sentimento geral de um documento para a positividade, devido a tendência natural do ser humano de utilizar linguagem positiva e evitar termos negativos \cite{boucher1969pollyanna, kennedy2006sentiment}. Para tentar diminuir esse enviesamento, nós utilizamos uma abordagem proposta por \citeonline{taboada2011lexicon}, que consiste em aumentar em 50\% a polaridade de todo unigram negativo. 
 
-\subsubsection{Bigrams e trigrams}
+%\subsubsection{Bigrams e trigrams}
 
 O dicionário de opiniões provê a polaridade somente para os unigrams. Para bigrams e trigrams, tivemos de considerar a influência entre as palavras desses n-grams. Conforme vimos na etapa de pré-processamento, os bigrams e trigrams propostos nesse trabalho são compostos por advérbios e adjetivos ou somente por advérbios. Os advérbios que antecedem os adjetivos ou advérbios nos n-grams são chamados de modificadores, intensificadores ou atenuadores, pois alteram a polaridade das palavras que os acompanham \cite{voll2007not}. Os intensificadores aumentam o grau da polaridade do unigram, seja ele positivo ou negativo, e os atenuadores diminuem. O exemplo a seguir, com polaridades retiradas do SWN, e modificação dos adjetivos pelos advérbios realizada nesse trabalho, ilustram a influência dos advérbios sobre os adjetivos.  
 
@@ -250,27 +252,40 @@ Desta forma, as características extraídas dos documentos foram as seguintes:
      \item advérbios negativos
      
      \todo[inline]{nos itens e, f, g, h não seria apenas a partir de "bigrams positivos compostos por..."? Isso porque, adjetivos e advérbios foram contemplados nos itens a, b, c, d.}
+     \todo[inline]{matheus: Nao, pois é a junção, por exemplo, de adjetivos positivos e bigrams positivos compostos por... Vou reescrever pra n deixar duvidas}
      
-     \item adjetivos e bigrams positivos compostos por advérbio e adjetivo
-     \item adjetivos e bigrams negativos compostos por advérbio e adjetivo
-     \item advérbios e bigrams positivos compostos somente por advérbios
-	 \item advérbios e bigrams negativos compostos somente por advérbios
+     \item adjetivos positivos e bigrams positivos compostos por advérbio e adjetivo
+     \item adjetivos negativos e bigrams negativos compostos por advérbio e adjetivo
+     \item advérbios positivos e bigrams positivos compostos somente por advérbios
+	 \item advérbios negativos e bigrams negativos compostos somente por advérbios
 	 \item unigrams e bigrams positivos
 	 \item unigrams e bigrams negativos
 	 \item unigrams, bigrams e trigrams positivos 
 	 \item unigrams, bigrams e trigrams negativos
   \end{enumerate}
-  \item Diferença entre a soma e a contagem: 
-\todo[inline] {explicar melhor esta caracteristica. Esta característica significa: diferença entre as somas dos n-grams positivos e negativos. Diferença entre as contagens dos n-grams positivos e negativos?} 
+  \item Diferença entre as somas: 
+\todo[inline] {explicar melhor esta caracteristica. Esta característica significa: diferença entre as somas dos n-grams positivos e negativos. Diferença entre as contagens dos n-grams positivos e negativos?}
+\todo[inline]{matheus: dividi em dois para não deixar duvidas para os leitores ,mesmo que fique repetitivo.}
   
   \begin{enumerate}
      \item Dos adjetivos positivos e negativos
      \item Dos advérbios positivos e negativos
-     \item positiva e negativa de adjetivos e bigrams compostos por advérbio e adjetivo
-     \item positiva e negativa de advérbios e bigrams compostos somente por advérbios
-     \item positiva e negativa de unigrams e bigrams
-     \item positiva e negativa de unigrams, bigrams e trigrams
+     \item positivas e negativas de adjetivos e bigrams compostos por advérbio e adjetivo
+     \item positivas e negativas de advérbios e bigrams compostos somente por advérbios
+     \item positivas e negativas de unigrams e bigrams
+     \item positivas e negativas de unigrams, bigrams e trigrams
   \end{enumerate}
+  
+   \item Diferença entre as quantidades:
+  \begin{enumerate}
+     \item Dos adjetivos positivos e negativos
+     \item Dos advérbios positivos e negativos
+     \item positivas e negativas de adjetivos e bigrams compostos por advérbio e adjetivo
+     \item positivas e negativas de advérbios e bigrams compostos somente por advérbios
+     \item positivas e negativas de unigrams e bigrams
+     \item positivas e negativas de unigrams, bigrams e trigrams
+  \end{enumerate}
+  
   \item Valores máximos para:
   \begin{enumerate}
 	\item Classe da polaridade máxima entre os adjetivos de um documento (1 se o maior valor absoluto entre as polaridades for positivo ou -1 se for negativo)
@@ -296,21 +311,16 @@ Depois de extraídas as características dos documentos, é preciso selecionar q
 
 %Além de reduzir a quantidade de características a serem analisadas e tornar a etapa de classificação mais eficiente/efetiva, também reduz a dimensionalidade do vetor de características. 
 
-Para realizar a seleção de características nós usamos dois algoritmos, o \textit{Correlation-based Feature Selection} (CFS) e o C4.5 \cite{cintra2008fuzzy}. 
+Seguindo a proposta de \citeonline{cintra2008fuzzy} de avaliação de métodos de seleção de características aplicados a construção de sistemas fuzzy, decidimos usar o c4.5 e o CFS para a seleção de características neste trabalho.
 
 \todo[inline]{Matheus, para o C4.5, insira esta referência: J. R. Quinlan. C4.5 Programs for Machine Learning. Morgan Kaufmann, CA, 1988. E para o CFS: M. A. Hall. Correlation-based feature selection for discrete and numeric class machine learning. In Proc. 17th International Conf. on Machine Learning, pages 359–366. Morgan Kaufmann, San Francisco, CA, 2000.
 
 Tire a referencia de Cintra para o C4.5}
 
-Em \citeonline{cintra2008fuzzy} é apresentado o uso destes algoritmos de seleção de características no âmbito da lógica fuzzy e de regras fuzzy, conceitos chave do nosso trabalho. 
-
-A hipótese central do CFS é que um bom conjunto de características contém características que são altamente correlacionadas com a classe, mas sem qualquer correlação umas com as outras. O CFS é um algoritmo que junta essa hipótese com uma medida de correlação apropriada e uma heurística de estratégia de busca \cite{hall1999correlation}. Dessa etapa de seleção, o CFS produz uma lista das características mais aptas a classificar os documentos da base. 
-
 \todo[inline]{essa explicação do CFS não está boa, pode partir da tese de Hall: 'The central hypothesis is that good feature sets contain features that are highly correlated with the class, yet uncorrelated with each other. [..] CFS
 (Correlation based Feature Selection) is an algorithm that couples this evaluation formula with an appropriate correlation measure and a heuristic search strategy'}
 \todo[inline]{Eu tinha usado exatamente ela, mas ainda assim alterei de acordo com o comentário}
-
-O algoritmo C4.5, por outro lado, gera uma árvore de decisão que é normalmente usada para a tarefa de classificação \cite{quinlan19934}. Todavia, para construir essa árvore de decisão, esse algoritmo seleciona as melhores características entre as existentes a cada nó gerado. Portanto, uma árvore de decisão é construída, e o resultado é uma lista das características mais aptas ordenadas por relevância. Sendo assim, quando se usa o C4.5 para seleção de características, a quantidade de características selecionadas depende da altura da árvore, determinada por um parâmetro.
+\todo[inline]{matheus: foi para a fundamentacao}
 
 Após a seleção das características mais aptas para representar os documentos do domínio escolhido, estas são passadas para a etapa de classificação. 
 
@@ -495,8 +505,9 @@ A avaliação dos resultados deste trabalho foi feita usando a metodologia valid
 %\todo[inline]{matheus: tentei justificar embaixo}
 
 \todo[inline]{mgpires: Matheus, acho melhor trocar a referência de Garcia et al para Fawcett (2006) An introduction to ROC analysis, Pattern Recognition Letters 27 (2006) 861–874}
+\todo[inline]{matheus: mudei}
 
-As medidas usadas para avaliar o desempenho da classificação do sistema foram a \textit{acurácia}, a taxa de verdadeiros positivos (TPR) e a taxa de verdadeiros negativos (TNR) \cite{garcia2012multi}. A \textit{acurácia} (equação \ref{eq:acccuracy}) é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos.
+As medidas usadas para avaliar o desempenho da classificação do sistema foram a \textit{acurácia}, a taxa de verdadeiros positivos (TPR) e a taxa de verdadeiros negativos (TNR) \cite{fawcett2006introduction}. A \textit{acurácia} (equação \ref{eq:acccuracy}) é uma medida da razão entre a soma dos documentos positivos (TP) e negativos (TN) corretamente classificados e o total de documentos.
 
 \begin{equation}
 acuracia =  (TP + TN) / Total

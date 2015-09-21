@@ -92,7 +92,7 @@ Também denominado nível de entidade e características, o nível de entidade e
 
 O processo de mineração de opinião tipicamente envolve algumas etapas desde a preparação dos dados dos documentos até a classificação destes. É comum encontrar os trabalhos relacionados as seguintes etapas para minerar e classificar opiniões:  i) definição do domínio, ii) pré-processamento, iii) transformação, iv) seleção de características, v) classificação e vi) análise dos resultados \cite{moraes2012document}. 
 
-A definição do domínio é a fase em qye são selecionadas os tipos de dados que serão utilizados para o estudo, como filmes, hotéis, produtos, etc. O pré-processamento é a etapa em que as bases escolhidas são estruturadas para serem utilizadas nas próximas etapas, como a eliminação de termos indesejados, erros de grafia, dentre outros. A transformação é o momento em que os termos estruturados do pré-processamento são transformados em dados numéricos. A extração e seleção de características envolve a obtenção de características descritivas dos documentos a partir dos dados anteriores, assim como, a seleção das características mais relevantes. É importante observar que a extração de características não é tão comum de ser encontrada. De fato, é típico encontrar trabalhos que não é feita qualquer extração e a seleção é realizada diretamente sobre os dados oriundos do pré-processamento. A etapa de classificação é onde os documentos são classificados, utilizando das características selecionadas na etapa anterior. E, no fim do processo, é na a etapa de avaliação que são realizadas as análises dos resultados obtidos pelo classificador.
+A definição do domínio é a fase em que são selecionadas os tipos de dados que serão utilizados para o estudo, como filmes, hotéis, produtos, etc. O pré-processamento é a etapa em que as bases escolhidas são estruturadas para serem utilizadas nas próximas etapas, como a eliminação de termos indesejados, erros de grafia, dentre outros. A transformação é o momento em que os termos estruturados do pré-processamento são transformados em dados numéricos. A extração e seleção de características envolve a obtenção de características descritivas dos documentos a partir dos dados anteriores, assim como, a seleção das características mais relevantes. É importante observar que a extração de características não é tão comum de ser encontrada. De fato, é típico encontrar trabalhos que não é feita qualquer extração e a seleção é realizada diretamente sobre os dados oriundos do pré-processamento. A etapa de classificação é onde os documentos são classificados, utilizando das características selecionadas na etapa anterior. E, no fim do processo, é na a etapa de avaliação que são realizadas as análises dos resultados obtidos pelo classificador.
 
 O resto dessa seção detalha os principais conceitos envolvidos em cada etapa do processo de mineração de opinião.
 
@@ -317,11 +317,86 @@ Numa descrição mais extensa, segundo \cite{gomide1995conceitos}, um sistema fu
     \includegraphics[width=0.9\textwidth]{sistema_nebuloso}
 \end{figure}
 
-WANG-MENDEL
+Há duas formas básicas de se definir a base de regras de SBRF: manual e automática. A definição manual depende inteiramente do conhecimento dos envolvidos sobre o assunto para definir as regras fuzzy. A definição automática, por outro lado, depende da utilização de algoritmos de geração de regras fuzzy e um deles é o método de Wang-Mendel \cite{wang1992generating}.
 
-RACIOCINIO FUZZY
+A ideia central do método de Wang-Mendel é gerar regras fuzzy a partir de pares de dados numéricos, utilizando a modelagem das variáveis lingüísticas em conjuntos fuzzy, criando, assim, uma base comum de regras para o SBRF. Esse método é composto basicamente por 5 passos: 1) modelagem das variáveis linguísticas de entrada e de saída em conjuntos fuzzy e divisão dos dados em pares; 2) geração das regras a partir da modelagem do passo anterior; 3) Calculo de um grau para cada regra gerada; 4) remoção das regras conflitantes e 5) criação da base comum de regras fuzzy.
+
+A primeira etapa de modelagem das variáveis linguísticas é transforma-las em conjuntos fuzzy. Variáveis linguísticas podem ser "alto", "baixo", "medio", "neutro", "positivo", dentre outras. É nessa etapa que os projetistas do SBRF mapeiam essas variáveis em conjuntos fuzzy. Uma vez mapeadas as variáveis, os dados precisam ser divididos em pares, entrada e saída. Ao fim dessa etapa, têm-se um conjunto de dados numéricos, divididos em pares e mapeados para os conjuntos fuzzy. 
+
+A etapa seguinte, de geração de regras, é onde as primeiras regras são geradas. Cada par de dados origina uma regra fuzzy e essa regras são passadas para a próxima etapa. Na etapa 3 é onde se calcula os chamados graus de compatibilidade das regras. Nessa etapa, todas as regras geradas avaliam cada par de dados existentes, calculando o quanto compatível aquela regra é com o par de dados em questão. Após essa etapa, um valor numérico, chamado de grau de polaridade, é associado a cada regra avaliada  \cite{wang1992generating}.
+
+Uma vez geradas as regras e calculados os graus de compatibilidade, é preciso remover regras contraditórias e decidir entre regras iguais. É no quarto passo que é feita essa filtragem das regras. Na geração indiscriminada de regras, é comum surgirem regras que tenham antecedentes iguais e conseqüentes diferentes, como "Se a opinião é ALTA então ela é POSITIVA" e "Se a opinião é ALTA então ela é NEGATIVA". A decisão de qual regra utilizar é baseada no grau associado a cada regra. A que tiver o maior grau associado, é selecionada para a base final de regras. Além disso, regras repetidas (com antecedentes e conseqüentes idênticos) são também descartadas. Por fim, o último passo é a apresentação da base comum de regras geradas.
+
+Existem vários modelos de sistemas nebulosos. Na maioria dos casos, o antecedente é formado por proposições linguísticas e a distinção entre os modelos se dá no consequente das regras nebulosas. Entre os modelos mais conhecidos estão o de Mamdani \cite{mamdani1975experiment}, que utiliza conjuntos nebulosos também nos conseqüentes das regras nebulosas, Takagi-Sugeno \cite{takagi1985fuzzy}, no qual o consequente é representado por uma função das variáveis de entrada e Tsukamot \cite{tsukamoto1979approach}, que utiliza funções de pertinência monotônicas no consequente. Dentre os poucos trabalhos encontrados que aplicam conceitos fuzzy em mineração de opinião, todos seguiram o modelo de Mamdani em que a saída final é representada por um conjunto nebuloso resultante da agregação da saída inferida de cada regra.
+
+Assim, para se determinar a saída de um SBRF é necessário definir um mecanismo de inferência fuzzy. Há dois métodos propostos por \citeonline{cordon1999proposal} em que a saída final é representada por um conjunto nebuloso, o Método de Raciocínio Fuzzy Geral (MRFG) e o Método de Raciocínio Fuzzy Clássico (MRFC), muito utilizados em sistemas de classificação fuzzy \cite{cintra2008fuzzy}.
+
+O MRFC classifica um exemplo usando a regra que tem o maior grau de compatibilidade com o exemplo. Seja $e_p = (a_{p1}, a_{p2}, \cdots, a_{pm})$ um exemplo para ser classificado, e {$R_1,R_2, \cdots, R_s$} o conjunto de regras do sistema de classificação, cada uma com $m$ antecedentes e $A_{il_i}(a_{p_i}), i = 1, \cdots, m$, ser o grau de pertinência de uma característica $a_{p_i}$ para o conjunto fuzzy $i$ da regra $R_k$, o MRFC aplica os seguintes passos para classificar o exemplo $e_p$ \cite{cintra2012genetic}:
+
+\begin{enumerate}
+\item Calcula o grau de compatibilidade entre o exemplo $e_p$ e cada regra $R_k$, para $k = 1, \cdots, s$ e a norma \textbf{t}, através da equação \ref{eq:compat}:
+\begin{equation}
+Compat(R_k, e_p) = \textbf{t}(A_{1l_1}(a_{p_1}), A_{2l_2}(a_{p_2}), \cdots, A_{ml_m}(a_{p_m}))
+\label{eq:compat}
+\end{equation}
+\item Encontra a regra $R_{kmax}$ que tem o maior grau de compatibilidade com o exemplo:
+\begin{equation}
+Compat(R_{kmax}, e_p) = max{Compat(R_k, e_p)}, k = 1,2, \cdots, s
+\end{equation}
+\item Associa a classe $c_j$ ao exemplo $e_p$, onde $c_j$ é a classe definida pela regra máxima $R_{kmax}$
+\end{enumerate}
+
+A figura \ref{fig:mrfc} ilustra bem esse processo.
+
+\begin{figure}[H]  
+  \caption{Método de Raciocínio Fuzzy Clássico (MRFC)}
+  \label{fig:mrfc}
+  \centering
+    \includegraphics[width=0.9\textwidth]{mrfc}
+\end{figure}
+
+O MRFG, por outro lado, classifica um exemplo considerando todos os demais exemplos em relação as classes finais. Os seguintes passos mostram como MRFG funciona:
+
+\begin{enumerate}
+\item De maneira similar ao MRFC, o MRFG calcula os graus de compatibilidade entre o exemplo $e_p$ e cada regra $R_k$, para $k = 1, \cdots, s$.
+\item Calcula o valor de classificação $Class_c$, para cada classe. $Class_c$ é definida como a agregação dos graus de compatibilidade de todas as regras da classe $c_i$, e representa a compatibilidade do exemplo com todas as regras da classe $c_i$. Ele pode ser definido como:
+\begin{equation}
+Class_c = f{Compat(R_k, e_p)|c_i \, \acute{e}\, a\, classe\, da\, regra\, R_k}
+\end{equation}
+onde $f$ é o operador de agregação.
+\item A classe com o maior grau é assinalada para o exemplo $e_p$.
+\end{enumerate}
+
+A figura \ref{fig:mrfg} ilustra bem esse processo.
+
+\begin{figure}[H]  
+  \caption{Método de Raciocínio Fuzzy Geral (MRFG)}
+  \label{fig:mrfg}
+  \centering
+    \includegraphics[width=0.9\textwidth]{mrfg}
+\end{figure}
 
 \section{Trabalhos relacionados}
+
+Nesta seção serão discutidos os trabalhos encontrados, até agora, sobre mineração de opinião. É importante ressaltar novamente que poucos trabalhos foram encontrados na literatura sobre aplicação de lógica fuzzy sobre mineração de opiniões e extração e utilização de características de documentos para classificação. 
+
+Um dos primeiros trabalhos a se destacar na área de mineração de opinião foi o de \citeonline{turney2002thumbs}, apresentando uma abordagem de classificação não supervisionada. Similar à tarefa de classificar documentos como positivos ou negativos, \citeonline{turney2002thumbs} propôs classificar opiniões como "recomendadas" (\textit{thumbs up} ou "não recomendadas" (\textit{thumbs down}). A classificação de um documento contendo as opiniões é feita através da média da polaridade do sentimento geral das opiniões das palavras num documento que continha adjetivos e advérbios. \citeonline{turney2002thumbs} conseguiu resultados de até 74\% em média entre os domínios que realizou sua pesquisa.
+
+Paralelamente, \citeonline{pang2002thumbs} foi um dos primeiros a apresentar uma abordagem que utiliza técnicas clássicas de aprendizado de máquina para mineração de opinião. Ele comparou o desempenho entre os métodos \textit{Naive Bayes}, \textit{Maximum Entropy} e \textit{Support Vector Machine} (SVM). Esse trabalho mostrou que tais métodos produzem altas taxas de acurácia, alcançando 82,9\% de acurácia usando palavras isoladas (unigrams) com o SVM. Ainda mostrou que técnicas de aprendizado supervisionado produzem melhores resultados que técnicas de aprendizado não supervisionado. Contudo, a proposta apresentada por \citeonline{pang2002thumbs} é dependente do domínio utilizado, produzindo resultados muito ruins em outros tipos de dados, demandando outras rodadas de treinamento do classificador, aumentando custo e tempo para classificar os documentos.
+
+Um pouco mais relacionados a esta pesquisa, os trabalhos de \citeonline{wilson2005recognizing}, \citeonline{taboada2008extracting}, e \citeonline{ohana2009sentiment} usaram um grande número de características dos documentos. Essas características envolveram desde a contagem de adjetivos e advérbios em frases e no documento inteiro, tuplas de palavras (bigrams e trigrams), como advérbios e adjetivos combinados, até a soma das polaridades destes mesmo n-grams e muitos outros. \citeonline{taboada2008extracting} e \citeonline{ohana2009sentiment} foram um dos poucos a apresentar o uso de dicionários de opiniões, nesse caso, o Sentiwordnet \cite{esuli2006sentiwordnet} que associa às palavras valores numéricos referentes as polaridades opiniativas. Na classificação de documentos como positivos ou negativos, estes trabalhos apresentaram 65,7\% de acurácia em \citeonline{wilson2005recognizing}, 80,6\% em \citeonline{taboada2008extracting} e 69,35\% em \citeonline{ohana2009sentiment}.
+
+Em relação a aplicação da lógica fuzzy, nós encontramos o trabalho de \citeonline{nadali2010sentiment}. Ele propõe um modelo de lógica fuzzy para executar classificação de opinião de clientes em cinco classes: muito fraca, fraca, moderada, muito forte e forte. Além disso, ele apresentou uma metodologia que indica o uso de sistemas de inferência, conjuntos fuzzy que modelam as cinco classes mencionadas e a criação manual de regras fuzzy. Contudo, o artigo de \citeonline{nadali2010sentiment} não apresentou resultados ou qualquer discussão a respeito.
+
+Outro trabalho encontrado foi o de \citeonline{ballhysa2012fuzzy} que propõe uma abordagem fuzzy para descobrir opiniões em postagens de blogs, determinando a polaridade do sentimento geral da postagem. Os autores apresentam conceitos fuzzy, como conjuntos fuzzy, operações entre conjuntos fuzzy, propõem um conjunto de medidas fuzzy e uma agregação fuzzy dessas medidas, embora um sistema fuzzy de inferência não seja utilizado. Contudo, as medidas fuzzy propostas parecem corresponder a medidas não fuzzy (\textit{crip}), mostrando que há, de fato, aplicação própria da lógica fuzzy no trabalho. Além disso, existe uma superficial descrição dos resultados obtidos de um conjunto de dados criados por eles mesmos e sem comparação com nenhum outro.
+
+\citeonline{bing:2012} foi um dos poucos a apresentar um proposta fuzzy com resultados claros. Ele utiliza a lógica fuzzy  juntamente com ontologias de domínio para minerar opiniões de avaliações de produtos. Este trabalho aborda o problema da sobrecarga de informações que a web possui e a impossibilidade de catalogar as informações manualmente. Frente a essa motivação, o trabalho de \citeonline{bing:2012} apresenta um nova proposta oriunda da junção de conjuntos fuzzy e ontologias de domínio que os autores chamam de árvore de sentimentos de ontologias de domínios fuzzy (tradução livre de \textit{fuzzy domain ontology sentiment tree} - FDOST). Essa proposta extrai atributos de produtos das opiniões, constrói uma arvore de relacionamentos entre eles e, utilizando conjuntos fuzzy, classifica e associa os sentimentos. Dois são os conjuntos fuzzy utilizados neste trabalho: um conjunto de palavras de sentimentos e outro de palavras especificas do domínio (neste caso, \textit{laptops}). Eles são utilizados para construir o modelo da ontologia do domínio que, por sua vez, será utilizado para construir as árvores de relacionamento entre os atributos dos produtos e os sentimentos associados. Os resultados obtidos mostram que a utilização dos conjuntos fuzzy teve melhor desempenho que a mesma proposta sem o uso deles. 
+
+E em \citeonline{mouthami2013sentiment} um novo algoritmo, chamado de Classificação de Sentimentos Fuzzy (da tradução livre de \textit{Sentiment Fuzzy Classification}), é proposto para melhorar a precisão da classificação de sentimentos de opiniões, utilizando lógica fuzzy, POS-Tags (\textit{Part of Speech Tags}) e uma base de dados de filmes como base de avaliação. Além do uso de lógica fuzzy, este trabalho contribui em mapear as etapas básicas do processo de mineração de opiniões, baseando-se nas tarefas executadas nos trabalhos relacionados descritos na pequisa dos autores. Conjuntos fuzzy são utilizados na etapa de classificação, onde são definidos três deles: conjunto fuzzy positivo, negativo e neutro. O trabalho,contudo, não apresentou resultados. 
+
+Foi recorrente encontrar artigos com propostas de conceitos fuzzy pra mineração de opinião que não apresentavam resultados os discutiam apropriadamente - em alguns casos a metodologia nem era bem definida. Essa pesquisa difere destes e de outros trabalhos relacionados por apresentar e aplicar apropriadamente conceitos e técnicas fuzzy em mineração de opinião. Nós modelamos as variáveis fuzzy e construímos um sistema de inferência fuzzy baseado em características dos documentos. Nós executamos ainda nossos testes em conjuntos de dados já utilizados nos trabalhos relacionados, permitindo comparações diretas. Além disso, nós propomos uma fase de extração e seleção de características pouco encontradas em outros trabalhos, onde definimos, extraímos e selecionamos um grande número de características dos documentos, baseando-se nos poucos trabalhos que já fizeram esse tipo de extração.
+
+A próxima seção apresenta a metodologia utilizada nessa pesquisa, descrevendo cada etapa realizada e as técnicas relevantes usadas nessas etapas.
 
 \ifcsdef{mainfile}{}{\bibliography{pesquisa}}
 

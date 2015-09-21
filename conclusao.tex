@@ -1,0 +1,23 @@
+\documentclass[template.tex]{subfiles}
+\begin{document}
+
+\xchapter{Conclusão}{}
+
+Essa pesquisa propôs e avaliou um sistema fuzzy automatizado de mineração de opinião para classificar o sentimento geral das opiniões dos documentos. Nossa proposta utiliza o método de Wang-Mendel \cite{wang1992generating} para gerar regras fuzzy baseadas nas características dos documentos mais aptas entre quase 60 características definidas e extraídas nesse trabalho. Nós conseguimos resultados promissores de até 72,4\% de acurácia numa validação cruzada de 10 folds.
+
+Essa pesquisa é possivelmente um dos primeiros trabalhos a aplicar a lógica fuzzy e o método de Wang-Mendel em mineração de opinião, mostrando resultados em bases de dados utilizados em trabalhos relacionados. Além disso, nossos resultados são comparáveis a de outros trabalhos que utilizam técnicas não fuzzy. Ainda, o classificador gerado nessa pesquisa, classifica documentos utilizando regras legíveis para seres humanos, utilizando conjuntos fuzzy simples, como "BAIXA", "ALTO", "POSITIVO" e "NEGATIVO". Essa pesquisa também contribuiu na investigação de características de documentos que podem ser relevantes para descrever e classificar documentos. Duas das características que mais se destacaram na classificação dos documentos foram definidas nesse trabalho.
+
+Como trabalhos futuros, há muitos pontos a serem investigados como melhorias para esta pesquisa. Alguns são elicitados a seguir:
+
+\begin{itemize}
+\item Construir um conjunto de advérbios melhor, investigar mais a fundo a influência destes sobre adjetivos e avaliar se impactam nos resultados finais;
+\item Melhorar o método de detecção de negação e como lidar melhor com esse fenômeno;
+\item Melhorar como os conjuntos fuzzy são modelados para as variáveis de entrada das características dos documentos;
+\item Investigar mais características que possam representar e classificar melhor os documentos;
+\item Experimentar outros tipos de técnicas de seleção de características, para investigar a influência desses métodos na geração de regras fuzzy;
+\item E buscar e experimentar a utilização de outros dicionários de opinião, com o fim de verificar a influência desdes na classificação dos documentos;
+\end{itemize}
+
+\ifcsdef{mainfile}{}{\bibliography{../pesquisa}}
+
+\end{document}

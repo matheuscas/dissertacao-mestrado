@@ -68,8 +68,8 @@ Somente em 2003, no trabalho de \citeonline{dave2003mining}, é que o termo mine
 
 \section{Níveis de mineração de opinião}
 
-\todo[inline]{coloca exemplos aqui, pode obter documentos, comentários e sentenças de sites se achar melhor, há somente um exemplo aqui}
-\todo[inline]{matheus: nao entendi direito, mas eu adicionei exemplos em cada paragrafo. Veja se foi isso que quis dizer.}
+%\todo[inline]{coloca exemplos aqui, pode obter documentos, comentários e sentenças de sites se achar melhor, há somente um exemplo aqui}
+%\todo[inline]{matheus: nao entendi direito, mas eu adicionei exemplos em cada paragrafo. Veja se foi isso que quis dizer.}
 
 Mineração de opiniões é uma área de pesquisa que vem sendo investigada em três principais níveis de análise: i) nível de análise de documento, ii) sentenças e iii) entidades e seus aspectos. O primeiro nível foca em classificar uma opinião de um documento expressando-a como positiva ou negativa. O segundo nível, o de sentenças, em vez de considerar o sentimento geral de um documento como todo, classifica as opiniões de cada sentença separadamente. E o último nível foca em descobrir todos os alvos existentes em sentenças e documentos e classificar as opiniões direcionadas a eles \cite{bing:2012}.
 
@@ -87,8 +87,8 @@ Também denominado nível de entidade e características, o nível de entidade e
 
 \section{Etapas na mineração de opinião}
 
-\todo[inline]{faz uma breve introdução nesta seção, dizendo que o processo de mineração de opinião tipicamente envolve diversas etapas que podem envolver  iniciam por pré-processamento dos dados e em alguns trabalhos por extração de características até alcançar a classificação}
-\todo[inline]{matheus: feito}
+%\todo[inline]{faz uma breve introdução nesta seção, dizendo que o processo de mineração de opinião tipicamente envolve diversas etapas que podem envolver  iniciam por pré-processamento dos dados e em alguns trabalhos por extração de características até alcançar a classificação}
+%\todo[inline]{matheus: feito}
 
 O processo de mineração de opinião tipicamente envolve algumas etapas, as quais consistem desde a preparação dos dados dos documentos até a classificação destes. É comum encontrar nos trabalhos relacionados as seguintes etapas para minerar e classificar opiniões:  i) definição do domínio, ii) pré-processamento, iii) transformação, iv) seleção de características, v) classificação e vi) análise dos resultados \cite{moraes2012document}. 
 
@@ -251,20 +251,18 @@ Usualmente, os dados da etapa de transformação já são considerados as caract
 A seleção de características é a etapa onde as características mais relevantes são selecionadas, e que serão usadas na classificação dos documentos. Com a redução da quantidade de características, espera-se que o classificador seja mais eficiente e efetivo \cite{moraes2012document}. Medidas de seleção de características comuns nos trabalhos relacionados são \textit{document frequency} \cite{pang2002thumbs}, \textit{mutual information} \cite{turney2002thumbs} e \textit{information gain} \cite{wiebe2006word}. Contudo, nenhuma delas tem sido largamente aceita como a melhor medida de seleção de características para mineração de opiniões, embora \textit{information gain} tenha mostrado resultados competitivos \cite{moraes2012document}.
 %\todo[inline]{estes não são metodos de seleção, são medidas que podem ser utilizadas para seleção}
 %\todo[inline]{matheus: ok, alterado} 
-\todo[inline]{novamente não podemos falar aqui sobre 'nossa pesquisa', além disso aqui vai faltar uma cola para contextualizar porque falar de c4.5 e CFS se você não encontrou trabalhos de mineração de opinião que usem. Uma possibilidade seria dizer algo, em novo parágracomo: Quando se trata de seleção de características para sistemas fuzzy, comumente são apresentados métodos como c4.5 e o CFS para esta tarefa. E cita pelos menos uns 3 trabalhos que fizeram isso.}
-\todo[inline]{matheus: ok, mas não tem nem tres trabalhos com isso. Na verdade, cintra2008fuzzy foi o unico e que foi encontrado pelo prof. Matheus.}
+%\todo[inline]{novamente não podemos falar aqui sobre 'nossa pesquisa', além disso aqui vai faltar uma cola para contextualizar porque falar de c4.5 e CFS se você não encontrou trabalhos de mineração de opinião que usem. Uma possibilidade seria dizer algo, em novo parágracomo: Quando se trata de seleção de características para sistemas fuzzy, comumente são apresentados métodos como c4.5 e o CFS para esta tarefa. E cita pelos menos uns 3 trabalhos que fizeram isso.}
+%\todo[inline]{matheus: ok, mas não tem nem tres trabalhos com isso. Na verdade, cintra2008fuzzy foi o unico e que foi encontrado pelo prof. Matheus.}
 
 O objetivo do nosso trabalho em realizar a seleção de características é gerar regras simples de classificação de sentimento, ou seja, com o menor número de antecedentes possível, para facilitar o entendimento delas por parte do usuário. Uma característica do algoritmo usado nesse trabalho para a construção das regras é que a quantidade de antecedentes é igual ao número de características selecionadas. Este algoritmo foi proposto por \citeonline{wang1992generating} (este algoritmo é detalhado na Seção \ref{metodo-wang-mendel}). Portanto, quanto menor o número de características, menor será a quantidade de antecedentes das regras.
 
 Um dos trabalhos encontrados na literatura que realizam a seleção de características, e posteriormente, controem as regras para um sistema fuzzy usando o algoritmo de Wang-Mendel, é o trabalho de \citeonline{cintra2008fuzzy}. Os autores compararam o desempenho de sua proposta com algoritmos clássicos de seleção de características, como CFS \cite{hall1999correlation} e o c4.5 \cite{quinlan2014c4}. 
 \todo[inline]{coloca na metodologia: Seguindo a proposta de \citeonline{cintra2008fuzzy} de avaliação de métodos de seleção de características aplicados a construção de sistemas fuzzy, decidimos usar o c4.5 e o CFS para a seleção de características neste trabalho.}
 
-\todo[inline]{mgpires: Matheus, insira esta referência: J. R. Quinlan. C4.5 Programs for Machine Learning. Morgan
-Kaufmann, CA, 1988. para o c4.5}
-\todo[inline]{matheus: mudei}
-
-\todo[inline]{traga a explicação sobre cfs e c4.5 que está na metodologia para cá}
-\todo[inline]{matheus: trouxe}
+%\todo[inline]{mgpires: Matheus, insira esta referência: J. R. Quinlan. C4.5 Programs for Machine Learning. Morgan Kaufmann, CA, 1988. para o c4.5}
+%\todo[inline]{matheus: mudei}
+%\todo[inline]{traga a explicação sobre cfs e c4.5 que está na metodologia para cá}
+%\todo[inline]{matheus: trouxe}
 
 A hipótese central do CFS é que um bom conjunto de características contém características que são altamente correlacionadas com a classe, mas sem qualquer correlação umas com as outras. O CFS é um algoritmo que junta essa hipótese com uma medida de correlação apropriada e uma heurística de estratégia de busca \cite{hall1999correlation}. Dessa etapa de seleção, o CFS produz uma lista das características mais aptas a classificar os documentos da base. 
 

@@ -256,13 +256,17 @@ A seleção de características é a etapa onde as características mais relevan
 
 O objetivo do nosso trabalho em realizar a seleção de características é gerar regras simples de classificação de sentimento, ou seja, com o menor número de antecedentes possível, para facilitar o entendimento delas por parte do usuário. Uma característica do algoritmo usado nesse trabalho para a construção das regras é que a quantidade de antecedentes é igual ao número de características selecionadas. Este algoritmo foi proposto por \citeonline{wang1992generating} (este algoritmo é detalhado na Seção \ref{metodo-wang-mendel}). Portanto, quanto menor o número de características, menor será a quantidade de antecedentes das regras.
 
-Um dos trabalhos encontrados na literatura que realizam a seleção de características, e posteriormente, controem as regras para um sistema fuzzy usando o algoritmo de Wang-Mendel, é o trabalho de \citeonline{cintra2008fuzzy}. Os autores compararam o desempenho de sua proposta com algoritmos clássicos de seleção de características, como CFS \cite{hall1999correlation} e o c4.5 \cite{quinlan2014c4}. 
-\todo[inline]{coloca na metodologia: Seguindo a proposta de \citeonline{cintra2008fuzzy} de avaliação de métodos de seleção de características aplicados a construção de sistemas fuzzy, decidimos usar o c4.5 e o CFS para a seleção de características neste trabalho.}
+Um dos trabalhos encontrados na literatura que realizam a seleção de características, e posteriormente, constroem as regras para um sistema fuzzy usando o algoritmo de Wang-Mendel, é o trabalho de \citeonline{cintra2008fuzzy}. Os autores compararam o desempenho de sua proposta com algoritmos clássicos de seleção de características, como CFS \cite{hall1999correlation} e o c4.5 \cite{quinlan2014c4}. 
+%\todo[inline]{coloca na metodologia: Seguindo a proposta de \citeonline{cintra2008fuzzy} de avaliação de métodos de seleção de características aplicados a construção de sistemas fuzzy, decidimos usar o c4.5 e o CFS para a seleção de características neste trabalho.}
 
 %\todo[inline]{mgpires: Matheus, insira esta referência: J. R. Quinlan. C4.5 Programs for Machine Learning. Morgan Kaufmann, CA, 1988. para o c4.5}
 %\todo[inline]{matheus: mudei}
 %\todo[inline]{traga a explicação sobre cfs e c4.5 que está na metodologia para cá}
 %\todo[inline]{matheus: trouxe}
+
+\todo[inline]{matheus: acrescimo sobre os tipos de algoritmos de saude}
+
+Os métodos de seleção características são tipicamente apresentados em duas classes: \textit{filters} e \textit{wrappers}. \textit{Filters} são métodos que selecionam características independentes do modelo, como o CFS. E os métodos do tipo \textit{wrappers}, como o c4.5, por outro lado, analisam os subconjuntos de características, permitindo detectar as possíveis interações entre as características \cite{guyon2003introduction}.
 
 A hipótese central do CFS é que um bom conjunto de características contém características que são altamente correlacionadas com a classe, mas sem qualquer correlação umas com as outras. O CFS é um algoritmo que junta essa hipótese com uma medida de correlação apropriada e uma heurística de estratégia de busca \cite{hall1999correlation}. Dessa etapa de seleção, o CFS produz uma lista das características mais aptas a classificar os documentos da base. 
 
@@ -360,7 +364,7 @@ A figura \ref{fig:mrfc} ilustra esse processo.
   \caption{Método de Raciocínio Fuzzy Clássico (MRFC)}
   \label{fig:mrfc}
   \centering
-    \includegraphics[width=0.9\textwidth]{mrfc}
+    \includegraphics[width=0.7\textwidth]{mrfc}
 \end{figure}
 
 O MRFG, por outro lado, classifica um exemplo considerando todos os demais exemplos em relação as classes finais. Os seguintes passos mostram como MRFG funciona \cite{cintra2012genetic}:
@@ -381,7 +385,7 @@ A figura \ref{fig:mrfg} ilustra esse processo.
   \caption{Método de Raciocínio Fuzzy Geral (MRFG)}
   \label{fig:mrfg}
   \centering
-    \includegraphics[width=0.9\textwidth]{mrfg}
+    \includegraphics[width=0.7\textwidth]{mrfg}
 \end{figure}
 
 \section{Trabalhos relacionados}

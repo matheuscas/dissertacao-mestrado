@@ -18,10 +18,12 @@
 \usepackage{booktabs}
 \usepackage{pifont}
 
+\let\cleardoublepage\clearpage
+
 \newcommand*\rot{\rotatebox{90}}
 \newcommand*\OK{\ding{51}}
 
-%\newcommand{\mainfile}{}
+\newcommand{\mainfile}{}
 
 \newcounter{example}[section]
 \newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
@@ -52,7 +54,8 @@
 \frontmatter
 
 % Portada (apresentação)
-\dmccpresentationpage
+%\dmccpresentationpage
+\presentationpage
 % Se seu trabalho não for uma tese de doutorado do DMCC, apague a linha
 % acima e use \presenationpage
 
@@ -61,7 +64,7 @@
 \advisercitationname{LOULA, A.} % e.g. Chavez, Christina von Flach Garcia
 \coadvisercitationname{PIRES, M.G.} % e.g. Mendonca, Manoel Gomes de
 \catalogtype{Dissertação (mestrado)} % e.g. ``Tese (doutorado)''
-\catalogtopics{(1. Mineração de dados. 2. Lógica difusa. 3. Conjuntos difusos. 4. Sistemas difusos)} % e.g. ``1. Complexidade Estrutural. 2. Engenharia de Software''
+\catalogtopics{(1. Mineração de dados. 2. Classificação de opinião. 3. Lógica Fuzzy. 4. Sistemas Baseados em Regras Fuzzy)} % e.g. ``1. Complexidade Estrutural. 2. Engenharia de Software''
 % Os topicos forma retirados de: http://consorcio.bn.br/scripts/odwp032k.dll?t=xs&pr=assuntos_pr&db=assuntos&use=kw_livre&disp=list&sort=off&ss=new&arg=mineracao+de+dados+&x=0&y=0
 \catalogcdd{(NUMERO CDD)} % e.g. ``CDD 20.ed. XXX.YY'' (esse número vai lhe ser dado pela biblioteca)
 \catalogingsheet
@@ -92,19 +95,28 @@ E à todos os demais que potencialmente jamais lerão essa breve nota e que se s
 % Resumo em Português
 % Se preferir, crie um arquivo à parte e o inclua via \include{}
 \resumo
-Opiniões são centrais em quase todas as atividades humanas, porque exercem relevante influência sobre o comportamento das pessoas. A internet e a web criaram mecanismos que tornaram possível que as pessoas pudessem compartilhar suas opiniões e para que eias, e também organizações, pudessem encontrar facilmente mais informações sobre as opiniões e experiências de outros indivíduos para ajudar em tomadas de decisão. Ainda assim, opiniões envolvem sentimentos que são descrições textuais vagas e imprecisas. Devido à natureza destes dados, a Lógica Fuzzy pode ser uma abordagem promissora para lidar com esses tipos de informações. Assim, este trabalho propõe a criação e a avaliação de sistema fuzzy para realizar um processo de mineração e classificação de opinião em diferentes domínios. Diversas características foram extraídas dos documentos e algoritmos de seleção de características foram aplicados para selecionar as mais aptas para representar e classificar os documentos. Com base nas características selecionadas, o método de Wang-Mendel (WM) e variados métodos de inferência foram utilizados para gerar as regras fuzzy e classificar documentos. Os resultados obtidos mostraram que a proposta é promissora, pois o desempenho das regras geradas se equipararam ou superaram trabalhos correlatos na literatura, demonstraram bons resultados entre domínios diferentes e ainda se igualaram a resultados de métodos clássicos de aprendizado de máquina, como o \textit{Support Vector Machine}.
+Opiniões são centrais em quase todas as atividades humanas, porque exercem relevante influência sobre o comportamento das pessoas. A internet e a web criaram mecanismos que tornaram possível que as pessoas pudessem compartilhar suas opiniões e para que eias, e também organizações, pudessem encontrar facilmente mais informações sobre as opiniões e experiências de outros indivíduos para ajudar em tomadas de decisão. Ainda assim, opiniões envolvem sentimentos que são descrições textuais vagas e imprecisas. Devido à natureza destes dados, a Lógica Fuzzy pode ser uma abordagem promissora para lidar com esses tipos de informações. Assim, este trabalho propõe a desenvolver e avaliar uma metodologia de classificação do sentimento de geral de opiniões em documentos, aplicando um sistema fuzzy automatizado de mineração de opinião associado à extração e seleção de características destes documentos. Diversas características foram extraídas dos documentos e algoritmos de seleção de características foram aplicados para selecionar as mais aptas para representar e classificar os documentos. Com base nas características selecionadas, o método de Wang-Mendel (WM) e variados métodos de inferência foram utilizados para gerar as regras fuzzy e classificar documentos. 
+
+\todo[inline]{refaz esse trecho final do resumo, para refletir as considerações finais do cap de resultados e conclusao. }
+\todo[inline]{matheus: seguindo a linha do que está escrito antes, destaquei um resultado quantitativo, as regras e as caracteristicas} 
+
+Os resultados obtidos foram promissores, alcançado até 72,4\% de acurácia numa validação cruzada de 10 folds, comparáveis a de outros trabalhos que utilizam técnicas não fuzzy. O classificador gerado pelas regras dessa pesquisa classifica documentos utilizando regras legíveis para seres humanos. Ainda, os resultados mostraram que duas características definidas nesse trabalho se destacaram na classificação dos documentos, evidenciando que uma quantidade limitada de características são suficientes para efetuar a classificação de opiniões.
 % Palavras-chave do resumo em Português
 \begin{keywords}
-mineração de opinião; classificação de sentimento; lógica fuzzy; sistemas de inferência fuzzy; extração de características; seleção de características; métodos de raciocínio fuzzy
+mineração de dados; classificação de opinião; lógica fuzzy; sistemas baseados em regras fuzzy; extração de características; seleção de características
 \end{keywords}
+
+\todo[inline]{mgpires: eu colocaria as seguintes palavras chave: mineração de dados; classificação de opinião (ou sentimento); lógica fuzzy; sistemas baseados em regras fuzzy; extração de características; seleção de características}
+\todo[inline]{matheus: ok}
+\todo[inline]{matheus: só me bateu uma duvida pq em todo trabalho se fala em mineração de opinião e dai isso n aparece no titulo (mudou) e nem nas palavras chave.}
 
 % Resumo em Inglês
 % Se preferir, crie um arquivo à parte e o inclua via \include{}
 \abstract
-Opinions are central in almost all human activities, because they are a relevant influence on people’s behavior. The internet and the web have created mechanisms that made possible for people to share their opinions and for other people and organizations to find out more about opinions and experiences from individuals and help in decision making. Still, opinions involve sentiments that are vague and inaccurate textual descriptions. Hence, due to data's nature, Fuzzy Logic can be a promising approach. This paper proposes a fuzzy system to perform opinion classification across different domains. Many features has been extracted from documents and algorithms of feature selection was applied to select the most fitted ones to represent and classify documents. Over the selected features, the Wang-Mendel (WM) method and several fuzzy inference methods were used to generate fuzzy rules and classify documents. The results have showed that this proposal is promising, matching or winning comparisons from related works results, showing good results across domains and evened the results compared with a classic machine learning technique, the Suport Vector Machine.
+Opinions are central in almost all human activities, because they are a relevant influence on people’s behavior. The internet and the web have created mechanisms that made possible for people to share their opinions and for other people and organizations to find out more about opinions and experiences from individuals and help in decision making. Still, opinions involve sentiments that are vague and inaccurate textual descriptions. Hence, due to data's nature, Fuzzy Logic can be a promising approach. This paper proposes a fuzzy system to perform opinion classification across different domains. Many features has been extracted from documents and algorithms of feature selection was applied to select the most fitted ones to represent and classify documents. Over the selected features, the Wang-Mendel (WM) method and several fuzzy inference methods were used to generate fuzzy rules and classify documents. The results were promising, reached up to 72.4 \% accuracy in 10-fold cross-validation, comparable to other papers that don't use fuzzy techniques. The classifier generated by the rules of this research classifies documents using rules readable for humans. Further, the results showed that two features that were defined in this work were highlighted in the documents classification, showing that a limited amount of characteristics are sufficient to perform opinions classification.
 % Palavras-chave do resumo em Inglês
 \begin{keywords}
-opinion mining; sentiment classification; fuzzy logic; fuzzy inference systems; feature extraction; feature selection; fuzzy reasoning methods
+data mining; opinion classification; fuzzy logic; fuzzy rule-based systems; feature extraction; feature selection
 \end{keywords}
 
 % Sumário

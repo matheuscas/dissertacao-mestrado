@@ -264,9 +264,9 @@ Um dos trabalhos encontrados na literatura que realizam a seleção de caracter�
 %\todo[inline]{traga a explicação sobre cfs e c4.5 que está na metodologia para cá}
 %\todo[inline]{matheus: trouxe}
 
-\todo[inline]{matheus: acrescimo sobre os tipos de algoritmos de saude}
+%\todo[inline]{matheus: acrescimo sobre os tipos de algoritmos de saude}
 
-Os métodos de seleção características são tipicamente apresentados em duas classes: \textit{filters} e \textit{wrappers}. \textit{Filters} são métodos que selecionam características independentes do modelo, como o CFS. E os métodos do tipo \textit{wrappers}, como o c4.5, por outro lado, analisam os subconjuntos de características, permitindo detectar as possíveis interações entre as características \cite{guyon2003introduction}.
+Os métodos de seleção características são tipicamente apresentados em duas classes: \textit{filters} e \textit{wrappers}\cite{guyon2003introduction}. Os métodos do tipo \textit{wrappers} analisam os subconjuntos de características construindo e avaliando o modelo do classificador gerado a partir de cada subconjunto de características, por isso tais métodos  tendem a ser computacionalmente intensivos. \textit{Filters}, como o CFS e c4.5, são métodos que selecionam características independentes do modelo do classificador, utilizando para isso medidas de avaliação direta das características.
 
 A hipótese central do CFS é que um bom conjunto de características contém características que são altamente correlacionadas com a classe, mas sem qualquer correlação umas com as outras. O CFS é um algoritmo que junta essa hipótese com uma medida de correlação apropriada e uma heurística de estratégia de busca \cite{hall1999correlation}. Dessa etapa de seleção, o CFS produz uma lista das características mais aptas a classificar os documentos da base. 
 

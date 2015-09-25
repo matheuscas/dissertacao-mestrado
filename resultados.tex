@@ -574,9 +574,9 @@ A aplicação dos pesos utilizando 2 conjuntos, contudo, não pareceu surtir o m
 %As quatro regras foram utilizadas na base de filmes e as duas primeiras regras na base da Amazon.
 
 \section{Avaliação do uso de regras entre domínios}
-\todo[inline]{faz aplicação cruzada tambem, amazon na de filmes e vice versa}
-\todo[inline]{valorize mais esta seção, o resultado é MUITO interessante, mas o texto não valoriza tanto, compare com os resultados de epinions com regras amazon e filmes. Quando aplicar amazon em filmes e vice versa compare com os resultados obtidos usando as regras da própria base. O uso do classificador de uma base em outra pode indicar a existencia de regras universais e realmente independentes de domínio, mas pode haver necessidade de ajuste na modelagem dos conjuntos ou em outro aspecto talvez}
-\todo[inline]{matheus: como haviamos combinado na sexta, deixaria essa avaliações cruzadas se houvesse tempo ou para o dia da defesa}
+%\todo[inline]{faz aplicação cruzada tambem, amazon na de filmes e vice versa}
+%\todo[inline]{valorize mais esta seção, o resultado é MUITO interessante, mas o texto não valoriza tanto, compare com os resultados de epinions com regras amazon e filmes. Quando aplicar amazon em filmes e vice versa compare com os resultados obtidos usando as regras da própria base. O uso do classificador de uma base em outra pode indicar a existencia de regras universais e realmente independentes de domínio, mas pode haver necessidade de ajuste na modelagem dos conjuntos ou em outro aspecto talvez}
+%\todo[inline]{matheus: como haviamos combinado na sexta, deixaria essa avaliações cruzadas se houvesse tempo ou para o dia da defesa}
 
 Outra avaliação que fizemos foi a validação do uso de regras entre domínios, utilizando a base inteira da Epinions como teste. Foram usadas as regras geradas da base de filmes e da base da Amazon e aplicadas à base da Epinions.
 %\todo[inline]{foram usadas as regras geradas para qual fold amazon ou filmes?}
@@ -602,7 +602,7 @@ Todas as regras de cada fold, em ambas as bases, foram utilizadas para classific
 
 Os resultados mostram que as regras geradas podem ser usadas entre domínios diferentes, produzindo resultados próximos ou melhores que os produzidos nas próprias bases, como pode ser visto na tabela \ref{table:epinions}. Além disso, os resultados também trazem a tona que foi muito mais fácil classificar documentos positivos que os negativos em ambas as bases. Embora não conclusivo, esse enviesamento para os documentos positivos pode ser um indicativo do enviesamento do uso de dicionários de opiniões que mostram uma tendência para classificar o sentimento geral de um documento para a positividade, devido a tendência natural do ser humano de utilizar linguagem positiva e evitar termos negativos \cite{boucher1969pollyanna, kennedy2006sentiment}.
 
-\section{Comparação com classificador SVM}
+\section{Comparação com classificador SVM e outros trabalhos}
 
 %\todo[inline]{esse primeiro parágrafo poderia ir para a discussão final do capítulo}
 %\todo[inline]{matheus: ja foi}
@@ -649,6 +649,14 @@ Realizamos uma comparação da configuração final do nosso classificador com u
 
 Nossos resultados mostram que o classificador construído nesse trabalho equivale aos resultados do SVM, pois em ambas as bases as diferenças dos resultados não são significativas (Wilcoxon, $p\leq0.01$). O SVM, inclusive, se utilizado com as características definidas e extraídas nessa pesquisa, torna-se tão independente de domínio quanto nossa abordagem. No entanto, nossa proposta, utilizando sistemas fuzzy, produz um classificador com regras legíveis para seres humanos, sendo mais fácil de ser interpretado e compreendido. 
 
+%\todo[inline]{não ficou muito claro as diferenças relevantes de nossa metodologia e dos outro trabalhos citados na base de filmes, acrescenta mais alguma coisa sobre essas diferenças}
+%\todo[inline]{matheus: acrescimo sobre o recorte das bases}
+
+Nossos resultados de acurácia são comparáveis também a resultados obtivos anteriormente por outros autores. A base de filmes da Universidade de Cornell \cite{pang2004sentimental} é um conjunto de dados pré-processados pelos autores e utilizada dessa forma por diversos outros estudos, como os apresentados por \citeonline{ohana2009sentiment} and \citeonline{taboada2008extracting}. Respectivamente, estes trabalhos produziram resultados iguais 69,35\% e 76\% de acurácia, evidenciado resultados próximos aos que nós obtivemos, embora não seja possível efetuar uma teste estatístico comparativo pois não temos acesso aos folds utilizados por esses, ou mesmo a eventuais alterações que eles tenham feito nas bases. É importante dizer que estes trabalhos não utilizaram qualquer técnica fuzzy, embora o trabalho de \citeonline{ohana2009sentiment} se aproxima mais de nossa proposta por efetuar extração de características e utilizar o SentiWordNet 3.0. Já \citeonline{taboada2008extracting} utilizaram muitos passos diferentes dos nossos, como o dicionário de opinião (foram utilizados mais de um para cada tipo de unigram e eles foram criados manualmente pelos próprios autores), um conjunto de intensificadores diferentes, filtragem de sentenças utilizando ferramentas de terceiros, dentre outros.  
+
+Ainda, embora tenhamos utilizado a base mista com opiniões do site da Amazon apresentada em \citeonline{wang2011latent} para testar e avaliar nosso trabalho, a classificação realizada no artigo foi feita na predição da escala numérica em vez de definição da classe dos documentos, tornando indevida a comparação com nosso trabalho. Outra observação importante sobre o conjunto de dados da Amazon é que tivemos de fazer um recorte dessa base, pois além de desbalanceada, ela continha mais de 18000 documentos. Nós reduzimos para 2000 documentos balanceados, mesma quantidade do conjunto de dados de filmes. 
+
+
 %\todo[inline]{note que o SVM quando aplicado em características extraídas da base (e não em bag-of-words, é tão independente de domínio quanto a nossa abordagem, poderíamos até usar o classificador svm treinado em uma base para classificar outra base, pode comentar isso no texto, e depois dizer que: no entanto, nossa proposta utilizando sistema fuzzy, produz um classificador mais fácil de ser interpretado e compreendido}
 %\todo[inline]{matheus: feito}
 
@@ -672,11 +680,7 @@ sempre foram selecionadas pelos algoritmos de seleção de características (CFS
 
 Em relação aos algoritmos de classificação, pudemos perceber que a introdução dos pesos auxilia muito no processo de inferência, pois algumas regras criadas pelo método de Wang-Mendel atrapalharam na inferência do sistema e, por conseguinte, na classificação dos documentos. Ainda como resultados da introdução dos pesos, nos fez perceber que a nossa modelagem das variáveis de entrada poderiam melhorar, já que as regras que utilizavam o conjunto "MÉDIA" não estavam sendo utilizadas. Isso nos mostrou que modelagem dos conjuntos fuzzy influencia bastante na qualidade do processo de classificação.
 
-\todo[inline]{matheus: acrescimo sobre o recorte das bases}
 
-Ainda, embora tenhamos utilizado a base mista com opiniões do site da Amazon apresentada em \citeonline{wang2011latent} para testar e avaliar nosso trabalho, a classificação realizada no artigo foi feita na predição da escala numérica em vez de definição da classe dos documentos, tornando indevida a comparação com nosso trabalho. Outra observação importante sobre o conjunto de dados da Amazon é que tivemos de fazer um recorte dessa base, pois além de desbalanceada, ela continha mais de 18000 documentos. Nós reduzimos para 2000 documentos balanceados, mesma quantidade do conjunto de dados de filmes. Dessa base de filmes, por outro lado, o mesmo não pode ser dito.
-
-A base de filmes da universidade de Cornell \cite{pang2004sentimental} é um conjunto de dados pré-processados pelos autores e utilizada dessa forma por diversos outros estudos, como os apresentados por \citeonline{ohana2009sentiment} and \citeonline{taboada2008extracting}. Respectivamente, estes trabalhos produziram resultados iguais 69,35\% e 76\% de acurácia. É importante dizer que estes trabalhos não utilizaram qualquer técnica fuzzy e, embora não tenhamos tido acesso aos folds utilizados por esses, ou mesmo a eventuais alterações que eles tenham feito nas bases, as comparações são válidas, pois evidenciam os resultados obtidos.
 
 %A próxima seção conclui essa pesquisa e apresenta novos direcionamentos para trabalhos futuros na área.
 

@@ -72,9 +72,9 @@
 % Termo de aprovação - exemplo
 % Modifique com os membros da sua banca
 \approvalsheet{Feira de Santana, 19 de Outubro de 2015}{
+  \comittemember{Prof. Dr. Angelo Conrado Loula}{Universidade Estadual de Feira de Santana}
   \comittemember{Profa. Dra. Heloisa de Arruda Camargo}{Universidade Federal de São Carlos}
   \comittemember{Prof. Dr. João B. Rocha Junior}{Universidade Estadual de Feira de Santana}
-  \comittemember{Prof. Dr. Angelo Conrado Loula}{Universidade Estadual de Feira de Santana}
 %  \comittemember{Prof. Dr. Professor 4}{Universidade HJKL}
 %  \comittemember{Profa. Dra. Professora 5}{Universidade QWERTY}
 }
@@ -95,20 +95,18 @@ E à todos os demais que potencialmente jamais lerão essa breve nota e que se s
 % Resumo em Português
 % Se preferir, crie um arquivo à parte e o inclua via \include{}
 \resumo
-Opiniões são centrais em quase todas as atividades humanas, porque exercem relevante influência sobre o comportamento das pessoas. A internet e a web criaram mecanismos que tornaram possível que as pessoas pudessem compartilhar suas opiniões e para que eias, e também organizações, pudessem encontrar facilmente mais informações sobre as opiniões e experiências de outros indivíduos para ajudar em tomadas de decisão. Ainda assim, opiniões envolvem sentimentos que são descrições textuais vagas e imprecisas. Devido à natureza destes dados, a Lógica Fuzzy pode ser uma abordagem promissora para lidar com esses tipos de informações. Assim, este trabalho propõe a desenvolver e avaliar uma metodologia de classificação do sentimento de geral de opiniões em documentos, aplicando um sistema fuzzy automatizado de mineração de opinião associado à extração e seleção de características destes documentos. Diversas características foram extraídas dos documentos e algoritmos de seleção de características foram aplicados para selecionar as mais aptas para representar e classificar os documentos. Com base nas características selecionadas, o método de Wang-Mendel (WM) e variados métodos de inferência foram utilizados para gerar as regras fuzzy e classificar documentos. 
-
-\todo[inline]{refaz esse trecho final do resumo, para refletir as considerações finais do cap de resultados e conclusao. }
-\todo[inline]{matheus: seguindo a linha do que está escrito antes, destaquei um resultado quantitativo, as regras e as caracteristicas} 
-
-Os resultados obtidos foram promissores, alcançado até 72,4\% de acurácia numa validação cruzada de 10 folds, comparáveis a de outros trabalhos que utilizam técnicas não fuzzy. O classificador gerado pelas regras dessa pesquisa classifica documentos utilizando regras legíveis para seres humanos. Ainda, os resultados mostraram que duas características definidas nesse trabalho se destacaram na classificação dos documentos, evidenciando que uma quantidade limitada de características são suficientes para efetuar a classificação de opiniões.
+Opiniões são centrais em quase todas as atividades humanas, porque exercem relevante influência sobre o comportamento das pessoas. A internet e a web criaram mecanismos que tornaram possível que as pessoas pudessem compartilhar suas opiniões e para que eias, e também organizações, pudessem encontrar facilmente mais informações sobre as opiniões e experiências de outros indivíduos para ajudar em tomadas de decisão. Ainda assim, opiniões envolvem sentimentos que são descrições textuais vagas e imprecisas. Devido à natureza destes dados, a Lógica Fuzzy pode ser uma abordagem promissora para lidar com esses tipos de informações. Assim, este trabalho propõe a desenvolver e avaliar uma metodologia de classificação do sentimento de geral de opiniões em documentos, aplicando um sistema fuzzy automatizado de mineração de opinião associado à extração e seleção de características destes documentos. Diversas características foram extraídas dos documentos e algoritmos de seleção de características foram aplicados para selecionar as mais aptas para representar e classificar os documentos. Com base nas características selecionadas, o método de Wang-Mendel (WM) foi utilizado para gerar as regras fuzzy e variados métodos de raciocínio fuzzy para aplicar as regras e classificar documentos. 
+%\todo[inline]{refaz esse trecho final do resumo, para refletir as considerações finais do cap de resultados e conclusao. }
+%\todo[inline]{matheus: seguindo a linha do que está escrito antes, destaquei um resultado quantitativo, as regras e as caracteristicas} 
+Os resultados obtidos foram promissores, alcançado mais de 70\% de acurácia numa validação cruzada de 10 folds, comparáveis a de outros trabalhos que utilizam técnicas não fuzzy. Por outro lado, o classificador gerado nessa pesquisa classifica documentos utilizando regras legíveis para seres humanos. Ainda, os resultados mostraram que duas características definidas nesse trabalho se destacaram na classificação dos documentos, evidenciando que uma quantidade limitada de características são suficientes para efetuar a classificação de opiniões.
 % Palavras-chave do resumo em Português
 \begin{keywords}
 mineração de dados; classificação de opinião; lógica fuzzy; sistemas baseados em regras fuzzy; extração de características; seleção de características
 \end{keywords}
 
-\todo[inline]{mgpires: eu colocaria as seguintes palavras chave: mineração de dados; classificação de opinião (ou sentimento); lógica fuzzy; sistemas baseados em regras fuzzy; extração de características; seleção de características}
-\todo[inline]{matheus: ok}
-\todo[inline]{matheus: só me bateu uma duvida pq em todo trabalho se fala em mineração de opinião e dai isso n aparece no titulo (mudou) e nem nas palavras chave.}
+%\todo[inline]{mgpires: eu colocaria as seguintes palavras chave: mineração de dados; classificação de opinião (ou sentimento); lógica fuzzy; sistemas baseados em regras fuzzy; extração de características; seleção de características}
+%\todo[inline]{matheus: ok}
+%\todo[inline]{matheus: só me bateu uma duvida pq em todo trabalho se fala em mineração de opinião e dai isso n aparece no titulo (mudou) e nem nas palavras chave.}
 
 % Resumo em Inglês
 % Se preferir, crie um arquivo à parte e o inclua via \include{}
@@ -184,7 +182,7 @@ data mining; opinion classification; fuzzy logic; fuzzy rule-based systems; feat
 % Para ajuda na criação do arquivo .bib e utilização do BibTeX, recorra ao
 % BibTeXpress em www.cin.ufpe.br/~paguso/bibtexpress
 \bibliographystyle{abnt-alf}
-\bibliography{../pesquisa}
+\bibliography{pesquisa}
 
 %% Fim do documento
 \end{document}
